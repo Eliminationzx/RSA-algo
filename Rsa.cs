@@ -2,48 +2,83 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Security.Cryptography;
+using System.Diagnostics;
 
 namespace Rsa_algo
 {
-    class Rsa
+    class Rsa : ConstantProvider
     {
-        public string Exponent
-        {
-            set
-            {
-                _exponent = hexToBytes(value);
-            }
-        }
-        public string Modulus
-        {
-            set
-            {
-                _modulus = hexToBytes(value);
-            }
-        }
         public string Encrypt(string data)
         {
-            if (data == null) throw new ArgumentNullException("data");
+            byte[] byteData;
+            RSAParameters parameters = new RSAParameters();
+            RSACryptoServiceProvider provider = new RSACryptoServiceProvider();
+
+            parameters.Exponent = hexToBytes(exp);
+            parameters.Modulus = hexToBytes(mod);
+            provider.ImportParameters(parameters);
+
+            byteData = provider.Encrypt(Encoding.UTF8.GetBytes(data), false);
+
+            return Convert.ToBase64String(byteData);
+        }
+        public string Decrypt(string data)
+        {
+            byte[] byteData;
+            RSAParameters parameters = new RSAParameters();
+            RSACryptoServiceProvider provider = new RSACryptoServiceProvider();
+
+            parameters.Exponent = hexToBytes(exp);
+            parameters.Modulus = hexToBytes(mod);
+            provider.ImportParameters(parameters);
+
+            byteData = provider.Decrypt(Convert.FromBase64String(data), true);
+
+            return Encoding.UTF8.GetString(byteData);
+        }
+        public void outLog(string str, object args)
+        {
+            TextWriterTraceListener twtl = new TextWriterTraceListener(logPath, AppDomain.CurrentDomain.FriendlyName);
+            twtl.Name = "RSALogger";
+            twtl.TraceOutputOptions = TraceOptions.ThreadId | TraceOptions.DateTime;
+            Trace.Listeners.Add(twtl);
+            Trace.AutoFlush = true;
+            Trace.WriteLine(str + args);
+        }
+        public void outFile(string path, string str, object args)
+        {
+            TextWriterTraceListener twtl = new TextWriterTraceListener(path, AppDomain.CurrentDomain.FriendlyName);
+            twtl.Name = "RSASaver";
+            twtl.TraceOutputOptions = TraceOptions.ThreadId | TraceOptions.DateTime;
+            Trace.Listeners.Add(twtl);
+            Trace.AutoFlush = true;
+            Trace.WriteLine(str + args);
+        }
+        public string getKey(string str)
+        {
+            string key;
             try
             {
-                    byte[] byteData = Encoding.ASCII.GetBytes(data);
-                    var parameters = new RSAParameters();
-                    var provider = new RSACryptoServiceProvider();
-
-                    parameters.Exponent = _exponent;
-                    parameters.Modulus = _modulus;
-
-                    provider.ImportParameters(parameters);
-                    return Convert.ToBase64String(provider.Encrypt(byteData, false)).ToString();
+                key = Decrypt(str);
             }
-            catch 
-            { 
-                return null; 
+            catch
+            {
+                key = str;
             }
+            return key;
         }
-        public string Decrypt(string data, bool foo)
+        public string setKey(string str)
         {
-            return null;
+            string key;
+            try
+            {
+                key = Encrypt(str);
+            }
+            catch
+            {
+                key = str;
+            }
+            return key;
         }
         private byte[] hexToBytes(string hex)
         {
@@ -59,7 +94,5 @@ namespace Rsa_algo
             int val = (int)hex;
             return val - (val < 58 ? 48 : 55);
         }
-        private byte[] _exponent;
-        private byte[] _modulus;
     }
 }

@@ -3,27 +3,35 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
+using System.IO;
 
-namespace ConsoleApplication4
+namespace Rsa_algo
 {
-    class Program
+    class Program : ConstantProvider
     {
+        static void outLog(string str, object args)
+        {
+            TextWriterTraceListener twtl = new TextWriterTraceListener(logPath, AppDomain.CurrentDomain.FriendlyName);
+            twtl.Name = "RSALogger";
+            twtl.TraceOutputOptions = TraceOptions.ThreadId | TraceOptions.DateTime;
+            Trace.Listeners.Add(twtl);
+            Trace.AutoFlush = true;
+            Trace.WriteLine(str + args);
+        }
+        static void rsaProcessor()
+        {
+            var rsa = new Rsa();
+            rsa.Exponent = exp;
+            rsa.Modulus = mod;
+            Console.WriteLine("Enter the key: ");
+            string key = rsa.Encrypt(Convert.ToString(Console.ReadLine()));
+            outLog("[" + DateTime.Now + "] RSA Public Key: ", key);
+            Console.WriteLine("Your public key is:{0}", key);
+        }
         static void Main(string[] args)
         {
-            string mod = "qMBRpdYrAy5aMmo31NErUizh5sbweguSmh4wlK6uJEIDl+kwTlROnE34KOFExeTbJSX0WygPi+vWl0yNq7buIMUKpytossAAWut5khO3CQJxTk7G2gnEPNUUXHiExGgNrLzcSLv8YIlfVALhoRWyC67KOL+a+3taNq3h+BHeWhM=";
-            string exp = "AQAB";
-            var rsa = new Rsa();
-            string text, publicKey;
-
-            Console.WriteLine("Enter the text: ");
-            text = Convert.ToString(Console.ReadLine());
-
-            rsa.Modulus = mod;
-            rsa.Exponent = exp;
-
-            publicKey = rsa.Encrypt(text);
-
-            Console.WriteLine("RSA Public Key: {0}", publicKey);
+            rsaProcessor();
             Console.ReadKey();
         }
     }

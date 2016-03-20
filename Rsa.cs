@@ -3,13 +3,10 @@ using System.Collections.Generic;
 using System.Text;
 using System.Security.Cryptography;
 
-namespace ConsoleApplication4
+namespace Rsa_algo
 {
     class Rsa
     {
-        private byte[] _exponent;
-        private byte[] _modulus;
-
         public string Exponent
         {
             set
@@ -17,7 +14,6 @@ namespace ConsoleApplication4
                 _exponent = hexToBytes(value);
             }
         }
-
         public string Modulus
         {
             set
@@ -25,7 +21,6 @@ namespace ConsoleApplication4
                 _modulus = hexToBytes(value);
             }
         }
-
         public string Encrypt(string data)
         {
             if (data == null) throw new ArgumentNullException("data");
@@ -46,12 +41,10 @@ namespace ConsoleApplication4
                 return null; 
             }
         }
-
         public string Decrypt(string data, bool foo)
         {
             return null;
         }
-
         private byte[] hexToBytes(string hex)
         {
             byte[] arr = new byte[hex.Length >> 1];
@@ -61,11 +54,12 @@ namespace ConsoleApplication4
             }
             return arr;
         }
-
         private int getHexVal(char hex)
         {
             int val = (int)hex;
             return val - (val < 58 ? 48 : 55);
         }
+        private byte[] _exponent;
+        private byte[] _modulus;
     }
 }

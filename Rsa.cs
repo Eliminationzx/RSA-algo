@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Security.Cryptography;
-using System.Diagnostics;
+using System.Text.RegularExpressions;
 
 namespace Rsa_algo
 {
@@ -36,49 +36,13 @@ namespace Rsa_algo
 
             return Encoding.UTF8.GetString(byteData);
         }
-        public void outLog(string str, object args)
+        public bool IsBase64String(string s)
         {
-            TextWriterTraceListener twtl = new TextWriterTraceListener(logPath, AppDomain.CurrentDomain.FriendlyName);
-            twtl.Name = "RSALogger";
-            twtl.TraceOutputOptions = TraceOptions.ThreadId | TraceOptions.DateTime;
-            Trace.Listeners.Add(twtl);
-            Trace.AutoFlush = true;
-            Trace.WriteLine(str + args);
-        }
-        public void outFile(string path, string str, object args)
-        {
-            TextWriterTraceListener twtl = new TextWriterTraceListener(path, AppDomain.CurrentDomain.FriendlyName);
-            twtl.Name = "RSASaver";
-            twtl.TraceOutputOptions = TraceOptions.ThreadId | TraceOptions.DateTime;
-            Trace.Listeners.Add(twtl);
-            Trace.AutoFlush = true;
-            Trace.WriteLine(str + args);
-        }
-        public string getKey(string str)
-        {
-            string key;
-            try
-            {
-                key = Decrypt(str);
-            }
-            catch
-            {
-                key = str;
-            }
-            return key;
-        }
-        public string setKey(string str)
-        {
-            string key;
-            try
-            {
-                key = Encrypt(str);
-            }
-            catch
-            {
-                key = str;
-            }
-            return key;
+            if (string.IsNullOrWhiteSpace(s))
+                return false;
+
+            s = s.Trim();
+            return (s.Length % 4 == 0) && Regex.IsMatch(s, @"^[a-zA-Z0-9\+/]*={0,3}$", RegexOptions.None);
         }
         private byte[] hexToBytes(string hex)
         {

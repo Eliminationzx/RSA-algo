@@ -36,6 +36,9 @@ namespace Rsa_algo
                 outLog("Can't encrypt key: ", "The text box with key is empty or is base64!", true);
                 return;
             }
+
+            doWork(); // do something...
+
             // key encryption
             Rsa rsa = new Rsa();
             string key = setKey(Convert.ToString(tbkey.Text), rsa);
@@ -51,6 +54,9 @@ namespace Rsa_algo
                 outLog("Can't decrypt key: ", "The text box with key is empty or not base64!", true);
                 return;
             }
+
+            doWork(); // do something...
+
             // key decryption
             Rsa rsa = new Rsa();
             string key = getKey(Convert.ToString(tbkey.Text), rsa);
@@ -149,5 +155,12 @@ namespace Rsa_algo
             return (s.Length % 4 == 0) && Regex.IsMatch(s, @"^[a-zA-Z0-9\+/]*={0,3}$", RegexOptions.None);
         }
         private void Form1_Load(object sender, EventArgs e) { }
+        private void progressBar1_Click(object sender, EventArgs e) { }
+        private void doWork()
+        {
+            for (int i = 0; i < 100; ++i)
+                pb.Increment(i);
+            pb.Value = 0;
+        }
     }
 }

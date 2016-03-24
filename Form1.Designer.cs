@@ -41,7 +41,7 @@
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(210, 151);
+            this.btnSave.Location = new System.Drawing.Point(233, 146);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 0;
@@ -51,7 +51,7 @@
             // 
             // btnExit
             // 
-            this.btnExit.Location = new System.Drawing.Point(210, 189);
+            this.btnExit.Location = new System.Drawing.Point(233, 192);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(75, 23);
             this.btnExit.TabIndex = 1;
@@ -61,7 +61,7 @@
             // 
             // btnDecrypt
             // 
-            this.btnDecrypt.Location = new System.Drawing.Point(210, 110);
+            this.btnDecrypt.Location = new System.Drawing.Point(233, 103);
             this.btnDecrypt.Name = "btnDecrypt";
             this.btnDecrypt.Size = new System.Drawing.Size(75, 23);
             this.btnDecrypt.TabIndex = 2;
@@ -71,7 +71,7 @@
             // 
             // btnEncrypt
             // 
-            this.btnEncrypt.Location = new System.Drawing.Point(209, 66);
+            this.btnEncrypt.Location = new System.Drawing.Point(233, 62);
             this.btnEncrypt.Name = "btnEncrypt";
             this.btnEncrypt.Size = new System.Drawing.Size(75, 23);
             this.btnEncrypt.TabIndex = 3;
@@ -85,7 +85,7 @@
             this.tbkey.Multiline = true;
             this.tbkey.Name = "tbkey";
             this.tbkey.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbkey.Size = new System.Drawing.Size(174, 83);
+            this.tbkey.Size = new System.Drawing.Size(199, 83);
             this.tbkey.TabIndex = 4;
             this.tbkey.TextChanged += new System.EventHandler(this.textBox1_TextChanged_1);
             // 
@@ -96,7 +96,7 @@
             this.tbResult.Name = "tbResult";
             this.tbResult.ReadOnly = true;
             this.tbResult.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbResult.Size = new System.Drawing.Size(174, 72);
+            this.tbResult.Size = new System.Drawing.Size(199, 72);
             this.tbResult.TabIndex = 5;
             this.tbResult.TextChanged += new System.EventHandler(this.tbResult_TextChanged);
             // 
@@ -106,7 +106,7 @@
             // 
             // btnload
             // 
-            this.btnload.Location = new System.Drawing.Point(210, 21);
+            this.btnload.Location = new System.Drawing.Point(233, 21);
             this.btnload.Name = "btnload";
             this.btnload.Size = new System.Drawing.Size(75, 23);
             this.btnload.TabIndex = 6;
@@ -123,8 +123,10 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(296, 215);
+            this.ClientSize = new System.Drawing.Size(320, 227);
+            this.ControlBox = false;
             this.Controls.Add(this.btnload);
             this.Controls.Add(this.tbResult);
             this.Controls.Add(this.tbkey);
@@ -133,7 +135,10 @@
             this.Controls.Add(this.btnExit);
             this.Controls.Add(this.btnSave);
             this.Name = "Form1";
+            this.Opacity = 0.92D;
+            this.ShowIcon = false;
             this.Text = "RSA De/En - cryptor";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

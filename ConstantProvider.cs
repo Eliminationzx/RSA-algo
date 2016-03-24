@@ -7,7 +7,5 @@
                     + "3CBAFAE7936E1BE2AFD2E0DF865A6E59C2B8DF1E8D5702567D0A9650CB07A43D"
                     + "E39020969DF0997FCA587D9A8AE4627CF18477EC06765DF3AA8FB459DD4C9AF3";
         public string exp = "0x10001";
-        public string logPath = "RSALogger.txt";
-        public string fileType = ".rsa";
     }
 }

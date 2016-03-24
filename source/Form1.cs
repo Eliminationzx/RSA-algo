@@ -74,8 +74,13 @@ namespace Rsa_algo
             string key = tbResult.Text;
             // show dialog window
             saveKey.ShowDialog();
+
             // save into the file
             string path = saveKey.InitialDirectory + saveKey.FileName;
+
+            if (!isEmpty(path))
+                doWork(); // do something...
+
             outFile(path, key, null);
         }
         private bool isEmpty(String str)
@@ -86,6 +91,9 @@ namespace Rsa_algo
         {
             ofdiag.ShowDialog();
             string path = ofdiag.InitialDirectory + ofdiag.FileName;
+            if (!isEmpty(path))
+                doWork(); // do something...
+
             if (!path.Contains(".rsa")) // file type is .rsa
             {
                 outLog("The file could not be read : ", "wrong file type!", true);

@@ -33,7 +33,7 @@ namespace Rsa_algo
             byte[] bytes = Convert.FromBase64String(data);
             byte[] byteData = provider.Decrypt(bytes, false);
 
-            return data;
+            return Encoding.UTF8.GetString(byteData);
         }
         private byte[] hexToBytes(string hex)
         {

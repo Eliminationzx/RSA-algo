@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.btnSave = new System.Windows.Forms.Button();
             this.btnExit = new System.Windows.Forms.Button();
             this.btnDecrypt = new System.Windows.Forms.Button();
@@ -91,6 +92,7 @@
             // 
             // tbResult
             // 
+            this.tbResult.BackColor = System.Drawing.SystemColors.Control;
             this.tbResult.Location = new System.Drawing.Point(12, 131);
             this.tbResult.Multiline = true;
             this.tbResult.Name = "tbResult";
@@ -125,8 +127,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.SystemColors.Control;
+            this.BackgroundImage = global::Rsa_algo.Properties.Resources.bg;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(320, 227);
-            this.ControlBox = false;
             this.Controls.Add(this.btnload);
             this.Controls.Add(this.tbResult);
             this.Controls.Add(this.tbkey);
@@ -134,10 +137,14 @@
             this.Controls.Add(this.btnDecrypt);
             this.Controls.Add(this.btnExit);
             this.Controls.Add(this.btnSave);
+            this.Cursor = System.Windows.Forms.Cursors.Default;
+            this.DoubleBuffered = true;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.HelpButton = true;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.Opacity = 0.92D;
-            this.ShowIcon = false;
-            this.Text = "RSA De/En - cryptor";
+            this.Text = "RSA Algo";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

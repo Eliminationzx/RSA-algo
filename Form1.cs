@@ -38,7 +38,7 @@ namespace Rsa_algo
             }
             // key encryption
             Rsa rsa = new Rsa();
-            string key = setKey(Convert.ToString(tbkey), rsa);
+            string key = setKey(Convert.ToString(tbkey.Text), rsa);
             outLog("[" + DateTime.Now + "] RSA Public Key: ", key);
             tbResult.Text = key;
         }
@@ -53,7 +53,7 @@ namespace Rsa_algo
             }
             // key decryption
             Rsa rsa = new Rsa();
-            string key = getKey(Convert.ToString(tbkey), rsa);
+            string key = getKey(Convert.ToString(tbkey.Text), rsa);
             outLog("RSA decrypt result: ", key);
             tbResult.Text = key;
         }

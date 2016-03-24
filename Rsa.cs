@@ -16,8 +16,7 @@ namespace Rsa_algo
             parameters.Modulus = hexToBytes(mod);
             provider.ImportParameters(parameters);
 
-            byte[] bytes = Encoding.UTF8.GetBytes(data);
-            byte[] byteData = provider.Encrypt(bytes, false);
+            byte[] byteData = provider.Encrypt(Encoding.UTF8.GetBytes(data), false);
 
             return Convert.ToBase64String(byteData);
         }
@@ -30,8 +29,7 @@ namespace Rsa_algo
             parameters.Modulus = hexToBytes(mod);
             provider.ImportParameters(parameters);
 
-            byte[] bytes = Convert.FromBase64String(data);
-            byte[] byteData = provider.Decrypt(bytes, false);
+            byte[] byteData = provider.Decrypt(Convert.FromBase64String(data), false);
 
             return Encoding.UTF8.GetString(byteData);
         }

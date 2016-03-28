@@ -10,109 +10,142 @@ using System.Windows.Forms;
 using System.IO;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
+using System.Xml;
 
 namespace Rsa_algo
 {
-    public partial class Form1 : Form
+    public partial class rsaApp : Form
     {
-        public Form1()
+        public rsaApp()
         {
             InitializeComponent();
         }
-        private void label1_Click(object sender, EventArgs e) { }
-        private void label2_Click(object sender, EventArgs e) { }
-        private void textBox1_TextChanged(object sender, EventArgs e) { }
-        private void textBox1_TextChanged_1(object sender, EventArgs e) { }
-        private void button2_Click(object sender, EventArgs e)
-        {
-            // Just exit
-            Application.Exit();
-        }
         private void btnEncrypt_Click(object sender, EventArgs e)
         {
-            // don't use encryption if text box key is empty or is base64
-            if (isEmpty(tbkey.Text) || IsBase64String(tbkey.Text))
+            // don't allow encrypt with empty data
+            if (isEmpty(tbKey.Text) || isEmpty(tbKeySize.Text) || isEmpty(tbPublicKey.Text))
             {
-                outLog("Can't encrypt key: ", "The text box with key is empty or is base64!", true);
+                outLog("The key could not be encrypted: ", "data is empty, please check necessary fields!", true);
                 return;
             }
 
-            doWork(); // do something...
+            // don't use encryption if text box key is base64
+            if (IsBase64String(tbKey.Text))
+            {
+                outLog("The key could not be encrypted: ", "text box with key is base64!", true);
+                return;
+            }
+
+            doWorker(); // do something...
 
             // key encryption
             Rsa rsa = new Rsa();
-            string key = setKey(Convert.ToString(tbkey.Text), rsa);
-            outLog("[" + DateTime.Now + "] RSA Public Key: ", key);
-            tbResult.Text = key;
+            int key_size = Convert.ToInt32(tbKeySize.Text);
+            string encrypted = rsa.Encrypt(tbKey.Text, tbPublicKey.Text, key_size);
+            outLog("[" + DateTime.Now + "] RSA encrypted: ", encrypted);
+            tbResult.Text = encrypted;
         }
         private void tbResult_TextChanged(object sender, EventArgs e) { }
         private void btnDecrypt_Click(object sender, EventArgs e)
         {
-            // don't use decryption if text box key is empty or is not base64
-            if (isEmpty(tbkey.Text) || !IsBase64String(tbResult.Text))
+            // don't allow decrypt with empty data
+            if (isEmpty(tbKey.Text) || isEmpty(tbKeySize.Text) || isEmpty(tbPrivateKey.Text))
             {
-                outLog("Can't decrypt key: ", "The text box with key is empty or not base64!", true);
+                outLog("The key could not be decrypted: ", "data is empty, please check necessary fields!", true);
                 return;
             }
 
-            doWork(); // do something...
+            // don't use decryption if text box key is not base64
+            if (!IsBase64String(tbResult.Text))
+            {
+                outLog("The key could not be decrypted: ", "text box with key is not base64!", true);
+                return;
+            }
+
+            doWorker(); // do something...
 
             // key decryption
             Rsa rsa = new Rsa();
-            string key = getKey(Convert.ToString(tbkey.Text), rsa);
-            outLog("RSA decrypt result: ", key);
-            tbResult.Text = key;
+            int key_size = Convert.ToInt32(tbKeySize.Text);
+            string decrypted = rsa.Decrypt(tbKey.Text, tbPrivateKey.Text, key_size);
+            outLog("[" + DateTime.Now + "] RSA decrypted: ", decrypted);
+            tbResult.Text = decrypted;
         }
-        private void btnSave_Click(object sender, EventArgs e)
+        private bool isEmpty(String str)
         {
-            // don't save if text box result is empty
+            return string.IsNullOrWhiteSpace(str);
+        }
+        private void btnFlush_Click(object sender, EventArgs e)
+        {
+            // Cleanup boxes with key and result
+            tbResult.Text = null;
+            tbKey.Text = null;
+        }
+        private void btnCopy_Click(object sender, EventArgs e)
+        {
+            // Don't allow to copie if the key is empty
             if (isEmpty(tbResult.Text))
             {
-                outLog("Can't save key: ", "The text box with result is empty!", true);
+                outLog("The key could not be copied : ", "text box with result is empty!", true);
                 return;
             }
+
+            // Select & copy
+            tbResult.SelectAll();
+            tbResult.Focus();
+            tbResult.Copy();
+            outLog("The key was successfully copied in buffer!", null, true);
+        }
+        private void btnInit_Click(object sender, EventArgs e)
+        {
+            // don't allow initialize if key size is indefined
+            if (isEmpty(tbKeySize.Text))
+            {
+                outLog("The key could not be initialized: ", "data is empty, please check necessary fields!", true);
+                return;
+            }
+
+            doWorker(); // do something...
+
+            Rsa rsa = new Rsa();
+            int key_size = Convert.ToInt32(tbKeySize.Text);
+            string publicKey, privateKey;
+            rsa.GenerateKeys(key_size, out publicKey, out privateKey);
+            tbPublicKey.Text = publicKey;
+            tbPrivateKey.Text = privateKey;
+            outLog("RSA public key: ", publicKey);
+            outLog("RSA private key: ", privateKey);
+        }
+        private void mKeyImport_Click(object sender, EventArgs e)
+        {
+            // TODO: write key import algorithm
+        }
+        private void mKeyExport_Click(object sender, EventArgs e)
+        {
+            // don't save if text box result is empty
+            if (isEmpty(tbResult.Text) || isEmpty(tbPublicKey.Text) || isEmpty(tbPrivateKey.Text))
+            {
+                outLog("The key could not be saved: ", "text box with result is empty!", true);
+                return;
+            }
+
             string key = tbResult.Text;
             // show dialog window
             saveKey.ShowDialog();
 
             // save into the file
             string path = saveKey.InitialDirectory + saveKey.FileName;
-
             if (!isEmpty(path))
-                doWork(); // do something...
-
-            outFile(path, key, null);
-        }
-        private bool isEmpty(String str)
-        {
-            return string.IsNullOrWhiteSpace(str);
-        }
-        private void button1_Click(object sender, EventArgs e)
-        {
-            ofdiag.ShowDialog();
-            string path = ofdiag.InitialDirectory + ofdiag.FileName;
-            if (!isEmpty(path))
-                doWork(); // do something...
-
-            if (!path.Contains(".rsa")) // file type is .rsa
             {
-                outLog("The file could not be read : ", "wrong file type!", true);
-                return;
+                doWorker(); // do something...
+                outFile(path, key, null);
+                outFile(path + "public.xml", tbPublicKey.Text, null);
+                outFile(path + "private.xml", tbPrivateKey.Text, null);
             }
-            try
-            {   // Open the text file using a stream reader.
-                using (StreamReader sr = new StreamReader(path))
-                {
-                    // Read the stream to a string, and write the string to the console.
-                    String tmp = sr.ReadToEnd();
-                    if (IsBase64String(tmp))
-                        tbkey.Text = tmp;
-                }
-            }
-            catch (Exception exc)
-            {
-                outLog("The file could not be read: ", exc.Message);
-            }
+        }
+        private void mFileLoad_Click(object sender, EventArgs e)
+        {
+           // TODO: write file loading algorithm
         }
         private void outLog(string str, object args, bool useMb = false)
         {
@@ -123,48 +156,34 @@ namespace Rsa_algo
                 MessageBox.Show(str + args);
             file.Close();
         }
+        private void mViewHelp_Click(object sender, EventArgs e)
+        {
+            // TODO: write view help algorithm
+        }
+        private void mAbout_Click(object sender, EventArgs e)
+        {
+            // TODO: write 'about' algorithm
+        }
+        private void mKeySend_Click(object sender, EventArgs e)
+        {
+            // TODO: write send algorithm
+        }
         private void outFile(string path, string str, object args)
         {
-            StreamWriter file = new StreamWriter(path, true);
+            StreamWriter file = new StreamWriter(path, false);
             file.WriteLine(str + args);
             file.Close();
         }
-        private string getKey(string str, Rsa rsa)
-        {
-            string key = null;
-            try
-            {
-                key = rsa.Decrypt(str);
-            }
-            catch (Exception e)
-            {
-                outLog("The key can't be decrypted: ", e.Message);
-            }
-            return key;
-        }
-        private string setKey(string str, Rsa rsa)
-        {
-            string key = null;
-            try
-            {
-                key = rsa.Encrypt(str);
-            }
-            catch (Exception e)
-            {
-                outLog("The key can't be encrypted: ", e.Message);
-            }
-            return key;
-        }
         private bool IsBase64String(string s)
         {
-            if (string.IsNullOrWhiteSpace(s))
+            if (isEmpty(s))
                 return false;
             s = s.Trim();
             return (s.Length % 4 == 0) && Regex.IsMatch(s, @"^[a-zA-Z0-9\+/]*={0,3}$", RegexOptions.None);
         }
         private void Form1_Load(object sender, EventArgs e) { }
         private void progressBar1_Click(object sender, EventArgs e) { }
-        private void doWork()
+        private void doWorker()
         {
             for (int i = 0; i < 100; ++i)
                 pb.Increment(i);

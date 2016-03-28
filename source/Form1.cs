@@ -25,14 +25,14 @@ namespace Rsa_algo
             // don't allow encrypt with empty data
             if (isEmpty(tbKey.Text) || isEmpty(tbKeySize.Text) || isEmpty(tbPublicKey.Text))
             {
-                outLog("The key could not be encrypted: ", "data is empty, please check necessary fields!", true);
+                outError("The key could not be encrypted: ", "data is empty, please check necessary fields!", true);
                 return;
             }
 
             // don't use encryption if text box key is base64
             if (IsBase64String(tbKey.Text))
             {
-                outLog("The key could not be encrypted: ", "text box with key is base64!", true);
+                outError("The key could not be encrypted: ", "text box with key is base64!", true);
                 return;
             }
 
@@ -42,7 +42,7 @@ namespace Rsa_algo
             Rsa rsa = new Rsa();
             int key_size = Convert.ToInt32(tbKeySize.Text);
             string encrypted = rsa.Encrypt(tbKey.Text, tbPublicKey.Text, key_size);
-            outLog("[" + DateTime.Now + "] RSA encrypted: ", encrypted);
+            outError("[" + DateTime.Now + "] RSA encrypted: ", encrypted);
             tbResult.Text = encrypted;
         }
         private void btnDecrypt_Click(object sender, EventArgs e)
@@ -50,14 +50,14 @@ namespace Rsa_algo
             // don't allow decrypt with empty data
             if (isEmpty(tbKey.Text) || isEmpty(tbKeySize.Text) || isEmpty(tbPrivateKey.Text))
             {
-                outLog("The key could not be decrypted: ", "data is empty, please check necessary fields!", true);
+                outError("The key could not be decrypted: ", "data is empty, please check necessary fields!", true);
                 return;
             }
 
             // don't use decryption if text box key is not base64
             if (!IsBase64String(tbResult.Text))
             {
-                outLog("The key could not be decrypted: ", "text box with key is not base64!", true);
+                outError("The key could not be decrypted: ", "text box with key is not base64!", true);
                 return;
             }
 
@@ -67,7 +67,7 @@ namespace Rsa_algo
             Rsa rsa = new Rsa();
             int key_size = Convert.ToInt32(tbKeySize.Text);
             string decrypted = rsa.Decrypt(tbKey.Text, tbPrivateKey.Text, key_size);
-            outLog("[" + DateTime.Now + "] RSA decrypted: ", decrypted);
+            outError("[" + DateTime.Now + "] RSA decrypted: ", decrypted);
             tbResult.Text = decrypted;
         }
         private bool isEmpty(String str)
@@ -85,7 +85,7 @@ namespace Rsa_algo
             // Don't allow to copie if the key is empty
             if (isEmpty(tbResult.Text))
             {
-                outLog("The key could not be copied : ", "text box with result is empty!", true);
+                outError("The key could not be copied : ", "text box with result is empty!", true);
                 return;
             }
 
@@ -93,14 +93,14 @@ namespace Rsa_algo
             tbResult.SelectAll();
             tbResult.Focus();
             tbResult.Copy();
-            outLog("The key was successfully copied in buffer!", null, true);
+            outError("The key was successfully copied in buffer!", null, true);
         }
         private void btnInit_Click(object sender, EventArgs e)
         {
             // don't allow initialize if key size is indefined
             if (isEmpty(tbKeySize.Text))
             {
-                outLog("The key could not be initialized: ", "data is empty, please check necessary fields!", true);
+                outError("The key could not be initialized: ", "data is empty, please check necessary fields!", true);
                 return;
             }
 
@@ -112,41 +112,30 @@ namespace Rsa_algo
             rsa.GenerateKeys(key_size, out publicKey, out privateKey);
             tbPublicKey.Text = publicKey;
             tbPrivateKey.Text = privateKey;
-            outLog("RSA public key: ", publicKey);
-            outLog("RSA private key: ", privateKey);
-        }
-        private void mKeyImport_Click(object sender, EventArgs e)
-        {
-            // TODO: write key import algorithm
+            outError("RSA public key: ", publicKey);
+            outError("RSA private key: ", privateKey);
         }
         private void mKeyExport_Click(object sender, EventArgs e)
         {
             // don't save if text box result is empty
-            if (isEmpty(tbResult.Text) || isEmpty(tbPublicKey.Text) || isEmpty(tbPrivateKey.Text))
+            if (isEmpty(tbResult.Text) || isEmpty(tbPublicKey.Text) || isEmpty(tbPrivateKey.Text) || isEmpty(savediag.FileName))
             {
-                outLog("The key could not be saved: ", "text box with result is empty!", true);
+                outError("The key could not be saved: ", "text box with result is empty!", true);
                 return;
             }
 
             string key = tbResult.Text;
             // show dialog window
-            saveKey.ShowDialog();
+            savediag.ShowDialog();
 
             // save into the file
-            string path = saveKey.InitialDirectory + saveKey.FileName;
-            if (!isEmpty(path))
-            {
-                doWorker(); // do something...
-                outFile(path, key, null);
-                outFile(path + "public.xml", tbPublicKey.Text, null);
-                outFile(path + "private.xml", tbPrivateKey.Text, null);
-            }
+            string path = savediag.InitialDirectory + savediag.FileName;
+            doWorker(); // do something...
+            outFile(path, key, null);
+            outFile(path + "public.xml", tbPublicKey.Text, null);
+            outFile(path + "private.xml", tbPrivateKey.Text, null);
         }
-        private void mFileLoad_Click(object sender, EventArgs e)
-        {
-           // TODO: write file loading algorithm
-        }
-        private void outLog(string str, object args, bool useMb = false)
+        private void outError(string str, object args, bool useMb = false)
         {
             if (useMb)
                 MessageBox.Show(str + args);
@@ -155,6 +144,12 @@ namespace Rsa_algo
             {              
                 if (isEmpty(tbLogPath.Text) || isEmpty(tbLogName.Text))
                     return;
+
+                if (!IsPath(tbLogPath.Text))
+                {
+                    outError("Logs could not be written: ", "wrong logs folder!", true);
+                    return;
+                }
 
                 // create log directory if doesn't exist
                 if (!Directory.Exists(tbLogPath.Text))
@@ -185,6 +180,13 @@ namespace Rsa_algo
         {
             boxSettings.Visible = false;
         }
+        private void btnLoadFile_Click(object sender, EventArgs e)
+        {
+            ofdiag.ShowDialog();
+            string path = ofdiag.InitialDirectory + ofdiag.FileName;
+            if (!isEmpty(path))
+                tbLoad.Text = path;
+        }
         private void outFile(string path, string str, object args)
         {
             StreamWriter file = new StreamWriter(path, false);
@@ -198,6 +200,12 @@ namespace Rsa_algo
             s = s.Trim();
             return (s.Length % 4 == 0) && Regex.IsMatch(s, @"^[a-zA-Z0-9\+/]*={0,3}$", RegexOptions.None);
         }
+        private bool IsPath(string s)
+        {
+            if (isEmpty(s))
+                return false;
+            return s.Contains(":") || s.Contains("\\");
+        }
         private void doWorker()
         {
             for (int i = 0; i < 100; ++i)
@@ -208,6 +216,38 @@ namespace Rsa_algo
         {
             tbLogName.ReadOnly = !chLogs.Checked;
             tbLogPath.ReadOnly = !chLogs.Checked;
+        }
+
+        private void btnEncryptFile_Click(object sender, EventArgs e)
+        {
+            if (isEmpty(tbPublicKey.Text) || isEmpty(ofdiag.FileName))
+            {
+                outError("The file could not be encrypted: ", "data is empty, please check necessary fields!", true);
+                return;
+            }
+
+            Rsa rsa = new Rsa();
+            FileInfo fInfo = new FileInfo(ofdiag.FileName);
+            // Pass the file name without the path.
+            string name = fInfo.FullName;
+            doWorker(); // do something...
+            rsa.EncryptFile(name, tbPublicKey.Text, Convert.ToInt32(tbKeySize.Text));
+        }
+
+        private void btnDecryptFile_Click(object sender, EventArgs e)
+        {
+            if (isEmpty(tbPrivateKey.Text) || isEmpty(ofdiag.FileName))
+            {
+                outError("The file could not be encrypted: ", "data is empty, please check necessary fields!", true);
+                return;
+            }
+
+            Rsa rsa = new Rsa();
+            FileInfo fInfo = new FileInfo(ofdiag.FileName);
+            // Pass the file name without the path.
+            string name = fInfo.FullName;
+            doWorker(); // do something...
+            rsa.DecryptFile(name, tbPrivateKey.Text, Convert.ToInt32(tbKeySize.Text));
         }
     }
 }

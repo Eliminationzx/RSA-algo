@@ -31,17 +31,14 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(rsaApp));
             this.tbKey = new System.Windows.Forms.TextBox();
             this.tbResult = new System.Windows.Forms.TextBox();
-            this.saveKey = new System.Windows.Forms.SaveFileDialog();
+            this.savediag = new System.Windows.Forms.SaveFileDialog();
             this.ofdiag = new System.Windows.Forms.OpenFileDialog();
             this.pb = new System.Windows.Forms.ProgressBar();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.mfileLoad = new System.Windows.Forms.ToolStripMenuItem();
-            this.keyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.mKeyImport = new System.Windows.Forms.ToolStripMenuItem();
+            this.mFile = new System.Windows.Forms.ToolStripMenuItem();
             this.mKeyExport = new System.Windows.Forms.ToolStripMenuItem();
             this.mKeySend = new System.Windows.Forms.ToolStripMenuItem();
-            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.mViewHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.mAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.mSettings = new System.Windows.Forms.ToolStripMenuItem();
@@ -61,15 +58,25 @@
             this.tbLogName = new System.Windows.Forms.TextBox();
             this.tbLogPath = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.btnAccept = new System.Windows.Forms.Button();
             this.chLogs = new System.Windows.Forms.CheckBox();
+            this.btnLoadFile = new System.Windows.Forms.Button();
+            this.tbLoad = new System.Windows.Forms.TextBox();
+            this.btnEncryptFile = new System.Windows.Forms.Button();
+            this.btnDecryptFile = new System.Windows.Forms.Button();
+            this.tabChoice = new System.Windows.Forms.TabControl();
+            this.tabText = new System.Windows.Forms.TabPage();
+            this.tabFile = new System.Windows.Forms.TabPage();
+            this.btnAccept = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.boxSettings.SuspendLayout();
+            this.tabChoice.SuspendLayout();
+            this.tabText.SuspendLayout();
+            this.tabFile.SuspendLayout();
             this.SuspendLayout();
             // 
             // tbKey
             // 
-            this.tbKey.Location = new System.Drawing.Point(73, 204);
+            this.tbKey.Location = new System.Drawing.Point(53, 17);
             this.tbKey.Multiline = true;
             this.tbKey.Name = "tbKey";
             this.tbKey.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -79,7 +86,7 @@
             // tbResult
             // 
             this.tbResult.BackColor = System.Drawing.SystemColors.Control;
-            this.tbResult.Location = new System.Drawing.Point(73, 369);
+            this.tbResult.Location = new System.Drawing.Point(53, 172);
             this.tbResult.Multiline = true;
             this.tbResult.Name = "tbResult";
             this.tbResult.ReadOnly = true;
@@ -87,9 +94,9 @@
             this.tbResult.Size = new System.Drawing.Size(437, 60);
             this.tbResult.TabIndex = 5;
             // 
-            // saveKey
+            // savediag
             // 
-            this.saveKey.FileName = "Key.rsa";
+            this.savediag.FileName = "Key.rsa";
             // 
             // ofdiag
             // 
@@ -105,47 +112,23 @@
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem,
-            this.keyToolStripMenuItem,
-            this.helpToolStripMenuItem,
+            this.mFile,
+            this.mHelp,
             this.mSettings});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(557, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(558, 24);
             this.menuStrip1.TabIndex = 12;
             this.menuStrip1.Text = "menuStrip1";
             // 
-            // fileToolStripMenuItem
+            // mFile
             // 
-            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mfileLoad});
-            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
-            this.fileToolStripMenuItem.Text = "File";
-            // 
-            // mfileLoad
-            // 
-            this.mfileLoad.Name = "mfileLoad";
-            this.mfileLoad.Size = new System.Drawing.Size(152, 22);
-            this.mfileLoad.Text = "Load";
-            this.mfileLoad.Click += new System.EventHandler(this.mFileLoad_Click);
-            // 
-            // keyToolStripMenuItem
-            // 
-            this.keyToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mKeyImport,
+            this.mFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mKeyExport,
             this.mKeySend});
-            this.keyToolStripMenuItem.Name = "keyToolStripMenuItem";
-            this.keyToolStripMenuItem.Size = new System.Drawing.Size(38, 20);
-            this.keyToolStripMenuItem.Text = "Key";
-            // 
-            // mKeyImport
-            // 
-            this.mKeyImport.Name = "mKeyImport";
-            this.mKeyImport.Size = new System.Drawing.Size(152, 22);
-            this.mKeyImport.Text = "Import";
-            this.mKeyImport.Click += new System.EventHandler(this.mKeyImport_Click);
+            this.mFile.Name = "mFile";
+            this.mFile.Size = new System.Drawing.Size(37, 20);
+            this.mFile.Text = "File";
             // 
             // mKeyExport
             // 
@@ -161,14 +144,14 @@
             this.mKeySend.Text = "Send";
             this.mKeySend.Click += new System.EventHandler(this.mKeySend_Click);
             // 
-            // helpToolStripMenuItem
+            // mHelp
             // 
-            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mViewHelp,
             this.mAbout});
-            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
-            this.helpToolStripMenuItem.Text = "Help";
+            this.mHelp.Name = "mHelp";
+            this.mHelp.Size = new System.Drawing.Size(44, 20);
+            this.mHelp.Text = "Help";
             // 
             // mViewHelp
             // 
@@ -193,7 +176,7 @@
             // 
             // btnEncrypt
             // 
-            this.btnEncrypt.Location = new System.Drawing.Point(156, 295);
+            this.btnEncrypt.Location = new System.Drawing.Point(135, 102);
             this.btnEncrypt.Name = "btnEncrypt";
             this.btnEncrypt.Size = new System.Drawing.Size(103, 38);
             this.btnEncrypt.TabIndex = 13;
@@ -203,7 +186,7 @@
             // 
             // btnDecrypt
             // 
-            this.btnDecrypt.Location = new System.Drawing.Point(295, 295);
+            this.btnDecrypt.Location = new System.Drawing.Point(274, 102);
             this.btnDecrypt.Name = "btnDecrypt";
             this.btnDecrypt.Size = new System.Drawing.Size(103, 38);
             this.btnDecrypt.TabIndex = 14;
@@ -213,7 +196,7 @@
             // 
             // btnFlush
             // 
-            this.btnFlush.Location = new System.Drawing.Point(26, 202);
+            this.btnFlush.Location = new System.Drawing.Point(6, 17);
             this.btnFlush.Name = "btnFlush";
             this.btnFlush.Size = new System.Drawing.Size(41, 23);
             this.btnFlush.TabIndex = 15;
@@ -223,7 +206,7 @@
             // 
             // btnCopy
             // 
-            this.btnCopy.Location = new System.Drawing.Point(26, 369);
+            this.btnCopy.Location = new System.Drawing.Point(6, 172);
             this.btnCopy.Name = "btnCopy";
             this.btnCopy.Size = new System.Drawing.Size(41, 23);
             this.btnCopy.TabIndex = 16;
@@ -233,7 +216,7 @@
             // 
             // tbPublicKey
             // 
-            this.tbPublicKey.Location = new System.Drawing.Point(295, 90);
+            this.tbPublicKey.Location = new System.Drawing.Point(295, 117);
             this.tbPublicKey.Name = "tbPublicKey";
             this.tbPublicKey.Size = new System.Drawing.Size(215, 20);
             this.tbPublicKey.TabIndex = 17;
@@ -243,7 +226,7 @@
             this.label2.AutoSize = true;
             this.label2.BackColor = System.Drawing.SystemColors.Control;
             this.label2.Cursor = System.Windows.Forms.Cursors.Default;
-            this.label2.Location = new System.Drawing.Point(230, 93);
+            this.label2.Location = new System.Drawing.Point(230, 120);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(59, 13);
             this.label2.TabIndex = 18;
@@ -254,7 +237,7 @@
             this.label3.AutoSize = true;
             this.label3.BackColor = System.Drawing.SystemColors.Control;
             this.label3.Cursor = System.Windows.Forms.Cursors.Default;
-            this.label3.Location = new System.Drawing.Point(226, 147);
+            this.label3.Location = new System.Drawing.Point(226, 174);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(63, 13);
             this.label3.TabIndex = 19;
@@ -262,14 +245,14 @@
             // 
             // tbPrivateKey
             // 
-            this.tbPrivateKey.Location = new System.Drawing.Point(295, 144);
+            this.tbPrivateKey.Location = new System.Drawing.Point(295, 171);
             this.tbPrivateKey.Name = "tbPrivateKey";
             this.tbPrivateKey.Size = new System.Drawing.Size(215, 20);
             this.tbPrivateKey.TabIndex = 20;
             // 
             // btnInit
             // 
-            this.btnInit.Location = new System.Drawing.Point(57, 105);
+            this.btnInit.Location = new System.Drawing.Point(58, 129);
             this.btnInit.Name = "btnInit";
             this.btnInit.Size = new System.Drawing.Size(125, 43);
             this.btnInit.TabIndex = 21;
@@ -283,6 +266,7 @@
             this.tbKeySize.Name = "tbKeySize";
             this.tbKeySize.Size = new System.Drawing.Size(73, 20);
             this.tbKeySize.TabIndex = 22;
+            this.tbKeySize.Text = "1024";
             // 
             // label1
             // 
@@ -295,7 +279,6 @@
             // 
             // boxSettings
             // 
-            this.boxSettings.AutoSize = true;
             this.boxSettings.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.boxSettings.Controls.Add(this.label5);
             this.boxSettings.Controls.Add(this.tbLogName);
@@ -305,9 +288,9 @@
             this.boxSettings.Controls.Add(this.chLogs);
             this.boxSettings.Controls.Add(this.label1);
             this.boxSettings.Controls.Add(this.tbKeySize);
-            this.boxSettings.Location = new System.Drawing.Point(42, 43);
+            this.boxSettings.Location = new System.Drawing.Point(95, 27);
             this.boxSettings.Name = "boxSettings";
-            this.boxSettings.Size = new System.Drawing.Size(140, 208);
+            this.boxSettings.Size = new System.Drawing.Size(148, 190);
             this.boxSettings.TabIndex = 24;
             this.boxSettings.TabStop = false;
             this.boxSettings.Text = "Settings";
@@ -347,16 +330,6 @@
             this.label4.TabIndex = 25;
             this.label4.Text = "Log path:";
             // 
-            // btnAccept
-            // 
-            this.btnAccept.Location = new System.Drawing.Point(45, 166);
-            this.btnAccept.Name = "btnAccept";
-            this.btnAccept.Size = new System.Drawing.Size(75, 23);
-            this.btnAccept.TabIndex = 24;
-            this.btnAccept.Text = "OK";
-            this.btnAccept.UseVisualStyleBackColor = true;
-            this.btnAccept.Click += new System.EventHandler(this.btnAccept_Click);
-            // 
             // chLogs
             // 
             this.chLogs.AutoSize = true;
@@ -368,6 +341,94 @@
             this.chLogs.UseVisualStyleBackColor = true;
             this.chLogs.CheckedChanged += new System.EventHandler(this.chLogs_CheckedChanged);
             // 
+            // btnLoadFile
+            // 
+            this.btnLoadFile.Location = new System.Drawing.Point(14, 57);
+            this.btnLoadFile.Name = "btnLoadFile";
+            this.btnLoadFile.Size = new System.Drawing.Size(75, 23);
+            this.btnLoadFile.TabIndex = 25;
+            this.btnLoadFile.Text = "Load";
+            this.btnLoadFile.UseVisualStyleBackColor = true;
+            this.btnLoadFile.Click += new System.EventHandler(this.btnLoadFile_Click);
+            // 
+            // tbLoad
+            // 
+            this.tbLoad.Location = new System.Drawing.Point(110, 59);
+            this.tbLoad.Name = "tbLoad";
+            this.tbLoad.ReadOnly = true;
+            this.tbLoad.Size = new System.Drawing.Size(351, 20);
+            this.tbLoad.TabIndex = 26;
+            // 
+            // btnEncryptFile
+            // 
+            this.btnEncryptFile.Location = new System.Drawing.Point(126, 138);
+            this.btnEncryptFile.Name = "btnEncryptFile";
+            this.btnEncryptFile.Size = new System.Drawing.Size(103, 38);
+            this.btnEncryptFile.TabIndex = 27;
+            this.btnEncryptFile.Text = "Encryption";
+            this.btnEncryptFile.UseVisualStyleBackColor = true;
+            this.btnEncryptFile.Click += new System.EventHandler(this.btnEncryptFile_Click);
+            // 
+            // btnDecryptFile
+            // 
+            this.btnDecryptFile.Location = new System.Drawing.Point(274, 138);
+            this.btnDecryptFile.Name = "btnDecryptFile";
+            this.btnDecryptFile.Size = new System.Drawing.Size(103, 38);
+            this.btnDecryptFile.TabIndex = 28;
+            this.btnDecryptFile.Text = "Decryption";
+            this.btnDecryptFile.UseVisualStyleBackColor = true;
+            this.btnDecryptFile.Click += new System.EventHandler(this.btnDecryptFile_Click);
+            // 
+            // tabChoice
+            // 
+            this.tabChoice.Controls.Add(this.tabText);
+            this.tabChoice.Controls.Add(this.tabFile);
+            this.tabChoice.Location = new System.Drawing.Point(26, 241);
+            this.tabChoice.Name = "tabChoice";
+            this.tabChoice.SelectedIndex = 0;
+            this.tabChoice.Size = new System.Drawing.Size(507, 280);
+            this.tabChoice.TabIndex = 29;
+            // 
+            // tabText
+            // 
+            this.tabText.Controls.Add(this.tbKey);
+            this.tabText.Controls.Add(this.btnFlush);
+            this.tabText.Controls.Add(this.btnEncrypt);
+            this.tabText.Controls.Add(this.btnDecrypt);
+            this.tabText.Controls.Add(this.tbResult);
+            this.tabText.Controls.Add(this.btnCopy);
+            this.tabText.Location = new System.Drawing.Point(4, 22);
+            this.tabText.Name = "tabText";
+            this.tabText.Padding = new System.Windows.Forms.Padding(3);
+            this.tabText.Size = new System.Drawing.Size(499, 254);
+            this.tabText.TabIndex = 0;
+            this.tabText.Text = "Text";
+            this.tabText.UseVisualStyleBackColor = true;
+            // 
+            // tabFile
+            // 
+            this.tabFile.Controls.Add(this.tbLoad);
+            this.tabFile.Controls.Add(this.btnDecryptFile);
+            this.tabFile.Controls.Add(this.btnLoadFile);
+            this.tabFile.Controls.Add(this.btnEncryptFile);
+            this.tabFile.Location = new System.Drawing.Point(4, 22);
+            this.tabFile.Name = "tabFile";
+            this.tabFile.Padding = new System.Windows.Forms.Padding(3);
+            this.tabFile.Size = new System.Drawing.Size(499, 254);
+            this.tabFile.TabIndex = 1;
+            this.tabFile.Text = "File";
+            this.tabFile.UseVisualStyleBackColor = true;
+            // 
+            // btnAccept
+            // 
+            this.btnAccept.Location = new System.Drawing.Point(45, 161);
+            this.btnAccept.Name = "btnAccept";
+            this.btnAccept.Size = new System.Drawing.Size(75, 23);
+            this.btnAccept.TabIndex = 24;
+            this.btnAccept.Text = "OK";
+            this.btnAccept.UseVisualStyleBackColor = true;
+            this.btnAccept.Click += new System.EventHandler(this.btnAccept_Click);
+            // 
             // rsaApp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -376,20 +437,15 @@
             this.BackColor = System.Drawing.SystemColors.Control;
             this.BackgroundImage = global::Rsa_algo.Properties.Resources.bg;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(557, 464);
+            this.ClientSize = new System.Drawing.Size(558, 540);
+            this.Controls.Add(this.tabChoice);
             this.Controls.Add(this.boxSettings);
             this.Controls.Add(this.btnInit);
             this.Controls.Add(this.tbPrivateKey);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.tbPublicKey);
-            this.Controls.Add(this.btnCopy);
-            this.Controls.Add(this.btnFlush);
-            this.Controls.Add(this.btnDecrypt);
-            this.Controls.Add(this.btnEncrypt);
             this.Controls.Add(this.pb);
-            this.Controls.Add(this.tbResult);
-            this.Controls.Add(this.tbKey);
             this.Controls.Add(this.menuStrip1);
             this.Cursor = System.Windows.Forms.Cursors.Default;
             this.DoubleBuffered = true;
@@ -404,6 +460,11 @@
             this.menuStrip1.PerformLayout();
             this.boxSettings.ResumeLayout(false);
             this.boxSettings.PerformLayout();
+            this.tabChoice.ResumeLayout(false);
+            this.tabText.ResumeLayout(false);
+            this.tabText.PerformLayout();
+            this.tabFile.ResumeLayout(false);
+            this.tabFile.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -413,15 +474,13 @@
 
         private System.Windows.Forms.TextBox tbKey;
         private System.Windows.Forms.TextBox tbResult;
-        private System.Windows.Forms.SaveFileDialog saveKey;
+        private System.Windows.Forms.SaveFileDialog savediag;
         private System.Windows.Forms.OpenFileDialog ofdiag;
         private System.Windows.Forms.ProgressBar pb;
         private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem mfileLoad;
-        private System.Windows.Forms.ToolStripMenuItem keyToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mFile;
         private System.Windows.Forms.ToolStripMenuItem mKeyExport;
-        private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mHelp;
         private System.Windows.Forms.ToolStripMenuItem mViewHelp;
         private System.Windows.Forms.ToolStripMenuItem mAbout;
         private System.Windows.Forms.Button btnEncrypt;
@@ -436,15 +495,21 @@
         private System.Windows.Forms.Button btnInit;
         private System.Windows.Forms.TextBox tbKeySize;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ToolStripMenuItem mKeyImport;
         private System.Windows.Forms.ToolStripMenuItem mSettings;
         private System.Windows.Forms.CheckBox chLogs;
-        private System.Windows.Forms.Button btnAccept;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox tbLogName;
         private System.Windows.Forms.TextBox tbLogPath;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.GroupBox boxSettings;
+        private System.Windows.Forms.Button btnLoadFile;
+        private System.Windows.Forms.TextBox tbLoad;
+        private System.Windows.Forms.Button btnEncryptFile;
+        private System.Windows.Forms.Button btnDecryptFile;
+        private System.Windows.Forms.TabControl tabChoice;
+        private System.Windows.Forms.TabPage tabText;
+        private System.Windows.Forms.TabPage tabFile;
+        private System.Windows.Forms.Button btnAccept;
 
     }
 }

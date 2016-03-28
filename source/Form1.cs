@@ -45,7 +45,6 @@ namespace Rsa_algo
             outLog("[" + DateTime.Now + "] RSA encrypted: ", encrypted);
             tbResult.Text = encrypted;
         }
-        private void tbResult_TextChanged(object sender, EventArgs e) { }
         private void btnDecrypt_Click(object sender, EventArgs e)
         {
             // don't allow decrypt with empty data
@@ -149,12 +148,22 @@ namespace Rsa_algo
         }
         private void outLog(string str, object args, bool useMb = false)
         {
-            string path = "logs/RSALogger.txt";
-            StreamWriter file = new StreamWriter(path, true);
-            file.WriteLine(str + args);
             if (useMb)
                 MessageBox.Show(str + args);
-            file.Close();
+
+            if (chLogs.Checked)
+            {              
+                if (isEmpty(tbLogPath.Text) || isEmpty(tbLogName.Text))
+                    return;
+
+                // create log directory if doesn't exist
+                if (!Directory.Exists(tbLogPath.Text))
+                    Directory.CreateDirectory(tbLogPath.Text);
+
+                StreamWriter file = new StreamWriter(tbLogPath.Text + tbLogName.Text, false);
+                file.WriteLine(str + args);
+                file.Close();
+            }
         }
         private void mViewHelp_Click(object sender, EventArgs e)
         {
@@ -167,6 +176,14 @@ namespace Rsa_algo
         private void mKeySend_Click(object sender, EventArgs e)
         {
             // TODO: write send algorithm
+        }
+        private void mSettings_Click(object sender, EventArgs e)
+        {
+            boxSettings.Visible = true;
+        }
+        private void btnAccept_Click(object sender, EventArgs e)
+        {
+            boxSettings.Visible = false;
         }
         private void outFile(string path, string str, object args)
         {
@@ -181,13 +198,16 @@ namespace Rsa_algo
             s = s.Trim();
             return (s.Length % 4 == 0) && Regex.IsMatch(s, @"^[a-zA-Z0-9\+/]*={0,3}$", RegexOptions.None);
         }
-        private void Form1_Load(object sender, EventArgs e) { }
-        private void progressBar1_Click(object sender, EventArgs e) { }
         private void doWorker()
         {
             for (int i = 0; i < 100; ++i)
                 pb.Increment(i);
             pb.Value = 0;
+        }
+        private void chLogs_CheckedChanged(object sender, EventArgs e)
+        {
+            tbLogName.ReadOnly = !chLogs.Checked;
+            tbLogPath.ReadOnly = !chLogs.Checked;
         }
     }
 }

@@ -44,6 +44,7 @@
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mViewHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.mAbout = new System.Windows.Forms.ToolStripMenuItem();
+            this.mSettings = new System.Windows.Forms.ToolStripMenuItem();
             this.btnEncrypt = new System.Windows.Forms.Button();
             this.btnDecrypt = new System.Windows.Forms.Button();
             this.btnFlush = new System.Windows.Forms.Button();
@@ -55,12 +56,20 @@
             this.btnInit = new System.Windows.Forms.Button();
             this.tbKeySize = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.boxSettings = new System.Windows.Forms.GroupBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.tbLogName = new System.Windows.Forms.TextBox();
+            this.tbLogPath = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.btnAccept = new System.Windows.Forms.Button();
+            this.chLogs = new System.Windows.Forms.CheckBox();
             this.menuStrip1.SuspendLayout();
+            this.boxSettings.SuspendLayout();
             this.SuspendLayout();
             // 
             // tbKey
             // 
-            this.tbKey.Location = new System.Drawing.Point(73, 211);
+            this.tbKey.Location = new System.Drawing.Point(73, 204);
             this.tbKey.Multiline = true;
             this.tbKey.Name = "tbKey";
             this.tbKey.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -77,7 +86,6 @@
             this.tbResult.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.tbResult.Size = new System.Drawing.Size(437, 60);
             this.tbResult.TabIndex = 5;
-            this.tbResult.TextChanged += new System.EventHandler(this.tbResult_TextChanged);
             // 
             // saveKey
             // 
@@ -93,14 +101,14 @@
             this.pb.Name = "pb";
             this.pb.Size = new System.Drawing.Size(484, 22);
             this.pb.TabIndex = 7;
-            this.pb.Click += new System.EventHandler(this.progressBar1_Click);
             // 
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.keyToolStripMenuItem,
-            this.helpToolStripMenuItem});
+            this.helpToolStripMenuItem,
+            this.mSettings});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(557, 24);
@@ -118,7 +126,7 @@
             // mfileLoad
             // 
             this.mfileLoad.Name = "mfileLoad";
-            this.mfileLoad.Size = new System.Drawing.Size(100, 22);
+            this.mfileLoad.Size = new System.Drawing.Size(152, 22);
             this.mfileLoad.Text = "Load";
             this.mfileLoad.Click += new System.EventHandler(this.mFileLoad_Click);
             // 
@@ -176,6 +184,13 @@
             this.mAbout.Text = "About";
             this.mAbout.Click += new System.EventHandler(this.mAbout_Click);
             // 
+            // mSettings
+            // 
+            this.mSettings.Name = "mSettings";
+            this.mSettings.Size = new System.Drawing.Size(61, 20);
+            this.mSettings.Text = "Settings";
+            this.mSettings.Click += new System.EventHandler(this.mSettings_Click);
+            // 
             // btnEncrypt
             // 
             this.btnEncrypt.Location = new System.Drawing.Point(156, 295);
@@ -198,7 +213,7 @@
             // 
             // btnFlush
             // 
-            this.btnFlush.Location = new System.Drawing.Point(26, 209);
+            this.btnFlush.Location = new System.Drawing.Point(26, 202);
             this.btnFlush.Name = "btnFlush";
             this.btnFlush.Size = new System.Drawing.Size(41, 23);
             this.btnFlush.TabIndex = 15;
@@ -254,7 +269,7 @@
             // 
             // btnInit
             // 
-            this.btnInit.Location = new System.Drawing.Point(55, 117);
+            this.btnInit.Location = new System.Drawing.Point(57, 105);
             this.btnInit.Name = "btnInit";
             this.btnInit.Size = new System.Drawing.Size(125, 43);
             this.btnInit.TabIndex = 21;
@@ -264,7 +279,7 @@
             // 
             // tbKeySize
             // 
-            this.tbKeySize.Location = new System.Drawing.Point(107, 91);
+            this.tbKeySize.Location = new System.Drawing.Point(61, 27);
             this.tbKeySize.Name = "tbKeySize";
             this.tbKeySize.Size = new System.Drawing.Size(73, 20);
             this.tbKeySize.TabIndex = 22;
@@ -272,11 +287,86 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(52, 94);
+            this.label1.Location = new System.Drawing.Point(6, 30);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(49, 13);
             this.label1.TabIndex = 23;
             this.label1.Text = "Key size:";
+            // 
+            // boxSettings
+            // 
+            this.boxSettings.AutoSize = true;
+            this.boxSettings.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.boxSettings.Controls.Add(this.label5);
+            this.boxSettings.Controls.Add(this.tbLogName);
+            this.boxSettings.Controls.Add(this.tbLogPath);
+            this.boxSettings.Controls.Add(this.label4);
+            this.boxSettings.Controls.Add(this.btnAccept);
+            this.boxSettings.Controls.Add(this.chLogs);
+            this.boxSettings.Controls.Add(this.label1);
+            this.boxSettings.Controls.Add(this.tbKeySize);
+            this.boxSettings.Location = new System.Drawing.Point(42, 43);
+            this.boxSettings.Name = "boxSettings";
+            this.boxSettings.Size = new System.Drawing.Size(140, 208);
+            this.boxSettings.TabIndex = 24;
+            this.boxSettings.TabStop = false;
+            this.boxSettings.Text = "Settings";
+            this.boxSettings.Visible = false;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(6, 128);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(57, 13);
+            this.label5.TabIndex = 28;
+            this.label5.Text = "Log name:";
+            // 
+            // tbLogName
+            // 
+            this.tbLogName.Location = new System.Drawing.Point(61, 125);
+            this.tbLogName.Name = "tbLogName";
+            this.tbLogName.ReadOnly = true;
+            this.tbLogName.Size = new System.Drawing.Size(73, 20);
+            this.tbLogName.TabIndex = 27;
+            // 
+            // tbLogPath
+            // 
+            this.tbLogPath.Location = new System.Drawing.Point(61, 90);
+            this.tbLogPath.Name = "tbLogPath";
+            this.tbLogPath.ReadOnly = true;
+            this.tbLogPath.Size = new System.Drawing.Size(73, 20);
+            this.tbLogPath.TabIndex = 26;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(6, 93);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(52, 13);
+            this.label4.TabIndex = 25;
+            this.label4.Text = "Log path:";
+            // 
+            // btnAccept
+            // 
+            this.btnAccept.Location = new System.Drawing.Point(45, 166);
+            this.btnAccept.Name = "btnAccept";
+            this.btnAccept.Size = new System.Drawing.Size(75, 23);
+            this.btnAccept.TabIndex = 24;
+            this.btnAccept.Text = "OK";
+            this.btnAccept.UseVisualStyleBackColor = true;
+            this.btnAccept.Click += new System.EventHandler(this.btnAccept_Click);
+            // 
+            // chLogs
+            // 
+            this.chLogs.AutoSize = true;
+            this.chLogs.Location = new System.Drawing.Point(9, 67);
+            this.chLogs.Name = "chLogs";
+            this.chLogs.Size = new System.Drawing.Size(67, 17);
+            this.chLogs.TabIndex = 0;
+            this.chLogs.Text = "Use logs";
+            this.chLogs.UseVisualStyleBackColor = true;
+            this.chLogs.CheckedChanged += new System.EventHandler(this.chLogs_CheckedChanged);
             // 
             // rsaApp
             // 
@@ -287,8 +377,7 @@
             this.BackgroundImage = global::Rsa_algo.Properties.Resources.bg;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(557, 464);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.tbKeySize);
+            this.Controls.Add(this.boxSettings);
             this.Controls.Add(this.btnInit);
             this.Controls.Add(this.tbPrivateKey);
             this.Controls.Add(this.label3);
@@ -311,9 +400,10 @@
             this.Name = "rsaApp";
             this.Opacity = 0.92D;
             this.Text = "RSA Algo";
-            this.Load += new System.EventHandler(this.Form1_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.boxSettings.ResumeLayout(false);
+            this.boxSettings.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -347,6 +437,14 @@
         private System.Windows.Forms.TextBox tbKeySize;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ToolStripMenuItem mKeyImport;
+        private System.Windows.Forms.ToolStripMenuItem mSettings;
+        private System.Windows.Forms.CheckBox chLogs;
+        private System.Windows.Forms.Button btnAccept;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox tbLogName;
+        private System.Windows.Forms.TextBox tbLogPath;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.GroupBox boxSettings;
 
     }
 }

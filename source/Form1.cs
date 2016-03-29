@@ -25,6 +25,8 @@ namespace Rsa_algo
             // key encryption
             Rsa rsa = new Rsa();
             string encrypted = rsa.Encrypt(tbKey.Text, tbPublicKey.Text, Convert.ToInt32(tbKeySize.Text));
+            if (!String.IsNullOrEmpty(encrypted))
+                doWorker(); // do something...
             tbResult.Text = encrypted;
             outError("[" + DateTime.Now + "] RSA encrypted: ", encrypted);
         }
@@ -33,8 +35,10 @@ namespace Rsa_algo
             // key decryption
             Rsa rsa = new Rsa();
             string decrypted = rsa.Decrypt(tbKey.Text, tbPrivateKey.Text, Convert.ToInt32(tbKeySize.Text));
-            outError("[" + DateTime.Now + "] RSA decrypted: ", decrypted);
+            if (!String.IsNullOrEmpty(decrypted))
+                doWorker(); // do something...
             tbResult.Text = decrypted;
+            outError("[" + DateTime.Now + "] RSA decrypted: ", decrypted);
         }
         private void btnFlush_Click(object sender, EventArgs e)
         {
@@ -51,9 +55,11 @@ namespace Rsa_algo
         {
             if (String.IsNullOrWhiteSpace(tbKeySize.Text))
                 return;
+
             Rsa rsa = new Rsa();
             string publicKey, privateKey;
             rsa.GenerateKeys(Convert.ToInt32(tbKeySize.Text), out publicKey, out privateKey);
+            doWorker(); // do something...
             tbPublicKey.Text = publicKey;
             tbPrivateKey.Text = privateKey;
             outError("RSA public key: ", publicKey);
@@ -116,6 +122,8 @@ namespace Rsa_algo
             if (String.IsNullOrWhiteSpace(name))
                 return;
 
+            doWorker(); // do something...
+
             FileInfo fi = new FileInfo(name);
             long length = fi.Length;
             tbLoad.Text = name;
@@ -135,7 +143,8 @@ namespace Rsa_algo
         }
         private void doWorker()
         {
-            for (int i = 0; i < 100; ++i)
+            pb.Maximum = 100;
+            for (int i = 0; i < pb.Maximum; ++i)
                 pb.Increment(i);
             pb.Value = 0;
         }
@@ -148,16 +157,20 @@ namespace Rsa_algo
         {
             if (String.IsNullOrWhiteSpace(ofdiag.FileName))
                 return;
+
             Rsa rsa = new Rsa();
             rsa.fsEncrypt(ofdiag.FileName, tbPublicKey.Text, Convert.ToInt32(tbKeySize.Text));
+            doWorker(); // do something...
         }
 
         private void btnDecryptFile_Click(object sender, EventArgs e)
         {
             if (String.IsNullOrWhiteSpace(ofdiag.FileName))
                 return;
+
             Rsa rsa = new Rsa();
             rsa.fsDecrypt(ofdiag.FileName, tbPrivateKey.Text, Convert.ToInt32(tbKeySize.Text));
+            doWorker(); // do something...
         }
         private void tbSelectAndCopy(TextBox tb)
         {

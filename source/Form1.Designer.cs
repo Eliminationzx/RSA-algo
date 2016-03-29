@@ -58,6 +58,7 @@
             this.tbLogName = new System.Windows.Forms.TextBox();
             this.tbLogPath = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
+            this.btnAccept = new System.Windows.Forms.Button();
             this.chLogs = new System.Windows.Forms.CheckBox();
             this.btnLoadFile = new System.Windows.Forms.Button();
             this.tbLoad = new System.Windows.Forms.TextBox();
@@ -66,7 +67,7 @@
             this.tabChoice = new System.Windows.Forms.TabControl();
             this.tabText = new System.Windows.Forms.TabPage();
             this.tabFile = new System.Windows.Forms.TabPage();
-            this.btnAccept = new System.Windows.Forms.Button();
+            this.chOptimalPadding = new System.Windows.Forms.CheckBox();
             this.menuStrip1.SuspendLayout();
             this.boxSettings.SuspendLayout();
             this.tabChoice.SuspendLayout();
@@ -76,7 +77,7 @@
             // 
             // tbKey
             // 
-            this.tbKey.Location = new System.Drawing.Point(53, 17);
+            this.tbKey.Location = new System.Drawing.Point(56, 28);
             this.tbKey.Multiline = true;
             this.tbKey.Name = "tbKey";
             this.tbKey.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -133,14 +134,14 @@
             // mKeyExport
             // 
             this.mKeyExport.Name = "mKeyExport";
-            this.mKeyExport.Size = new System.Drawing.Size(152, 22);
+            this.mKeyExport.Size = new System.Drawing.Size(107, 22);
             this.mKeyExport.Text = "Export";
             this.mKeyExport.Click += new System.EventHandler(this.mKeyExport_Click);
             // 
             // mKeySend
             // 
             this.mKeySend.Name = "mKeySend";
-            this.mKeySend.Size = new System.Drawing.Size(152, 22);
+            this.mKeySend.Size = new System.Drawing.Size(107, 22);
             this.mKeySend.Text = "Send";
             this.mKeySend.Click += new System.EventHandler(this.mKeySend_Click);
             // 
@@ -156,14 +157,14 @@
             // mViewHelp
             // 
             this.mViewHelp.Name = "mViewHelp";
-            this.mViewHelp.Size = new System.Drawing.Size(152, 22);
+            this.mViewHelp.Size = new System.Drawing.Size(125, 22);
             this.mViewHelp.Text = "View help";
             this.mViewHelp.Click += new System.EventHandler(this.mViewHelp_Click);
             // 
             // mAbout
             // 
             this.mAbout.Name = "mAbout";
-            this.mAbout.Size = new System.Drawing.Size(152, 22);
+            this.mAbout.Size = new System.Drawing.Size(125, 22);
             this.mAbout.Text = "About";
             this.mAbout.Click += new System.EventHandler(this.mAbout_Click);
             // 
@@ -176,7 +177,7 @@
             // 
             // btnEncrypt
             // 
-            this.btnEncrypt.Location = new System.Drawing.Point(135, 102);
+            this.btnEncrypt.Location = new System.Drawing.Point(136, 107);
             this.btnEncrypt.Name = "btnEncrypt";
             this.btnEncrypt.Size = new System.Drawing.Size(103, 38);
             this.btnEncrypt.TabIndex = 13;
@@ -186,7 +187,7 @@
             // 
             // btnDecrypt
             // 
-            this.btnDecrypt.Location = new System.Drawing.Point(274, 102);
+            this.btnDecrypt.Location = new System.Drawing.Point(275, 107);
             this.btnDecrypt.Name = "btnDecrypt";
             this.btnDecrypt.Size = new System.Drawing.Size(103, 38);
             this.btnDecrypt.TabIndex = 14;
@@ -196,7 +197,7 @@
             // 
             // btnFlush
             // 
-            this.btnFlush.Location = new System.Drawing.Point(6, 17);
+            this.btnFlush.Location = new System.Drawing.Point(6, 28);
             this.btnFlush.Name = "btnFlush";
             this.btnFlush.Size = new System.Drawing.Size(41, 23);
             this.btnFlush.TabIndex = 15;
@@ -280,6 +281,7 @@
             // boxSettings
             // 
             this.boxSettings.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.boxSettings.Controls.Add(this.chOptimalPadding);
             this.boxSettings.Controls.Add(this.label5);
             this.boxSettings.Controls.Add(this.tbLogName);
             this.boxSettings.Controls.Add(this.tbLogPath);
@@ -290,7 +292,7 @@
             this.boxSettings.Controls.Add(this.tbKeySize);
             this.boxSettings.Location = new System.Drawing.Point(95, 27);
             this.boxSettings.Name = "boxSettings";
-            this.boxSettings.Size = new System.Drawing.Size(148, 190);
+            this.boxSettings.Size = new System.Drawing.Size(194, 194);
             this.boxSettings.TabIndex = 24;
             this.boxSettings.TabStop = false;
             this.boxSettings.Text = "Settings";
@@ -310,7 +312,7 @@
             this.tbLogName.Location = new System.Drawing.Point(61, 125);
             this.tbLogName.Name = "tbLogName";
             this.tbLogName.ReadOnly = true;
-            this.tbLogName.Size = new System.Drawing.Size(73, 20);
+            this.tbLogName.Size = new System.Drawing.Size(112, 20);
             this.tbLogName.TabIndex = 27;
             // 
             // tbLogPath
@@ -318,7 +320,7 @@
             this.tbLogPath.Location = new System.Drawing.Point(61, 90);
             this.tbLogPath.Name = "tbLogPath";
             this.tbLogPath.ReadOnly = true;
-            this.tbLogPath.Size = new System.Drawing.Size(73, 20);
+            this.tbLogPath.Size = new System.Drawing.Size(112, 20);
             this.tbLogPath.TabIndex = 26;
             // 
             // label4
@@ -329,6 +331,16 @@
             this.label4.Size = new System.Drawing.Size(52, 13);
             this.label4.TabIndex = 25;
             this.label4.Text = "Log path:";
+            // 
+            // btnAccept
+            // 
+            this.btnAccept.Location = new System.Drawing.Point(61, 163);
+            this.btnAccept.Name = "btnAccept";
+            this.btnAccept.Size = new System.Drawing.Size(75, 23);
+            this.btnAccept.TabIndex = 24;
+            this.btnAccept.Text = "OK";
+            this.btnAccept.UseVisualStyleBackColor = true;
+            this.btnAccept.Click += new System.EventHandler(this.btnAccept_Click);
             // 
             // chLogs
             // 
@@ -419,15 +431,15 @@
             this.tabFile.Text = "File";
             this.tabFile.UseVisualStyleBackColor = true;
             // 
-            // btnAccept
+            // chOptimalPadding
             // 
-            this.btnAccept.Location = new System.Drawing.Point(45, 161);
-            this.btnAccept.Name = "btnAccept";
-            this.btnAccept.Size = new System.Drawing.Size(75, 23);
-            this.btnAccept.TabIndex = 24;
-            this.btnAccept.Text = "OK";
-            this.btnAccept.UseVisualStyleBackColor = true;
-            this.btnAccept.Click += new System.EventHandler(this.btnAccept_Click);
+            this.chOptimalPadding.AutoSize = true;
+            this.chOptimalPadding.Location = new System.Drawing.Point(73, 67);
+            this.chOptimalPadding.Name = "chOptimalPadding";
+            this.chOptimalPadding.Size = new System.Drawing.Size(122, 17);
+            this.chOptimalPadding.TabIndex = 29;
+            this.chOptimalPadding.Text = "Use optimal padding";
+            this.chOptimalPadding.UseVisualStyleBackColor = true;
             // 
             // rsaApp
             // 
@@ -510,6 +522,7 @@
         private System.Windows.Forms.TabPage tabText;
         private System.Windows.Forms.TabPage tabFile;
         private System.Windows.Forms.Button btnAccept;
+        private System.Windows.Forms.CheckBox chOptimalPadding;
 
     }
 }

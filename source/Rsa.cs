@@ -11,16 +11,20 @@ namespace Rsa_algo
         /// <summary>
         /// The padding scheme often used together with RSA encryption.
         /// </summary>
-        private bool _optimalAsymmetricEncryptionPadding = false;
+        private bool _optimalAsymmetricEncryptionPadding;
+        public void setOptimalAsymmetricEncryptionPadding(bool padding)
+        {
+            _optimalAsymmetricEncryptionPadding = padding;
+        }
         /// <summary>
         // Key generation
         /// </summary>
-        public void GenerateKeys(int keySize, out string publicKey, out string publicAndPrivateKey)
+        public void GenerateKeys(int keySize, out string publicKey, out string privateKey)
         {
             using (var provider = new RSACryptoServiceProvider(keySize))
             {
                 publicKey = provider.ToXmlString(false);
-                publicAndPrivateKey = provider.ToXmlString(true);
+                privateKey = provider.ToXmlString(true);
             }
         }
         /// <summary>
@@ -32,8 +36,16 @@ namespace Rsa_algo
         /// <returns>The the RSA-encrypted text</returns>
         public string Encrypt(string text, string publicKeyXml, int keySize)
         {
-            var encrypted = EncryptByteArray(Encoding.UTF8.GetBytes(text), publicKeyXml, keySize);
-            return Convert.ToBase64String(encrypted);
+            try
+            {
+                var encrypted = EncryptByteArray(Encoding.UTF8.GetBytes(text), publicKeyXml, keySize);
+                return Convert.ToBase64String(encrypted);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
         }
         /// <summary>
         /// Gets and validates the RSA-encrypted text as a byte array
@@ -44,11 +56,6 @@ namespace Rsa_algo
         /// <returns>The the RSA-encrypted byte array</returns>
         private byte[] EncryptByteArray(byte[] data, string publicKeyXml, int keySize)
         {
-            if (data == null || data.Length == 0)
-            {
-                throw new ArgumentException("Data are empty", "data");
-            }
-
             int maxLength = GetMaxDataLength(keySize);
 
             if (data.Length > maxLength)
@@ -59,11 +66,6 @@ namespace Rsa_algo
             if (!IsKeySizeValid(keySize))
             {
                 throw new ArgumentException("Key size is not valid", "keySize");
-            }
-
-            if (String.IsNullOrEmpty(publicKeyXml))
-            {
-                throw new ArgumentException("Key is null or empty", "publicKeyXml");
             }
 
             using (var provider = new RSACryptoServiceProvider(keySize))
@@ -81,8 +83,16 @@ namespace Rsa_algo
         /// <returns>The the RSA-decrypted text</returns>
         public string Decrypt(string text, string publicAndPrivateKeyXml, int keySize)
         {
-            var decrypted = DecryptByteArray(Convert.FromBase64String(text), publicAndPrivateKeyXml, keySize);
-            return Encoding.UTF8.GetString(decrypted);
+            try
+            {
+                var decrypted = DecryptByteArray(Convert.FromBase64String(text), publicAndPrivateKeyXml, keySize);
+                return Encoding.UTF8.GetString(decrypted);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
         }
         /// <summary>
         /// Gets and validates the RSA-decrypted text as a byte array
@@ -93,19 +103,9 @@ namespace Rsa_algo
         /// <returns>The the RSA-decrypted byte array</returns>
         private byte[] DecryptByteArray(byte[] data, string publicAndPrivateKeyXml, int keySize)
         {
-            if (data == null || data.Length == 0)
-            {
-                throw new ArgumentException("Data are empty", "data");
-            }
-
             if (!IsKeySizeValid(keySize))
             {
                 throw new ArgumentException("Key size is not valid", "keySize");
-            }
-
-            if (String.IsNullOrEmpty(publicAndPrivateKeyXml))
-            {
-                throw new ArgumentException("Key is null or empty", "publicAndPrivateKeyXml");
             }
 
             using (var provider = new RSACryptoServiceProvider(keySize))
@@ -138,7 +138,22 @@ namespace Rsa_algo
                    keySize <= 16384 &&
                    keySize % 8 == 0;
         }
-        public void EncryptFile(string inFile, string publicAndPrivateKeyXml, int keySize)
+        /// <summary>
+        // File encryption algorithm
+        /// </summary>
+        ///
+        public void fsEncrypt(string inFile, string publicAndPrivateKeyXml, int keySize)
+        {
+            try
+            {
+                EncryptFile(inFile, publicAndPrivateKeyXml, keySize);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+        private void EncryptFile(string inFile, string publicAndPrivateKeyXml, int keySize)
         {
             // Create instance of Rijndael for
             // symetric encryption of the data.
@@ -218,7 +233,21 @@ namespace Rsa_algo
                 outFs.Close();
             }
         }
-        public void DecryptFile(string inFile, string publicAndPrivateKeyXml, int keySize)
+        /// <summary>
+        // File decryption algorithm
+        /// </summary>
+        public void fsDecrypt(string inFile, string publicAndPrivateKeyXml, int keySize)
+        {
+            try
+            {
+                DecryptFile(inFile, publicAndPrivateKeyXml, keySize);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+        private void DecryptFile(string inFile, string publicAndPrivateKeyXml, int keySize)
         {
             // Create instance of Rijndael for
             // symetric decryption of the data.

@@ -156,5 +156,10 @@ namespace Rsa_algo
             tb.Focus();
             tb.Copy();
         }
+        private void chOptimalPadding_CheckedChanged(object sender, EventArgs e)
+        {
+            Rsa rsa = new Rsa();
+            rsa.setOptimalAsymmetricEncryptionPadding(chLogs.Checked);
+        }
     }
 }

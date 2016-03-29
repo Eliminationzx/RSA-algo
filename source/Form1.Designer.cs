@@ -54,6 +54,7 @@
             this.tbKeySize = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.boxSettings = new System.Windows.Forms.GroupBox();
+            this.chOptimalPadding = new System.Windows.Forms.CheckBox();
             this.label5 = new System.Windows.Forms.Label();
             this.tbLogName = new System.Windows.Forms.TextBox();
             this.tbLogPath = new System.Windows.Forms.TextBox();
@@ -67,7 +68,6 @@
             this.tabChoice = new System.Windows.Forms.TabControl();
             this.tabText = new System.Windows.Forms.TabPage();
             this.tabFile = new System.Windows.Forms.TabPage();
-            this.chOptimalPadding = new System.Windows.Forms.CheckBox();
             this.menuStrip1.SuspendLayout();
             this.boxSettings.SuspendLayout();
             this.tabChoice.SuspendLayout();
@@ -298,6 +298,17 @@
             this.boxSettings.Text = "Settings";
             this.boxSettings.Visible = false;
             // 
+            // chOptimalPadding
+            // 
+            this.chOptimalPadding.AutoSize = true;
+            this.chOptimalPadding.Location = new System.Drawing.Point(73, 67);
+            this.chOptimalPadding.Name = "chOptimalPadding";
+            this.chOptimalPadding.Size = new System.Drawing.Size(122, 17);
+            this.chOptimalPadding.TabIndex = 29;
+            this.chOptimalPadding.Text = "Use optimal padding";
+            this.chOptimalPadding.UseVisualStyleBackColor = true;
+            this.chOptimalPadding.CheckedChanged += new System.EventHandler(this.chOptimalPadding_CheckedChanged);
+            // 
             // label5
             // 
             this.label5.AutoSize = true;
@@ -430,16 +441,6 @@
             this.tabFile.TabIndex = 1;
             this.tabFile.Text = "File";
             this.tabFile.UseVisualStyleBackColor = true;
-            // 
-            // chOptimalPadding
-            // 
-            this.chOptimalPadding.AutoSize = true;
-            this.chOptimalPadding.Location = new System.Drawing.Point(73, 67);
-            this.chOptimalPadding.Name = "chOptimalPadding";
-            this.chOptimalPadding.Size = new System.Drawing.Size(122, 17);
-            this.chOptimalPadding.TabIndex = 29;
-            this.chOptimalPadding.Text = "Use optimal padding";
-            this.chOptimalPadding.UseVisualStyleBackColor = true;
             // 
             // rsaApp
             // 

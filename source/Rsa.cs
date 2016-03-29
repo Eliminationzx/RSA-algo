@@ -57,7 +57,6 @@ namespace Rsa_algo
         private byte[] EncryptByteArray(byte[] data, string publicKeyXml, int keySize)
         {
             int maxLength = GetMaxDataLength(keySize);
-
             if (data.Length > maxLength)
             {
                 throw new ArgumentException(String.Format("Maximum data length is {0}", maxLength), "data");

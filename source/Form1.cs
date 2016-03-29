@@ -64,10 +64,10 @@ namespace Rsa_algo
             // show dialog window
             savediag.ShowDialog();
             // save into the file
-            string path = savediag.InitialDirectory + savediag.FileName;
-            outFile(path, tbResult.Text, null);
-            outFile(path + "_public.xml", tbPublicKey.Text, null);
-            outFile(path + "_private.xml", tbPrivateKey.Text, null);
+            string name = savediag.FileName;
+            outFile(name, tbResult.Text, null);
+            outFile(name + "_public.xml", tbPublicKey.Text, null);
+            outFile(name + "_private.xml", tbPrivateKey.Text, null);
         }
         private void outError(string str, object args, bool useMb = false)
         {
@@ -76,8 +76,7 @@ namespace Rsa_algo
 
             if (chLogs.Checked)
             {
-                if (String.IsNullOrWhiteSpace(tbLogPath.Text) ||
-                    String.IsNullOrWhiteSpace(tbLogName.Text))
+                if (String.IsNullOrWhiteSpace(tbLogName.Text))
                     return;
 
                 // create log directory if doesn't exist
@@ -112,9 +111,21 @@ namespace Rsa_algo
         private void btnLoadFile_Click(object sender, EventArgs e)
         {
             ofdiag.ShowDialog();
-            string path = ofdiag.InitialDirectory + ofdiag.FileName;
-            if (!String.IsNullOrWhiteSpace(path))
-                tbLoad.Text = path;
+
+            string name = ofdiag.FileName;
+            if (String.IsNullOrWhiteSpace(name))
+                return;
+
+            FileInfo fi = new FileInfo(name);
+            long length = fi.Length;
+            tbLoad.Text = name;
+            tbLoadResult.Text = "File name: " + fi.Name + "\r\n";
+            tbLoadResult.Text += "File size: " + length + " bytes\r\n";
+
+            if (fi.Name.Contains(".enc"))
+                tbLoadResult.Text += "Attributes: encrypted \r\n";
+            else
+                tbLoadResult.Text += "Attributes: none";
         }
         private void outFile(string path, string str, object args)
         {
@@ -138,8 +149,7 @@ namespace Rsa_algo
             if (String.IsNullOrWhiteSpace(ofdiag.FileName))
                 return;
             Rsa rsa = new Rsa();
-            FileInfo fInfo = new FileInfo(ofdiag.FileName);
-            rsa.fsEncrypt(fInfo.FullName, tbPublicKey.Text, Convert.ToInt32(tbKeySize.Text));
+            rsa.fsEncrypt(ofdiag.FileName, tbPublicKey.Text, Convert.ToInt32(tbKeySize.Text));
         }
 
         private void btnDecryptFile_Click(object sender, EventArgs e)
@@ -147,8 +157,7 @@ namespace Rsa_algo
             if (String.IsNullOrWhiteSpace(ofdiag.FileName))
                 return;
             Rsa rsa = new Rsa();
-            FileInfo fInfo = new FileInfo(ofdiag.FileName);
-            rsa.fsDecrypt(fInfo.FullName, tbPrivateKey.Text, Convert.ToInt32(tbKeySize.Text));
+            rsa.fsDecrypt(ofdiag.FileName, tbPrivateKey.Text, Convert.ToInt32(tbKeySize.Text));
         }
         private void tbSelectAndCopy(TextBox tb)
         {

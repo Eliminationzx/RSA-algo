@@ -35,7 +35,7 @@
             this.ofdiag = new System.Windows.Forms.OpenFileDialog();
             this.pb = new System.Windows.Forms.ProgressBar();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.mFile = new System.Windows.Forms.ToolStripMenuItem();
+            this.mKey = new System.Windows.Forms.ToolStripMenuItem();
             this.mKeyExport = new System.Windows.Forms.ToolStripMenuItem();
             this.mKeySend = new System.Windows.Forms.ToolStripMenuItem();
             this.mHelp = new System.Windows.Forms.ToolStripMenuItem();
@@ -68,6 +68,7 @@
             this.tabChoice = new System.Windows.Forms.TabControl();
             this.tabText = new System.Windows.Forms.TabPage();
             this.tabFile = new System.Windows.Forms.TabPage();
+            this.tbLoadResult = new System.Windows.Forms.TextBox();
             this.menuStrip1.SuspendLayout();
             this.boxSettings.SuspendLayout();
             this.tabChoice.SuspendLayout();
@@ -81,7 +82,7 @@
             this.tbKey.Multiline = true;
             this.tbKey.Name = "tbKey";
             this.tbKey.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbKey.Size = new System.Drawing.Size(437, 53);
+            this.tbKey.Size = new System.Drawing.Size(437, 60);
             this.tbKey.TabIndex = 4;
             // 
             // tbResult
@@ -113,7 +114,7 @@
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mFile,
+            this.mKey,
             this.mHelp,
             this.mSettings});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
@@ -122,14 +123,14 @@
             this.menuStrip1.TabIndex = 12;
             this.menuStrip1.Text = "menuStrip1";
             // 
-            // mFile
+            // mKey
             // 
-            this.mFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mKey.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mKeyExport,
             this.mKeySend});
-            this.mFile.Name = "mFile";
-            this.mFile.Size = new System.Drawing.Size(37, 20);
-            this.mFile.Text = "File";
+            this.mKey.Name = "mKey";
+            this.mKey.Size = new System.Drawing.Size(38, 20);
+            this.mKey.Text = "Key";
             // 
             // mKeyExport
             // 
@@ -177,7 +178,7 @@
             // 
             // btnEncrypt
             // 
-            this.btnEncrypt.Location = new System.Drawing.Point(136, 107);
+            this.btnEncrypt.Location = new System.Drawing.Point(126, 114);
             this.btnEncrypt.Name = "btnEncrypt";
             this.btnEncrypt.Size = new System.Drawing.Size(103, 38);
             this.btnEncrypt.TabIndex = 13;
@@ -187,7 +188,7 @@
             // 
             // btnDecrypt
             // 
-            this.btnDecrypt.Location = new System.Drawing.Point(275, 107);
+            this.btnDecrypt.Location = new System.Drawing.Point(265, 114);
             this.btnDecrypt.Name = "btnDecrypt";
             this.btnDecrypt.Size = new System.Drawing.Size(103, 38);
             this.btnDecrypt.TabIndex = 14;
@@ -366,9 +367,9 @@
             // 
             // btnLoadFile
             // 
-            this.btnLoadFile.Location = new System.Drawing.Point(14, 57);
+            this.btnLoadFile.Location = new System.Drawing.Point(32, 42);
             this.btnLoadFile.Name = "btnLoadFile";
-            this.btnLoadFile.Size = new System.Drawing.Size(75, 23);
+            this.btnLoadFile.Size = new System.Drawing.Size(75, 33);
             this.btnLoadFile.TabIndex = 25;
             this.btnLoadFile.Text = "Load";
             this.btnLoadFile.UseVisualStyleBackColor = true;
@@ -376,7 +377,7 @@
             // 
             // tbLoad
             // 
-            this.tbLoad.Location = new System.Drawing.Point(110, 59);
+            this.tbLoad.Location = new System.Drawing.Point(113, 49);
             this.tbLoad.Name = "tbLoad";
             this.tbLoad.ReadOnly = true;
             this.tbLoad.Size = new System.Drawing.Size(351, 20);
@@ -384,7 +385,7 @@
             // 
             // btnEncryptFile
             // 
-            this.btnEncryptFile.Location = new System.Drawing.Point(126, 138);
+            this.btnEncryptFile.Location = new System.Drawing.Point(126, 114);
             this.btnEncryptFile.Name = "btnEncryptFile";
             this.btnEncryptFile.Size = new System.Drawing.Size(103, 38);
             this.btnEncryptFile.TabIndex = 27;
@@ -394,7 +395,7 @@
             // 
             // btnDecryptFile
             // 
-            this.btnDecryptFile.Location = new System.Drawing.Point(274, 138);
+            this.btnDecryptFile.Location = new System.Drawing.Point(265, 114);
             this.btnDecryptFile.Name = "btnDecryptFile";
             this.btnDecryptFile.Size = new System.Drawing.Size(103, 38);
             this.btnDecryptFile.TabIndex = 28;
@@ -430,6 +431,7 @@
             // 
             // tabFile
             // 
+            this.tabFile.Controls.Add(this.tbLoadResult);
             this.tabFile.Controls.Add(this.tbLoad);
             this.tabFile.Controls.Add(this.btnDecryptFile);
             this.tabFile.Controls.Add(this.btnLoadFile);
@@ -441,6 +443,16 @@
             this.tabFile.TabIndex = 1;
             this.tabFile.Text = "File";
             this.tabFile.UseVisualStyleBackColor = true;
+            // 
+            // tbLoadResult
+            // 
+            this.tbLoadResult.Location = new System.Drawing.Point(16, 178);
+            this.tbLoadResult.Multiline = true;
+            this.tbLoadResult.Name = "tbLoadResult";
+            this.tbLoadResult.ReadOnly = true;
+            this.tbLoadResult.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.tbLoadResult.Size = new System.Drawing.Size(464, 57);
+            this.tbLoadResult.TabIndex = 29;
             // 
             // rsaApp
             // 
@@ -491,7 +503,7 @@
         private System.Windows.Forms.OpenFileDialog ofdiag;
         private System.Windows.Forms.ProgressBar pb;
         private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem mFile;
+        private System.Windows.Forms.ToolStripMenuItem mKey;
         private System.Windows.Forms.ToolStripMenuItem mKeyExport;
         private System.Windows.Forms.ToolStripMenuItem mHelp;
         private System.Windows.Forms.ToolStripMenuItem mViewHelp;
@@ -524,6 +536,7 @@
         private System.Windows.Forms.TabPage tabFile;
         private System.Windows.Forms.Button btnAccept;
         private System.Windows.Forms.CheckBox chOptimalPadding;
+        private System.Windows.Forms.TextBox tbLoadResult;
 
     }
 }

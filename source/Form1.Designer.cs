@@ -68,13 +68,13 @@
             this.btnDecryptFile = new System.Windows.Forms.Button();
             this.tabChoice = new System.Windows.Forms.TabControl();
             this.tabText = new System.Windows.Forms.TabPage();
+            this.btnExport = new System.Windows.Forms.Button();
             this.tabFile = new System.Windows.Forms.TabPage();
             this.tbLoadResult = new System.Windows.Forms.TextBox();
             this.boxHelp = new System.Windows.Forms.GroupBox();
             this.btnGuideHelp = new System.Windows.Forms.Button();
             this.btnSettingsHelp = new System.Windows.Forms.Button();
             this.tbHelp = new System.Windows.Forms.TextBox();
-            this.btnExport = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.boxSettings.SuspendLayout();
             this.boxAbout.SuspendLayout();
@@ -103,6 +103,7 @@
             this.tbResult.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.tbResult.Size = new System.Drawing.Size(437, 60);
             this.tbResult.TabIndex = 5;
+            this.tbResult.TextChanged += new System.EventHandler(this.tbResult_TextChanged);
             // 
             // savediag
             // 
@@ -142,14 +143,14 @@
             // mViewHelp
             // 
             this.mViewHelp.Name = "mViewHelp";
-            this.mViewHelp.Size = new System.Drawing.Size(152, 22);
+            this.mViewHelp.Size = new System.Drawing.Size(125, 22);
             this.mViewHelp.Text = "View help";
             this.mViewHelp.Click += new System.EventHandler(this.mViewHelp_Click);
             // 
             // mAbout
             // 
             this.mAbout.Name = "mAbout";
-            this.mAbout.Size = new System.Drawing.Size(152, 22);
+            this.mAbout.Size = new System.Drawing.Size(125, 22);
             this.mAbout.Text = "About";
             this.mAbout.Click += new System.EventHandler(this.mAbout_Click);
             // 
@@ -198,6 +199,7 @@
             this.btnCopy.TabIndex = 16;
             this.btnCopy.Text = "Copy";
             this.btnCopy.UseVisualStyleBackColor = true;
+            this.btnCopy.Visible = false;
             this.btnCopy.Click += new System.EventHandler(this.btnCopy_Click);
             // 
             // tbPublicKey
@@ -459,6 +461,17 @@
             this.tabText.Text = "Text";
             this.tabText.UseVisualStyleBackColor = true;
             // 
+            // btnExport
+            // 
+            this.btnExport.Location = new System.Drawing.Point(6, 209);
+            this.btnExport.Name = "btnExport";
+            this.btnExport.Size = new System.Drawing.Size(41, 23);
+            this.btnExport.TabIndex = 17;
+            this.btnExport.Text = "Exp";
+            this.btnExport.UseVisualStyleBackColor = true;
+            this.btnExport.Visible = false;
+            this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
+            // 
             // tabFile
             // 
             this.tabFile.Controls.Add(this.tbLoadResult);
@@ -526,16 +539,6 @@
             this.tbHelp.ReadOnly = true;
             this.tbHelp.Size = new System.Drawing.Size(215, 117);
             this.tbHelp.TabIndex = 25;
-            // 
-            // btnExport
-            // 
-            this.btnExport.Location = new System.Drawing.Point(6, 209);
-            this.btnExport.Name = "btnExport";
-            this.btnExport.Size = new System.Drawing.Size(41, 23);
-            this.btnExport.TabIndex = 17;
-            this.btnExport.Text = "Exp";
-            this.btnExport.UseVisualStyleBackColor = true;
-            this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
             // 
             // rsaApp
             // 

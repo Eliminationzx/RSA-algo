@@ -214,5 +214,13 @@ namespace Rsa_algo
             outFile(name + "_public.xml", tbPublicKey.Text, null);
             outFile(name + "_private.xml", tbPrivateKey.Text, null);
         }
+        private void tbResult_TextChanged(object sender, EventArgs e)
+        {
+            if (!btnCopy.Visible)
+                btnCopy.Visible = true;
+
+            if (!btnExport.Visible)
+                btnExport.Visible = true;
+        }
     }
 }

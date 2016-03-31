@@ -5,5 +5,3 @@ Basic functions:
 * text en/de-cryption
 * file en/de-cryption
 * export key into the file
-* import key from the file
-* send key

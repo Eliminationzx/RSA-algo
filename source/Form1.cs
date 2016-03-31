@@ -10,7 +10,8 @@ using System.Windows.Forms;
 using System.IO;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
-using System.Xml;
+using System.Net.Mail;
+using System.Net;
 
 namespace Rsa_algo
 {
@@ -65,16 +66,6 @@ namespace Rsa_algo
             outError("RSA public key: ", publicKey);
             outError("RSA private key: ", privateKey);
         }
-        private void mKeyExport_Click(object sender, EventArgs e)
-        {
-            // show dialog window
-            savediag.ShowDialog();
-            // save into the file
-            string name = savediag.FileName;
-            outFile(name, tbResult.Text, null);
-            outFile(name + "_public.xml", tbPublicKey.Text, null);
-            outFile(name + "_private.xml", tbPrivateKey.Text, null);
-        }
         private void outError(string str, object args, bool useMb = false)
         {
             if (useMb)
@@ -92,6 +83,7 @@ namespace Rsa_algo
                 StreamWriter file = new StreamWriter(tbLogPath.Text + tbLogName.Text, false);
                 file.WriteLine(str + args);
                 file.Close();
+                file.Dispose();
             }
         }
         private void mViewHelp_Click(object sender, EventArgs e)
@@ -108,10 +100,6 @@ namespace Rsa_algo
             else
                 boxAbout.Visible = false;
         }
-        private void mKeySend_Click(object sender, EventArgs e)
-        {
-            // TODO: write send algorithm
-        }
         private void mSettings_Click(object sender, EventArgs e)
         {
             if (!boxSettings.Visible)
@@ -121,7 +109,8 @@ namespace Rsa_algo
         }
         private void btnLoadFile_Click(object sender, EventArgs e)
         {
-            ofdiag.ShowDialog();
+            if (ofdiag.ShowDialog() != DialogResult.OK)
+                return;
 
             string name = ofdiag.FileName;
             if (String.IsNullOrWhiteSpace(name))
@@ -145,6 +134,7 @@ namespace Rsa_algo
             StreamWriter file = new StreamWriter(path, false);
             file.WriteLine(str + args);
             file.Close();
+            file.Dispose();
         }
         private void doWorker()
         {
@@ -211,6 +201,18 @@ namespace Rsa_algo
             tbHelp.Text += "3) Initialize your data (text or file)\r\n";
             tbHelp.Text += "4) Click on button en/de-cryption\r\n";
             tbHelp.Text += "5) Finish";
+        }
+
+        private void btnExport_Click(object sender, EventArgs e)
+        {
+            // show dialog window
+            if (savediag.ShowDialog() != DialogResult.OK)
+                return;
+            // save into the file
+            string name = savediag.FileName;
+            outFile(name, tbResult.Text, null);
+            outFile(name + "_public.xml", tbPublicKey.Text, null);
+            outFile(name + "_private.xml", tbPrivateKey.Text, null);
         }
     }
 }

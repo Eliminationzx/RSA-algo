@@ -35,9 +35,6 @@
             this.ofdiag = new System.Windows.Forms.OpenFileDialog();
             this.pb = new System.Windows.Forms.ProgressBar();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.mKey = new System.Windows.Forms.ToolStripMenuItem();
-            this.mKeyExport = new System.Windows.Forms.ToolStripMenuItem();
-            this.mKeySend = new System.Windows.Forms.ToolStripMenuItem();
             this.mHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.mViewHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.mAbout = new System.Windows.Forms.ToolStripMenuItem();
@@ -74,9 +71,10 @@
             this.tabFile = new System.Windows.Forms.TabPage();
             this.tbLoadResult = new System.Windows.Forms.TextBox();
             this.boxHelp = new System.Windows.Forms.GroupBox();
-            this.tbHelp = new System.Windows.Forms.TextBox();
-            this.btnSettingsHelp = new System.Windows.Forms.Button();
             this.btnGuideHelp = new System.Windows.Forms.Button();
+            this.btnSettingsHelp = new System.Windows.Forms.Button();
+            this.tbHelp = new System.Windows.Forms.TextBox();
+            this.btnExport = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.boxSettings.SuspendLayout();
             this.boxAbout.SuspendLayout();
@@ -124,7 +122,6 @@
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mKey,
             this.mHelp,
             this.mSettings});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
@@ -132,29 +129,6 @@
             this.menuStrip1.Size = new System.Drawing.Size(558, 24);
             this.menuStrip1.TabIndex = 12;
             this.menuStrip1.Text = "menuStrip1";
-            // 
-            // mKey
-            // 
-            this.mKey.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mKeyExport,
-            this.mKeySend});
-            this.mKey.Name = "mKey";
-            this.mKey.Size = new System.Drawing.Size(38, 20);
-            this.mKey.Text = "Key";
-            // 
-            // mKeyExport
-            // 
-            this.mKeyExport.Name = "mKeyExport";
-            this.mKeyExport.Size = new System.Drawing.Size(107, 22);
-            this.mKeyExport.Text = "Export";
-            this.mKeyExport.Click += new System.EventHandler(this.mKeyExport_Click);
-            // 
-            // mKeySend
-            // 
-            this.mKeySend.Name = "mKeySend";
-            this.mKeySend.Size = new System.Drawing.Size(107, 22);
-            this.mKeySend.Text = "Send";
-            this.mKeySend.Click += new System.EventHandler(this.mKeySend_Click);
             // 
             // mHelp
             // 
@@ -470,6 +444,7 @@
             // 
             // tabText
             // 
+            this.tabText.Controls.Add(this.btnExport);
             this.tabText.Controls.Add(this.tbKey);
             this.tabText.Controls.Add(this.btnFlush);
             this.tabText.Controls.Add(this.btnEncrypt);
@@ -523,14 +498,15 @@
             this.boxHelp.Text = "Help";
             this.boxHelp.Visible = false;
             // 
-            // tbHelp
+            // btnGuideHelp
             // 
-            this.tbHelp.Location = new System.Drawing.Point(11, 58);
-            this.tbHelp.Multiline = true;
-            this.tbHelp.Name = "tbHelp";
-            this.tbHelp.ReadOnly = true;
-            this.tbHelp.Size = new System.Drawing.Size(215, 117);
-            this.tbHelp.TabIndex = 25;
+            this.btnGuideHelp.Location = new System.Drawing.Point(134, 23);
+            this.btnGuideHelp.Name = "btnGuideHelp";
+            this.btnGuideHelp.Size = new System.Drawing.Size(75, 23);
+            this.btnGuideHelp.TabIndex = 27;
+            this.btnGuideHelp.Text = "Guide";
+            this.btnGuideHelp.UseVisualStyleBackColor = true;
+            this.btnGuideHelp.Click += new System.EventHandler(this.btnGuideHelp_Click);
             // 
             // btnSettingsHelp
             // 
@@ -542,15 +518,24 @@
             this.btnSettingsHelp.UseVisualStyleBackColor = true;
             this.btnSettingsHelp.Click += new System.EventHandler(this.btnSettingsHelp_Click);
             // 
-            // btnGuideHelp
+            // tbHelp
             // 
-            this.btnGuideHelp.Location = new System.Drawing.Point(134, 23);
-            this.btnGuideHelp.Name = "btnGuideHelp";
-            this.btnGuideHelp.Size = new System.Drawing.Size(75, 23);
-            this.btnGuideHelp.TabIndex = 27;
-            this.btnGuideHelp.Text = "Guide";
-            this.btnGuideHelp.UseVisualStyleBackColor = true;
-            this.btnGuideHelp.Click += new System.EventHandler(this.btnGuideHelp_Click);
+            this.tbHelp.Location = new System.Drawing.Point(11, 58);
+            this.tbHelp.Multiline = true;
+            this.tbHelp.Name = "tbHelp";
+            this.tbHelp.ReadOnly = true;
+            this.tbHelp.Size = new System.Drawing.Size(215, 117);
+            this.tbHelp.TabIndex = 25;
+            // 
+            // btnExport
+            // 
+            this.btnExport.Location = new System.Drawing.Point(6, 209);
+            this.btnExport.Name = "btnExport";
+            this.btnExport.Size = new System.Drawing.Size(41, 23);
+            this.btnExport.TabIndex = 17;
+            this.btnExport.Text = "Exp";
+            this.btnExport.UseVisualStyleBackColor = true;
+            this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
             // 
             // rsaApp
             // 
@@ -607,15 +592,12 @@
         private System.Windows.Forms.OpenFileDialog ofdiag;
         private System.Windows.Forms.ProgressBar pb;
         private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem mKey;
-        private System.Windows.Forms.ToolStripMenuItem mKeyExport;
         private System.Windows.Forms.ToolStripMenuItem mHelp;
         private System.Windows.Forms.ToolStripMenuItem mViewHelp;
         private System.Windows.Forms.ToolStripMenuItem mAbout;
         private System.Windows.Forms.Button btnEncrypt;
         private System.Windows.Forms.Button btnDecrypt;
         private System.Windows.Forms.Button btnFlush;
-        private System.Windows.Forms.ToolStripMenuItem mKeySend;
         private System.Windows.Forms.Button btnCopy;
         private System.Windows.Forms.TextBox tbPublicKey;
         private System.Windows.Forms.Label label2;
@@ -649,6 +631,7 @@
         private System.Windows.Forms.TextBox tbHelp;
         private System.Windows.Forms.Button btnGuideHelp;
         private System.Windows.Forms.Button btnSettingsHelp;
+        private System.Windows.Forms.Button btnExport;
 
     }
 }

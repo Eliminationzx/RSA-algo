@@ -96,11 +96,17 @@ namespace Rsa_algo
         }
         private void mViewHelp_Click(object sender, EventArgs e)
         {
-            // TODO: write view help algorithm
+            if (!boxHelp.Visible)
+                boxHelp.Visible = true;
+            else
+                boxHelp.Visible = false;
         }
         private void mAbout_Click(object sender, EventArgs e)
         {
-            // TODO: write 'about' algorithm
+            if (!boxAbout.Visible)
+                boxAbout.Visible = true;
+            else
+                boxAbout.Visible = false;
         }
         private void mKeySend_Click(object sender, EventArgs e)
         {
@@ -108,11 +114,10 @@ namespace Rsa_algo
         }
         private void mSettings_Click(object sender, EventArgs e)
         {
-            boxSettings.Visible = true;
-        }
-        private void btnAccept_Click(object sender, EventArgs e)
-        {
-            boxSettings.Visible = false;
+            if (!boxSettings.Visible)
+                boxSettings.Visible = true;
+            else
+                boxSettings.Visible = false;
         }
         private void btnLoadFile_Click(object sender, EventArgs e)
         {
@@ -182,6 +187,30 @@ namespace Rsa_algo
         {
             Rsa rsa = new Rsa();
             rsa.setOptimalAsymmetricEncryptionPadding(chLogs.Checked);
+        }
+        private void lbGithub_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            // Navigate to a URL.
+            System.Diagnostics.Process.Start("https://github.com/Eliminationzx/RSA-algo");
+        }
+
+        private void btnSettingsHelp_Click(object sender, EventArgs e)
+        {
+            tbHelp.Text = "Settings:\r\n";
+            tbHelp.Text += "* Key size - size of key in bytes\r\n";
+            tbHelp.Text += "* Use logs - option that enable/disable logs\r\n";
+            tbHelp.Text += "* Log path - directory for logs\r\n";
+            tbHelp.Text += "* Log name - name of logs\r\n";
+            tbHelp.Text += "* Use optimal padding - option that enable/disable optimal padding of file decryption";
+        }
+        private void btnGuideHelp_Click(object sender, EventArgs e)
+        {
+            tbHelp.Text = "How to use guide:\r\n";
+            tbHelp.Text += "1) Click initialize (firstly check settings!)\r\n";
+            tbHelp.Text += "2) Choose type of en/de-cryption (file or text)\r\n";
+            tbHelp.Text += "3) Initialize your data (text or file)\r\n";
+            tbHelp.Text += "4) Click on button en/de-cryption\r\n";
+            tbHelp.Text += "5) Finish";
         }
     }
 }

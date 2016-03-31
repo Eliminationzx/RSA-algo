@@ -59,8 +59,12 @@
             this.tbLogName = new System.Windows.Forms.TextBox();
             this.tbLogPath = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.btnAccept = new System.Windows.Forms.Button();
             this.chLogs = new System.Windows.Forms.CheckBox();
+            this.boxAbout = new System.Windows.Forms.GroupBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.lbGithub = new System.Windows.Forms.LinkLabel();
+            this.tbAbout = new System.Windows.Forms.TextBox();
             this.btnLoadFile = new System.Windows.Forms.Button();
             this.tbLoad = new System.Windows.Forms.TextBox();
             this.btnEncryptFile = new System.Windows.Forms.Button();
@@ -69,11 +73,17 @@
             this.tabText = new System.Windows.Forms.TabPage();
             this.tabFile = new System.Windows.Forms.TabPage();
             this.tbLoadResult = new System.Windows.Forms.TextBox();
+            this.boxHelp = new System.Windows.Forms.GroupBox();
+            this.tbHelp = new System.Windows.Forms.TextBox();
+            this.btnSettingsHelp = new System.Windows.Forms.Button();
+            this.btnGuideHelp = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.boxSettings.SuspendLayout();
+            this.boxAbout.SuspendLayout();
             this.tabChoice.SuspendLayout();
             this.tabText.SuspendLayout();
             this.tabFile.SuspendLayout();
+            this.boxHelp.SuspendLayout();
             this.SuspendLayout();
             // 
             // tbKey
@@ -158,14 +168,14 @@
             // mViewHelp
             // 
             this.mViewHelp.Name = "mViewHelp";
-            this.mViewHelp.Size = new System.Drawing.Size(125, 22);
+            this.mViewHelp.Size = new System.Drawing.Size(152, 22);
             this.mViewHelp.Text = "View help";
             this.mViewHelp.Click += new System.EventHandler(this.mViewHelp_Click);
             // 
             // mAbout
             // 
             this.mAbout.Name = "mAbout";
-            this.mAbout.Size = new System.Drawing.Size(125, 22);
+            this.mAbout.Size = new System.Drawing.Size(152, 22);
             this.mAbout.Text = "About";
             this.mAbout.Click += new System.EventHandler(this.mAbout_Click);
             // 
@@ -287,13 +297,12 @@
             this.boxSettings.Controls.Add(this.tbLogName);
             this.boxSettings.Controls.Add(this.tbLogPath);
             this.boxSettings.Controls.Add(this.label4);
-            this.boxSettings.Controls.Add(this.btnAccept);
             this.boxSettings.Controls.Add(this.chLogs);
             this.boxSettings.Controls.Add(this.label1);
             this.boxSettings.Controls.Add(this.tbKeySize);
             this.boxSettings.Location = new System.Drawing.Point(95, 27);
             this.boxSettings.Name = "boxSettings";
-            this.boxSettings.Size = new System.Drawing.Size(194, 194);
+            this.boxSettings.Size = new System.Drawing.Size(194, 160);
             this.boxSettings.TabIndex = 24;
             this.boxSettings.TabStop = false;
             this.boxSettings.Text = "Settings";
@@ -344,16 +353,6 @@
             this.label4.TabIndex = 25;
             this.label4.Text = "Log path:";
             // 
-            // btnAccept
-            // 
-            this.btnAccept.Location = new System.Drawing.Point(61, 163);
-            this.btnAccept.Name = "btnAccept";
-            this.btnAccept.Size = new System.Drawing.Size(75, 23);
-            this.btnAccept.TabIndex = 24;
-            this.btnAccept.Text = "OK";
-            this.btnAccept.UseVisualStyleBackColor = true;
-            this.btnAccept.Click += new System.EventHandler(this.btnAccept_Click);
-            // 
             // chLogs
             // 
             this.chLogs.AutoSize = true;
@@ -364,6 +363,62 @@
             this.chLogs.Text = "Use logs";
             this.chLogs.UseVisualStyleBackColor = true;
             this.chLogs.CheckedChanged += new System.EventHandler(this.chLogs_CheckedChanged);
+            // 
+            // boxAbout
+            // 
+            this.boxAbout.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.boxAbout.Controls.Add(this.label7);
+            this.boxAbout.Controls.Add(this.label6);
+            this.boxAbout.Controls.Add(this.lbGithub);
+            this.boxAbout.Controls.Add(this.tbAbout);
+            this.boxAbout.Location = new System.Drawing.Point(46, 27);
+            this.boxAbout.Name = "boxAbout";
+            this.boxAbout.Size = new System.Drawing.Size(253, 173);
+            this.boxAbout.TabIndex = 30;
+            this.boxAbout.TabStop = false;
+            this.boxAbout.Text = "About";
+            this.boxAbout.Visible = false;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(91, 151);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(153, 13);
+            this.label7.TabIndex = 28;
+            this.label7.Text = "E-mail: timurdelimin@gmail.com";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(150, 128);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(94, 13);
+            this.label6.TabIndex = 27;
+            this.label6.Text = "Author: Elimination";
+            // 
+            // lbGithub
+            // 
+            this.lbGithub.AutoSize = true;
+            this.lbGithub.Location = new System.Drawing.Point(8, 132);
+            this.lbGithub.Name = "lbGithub";
+            this.lbGithub.Size = new System.Drawing.Size(85, 13);
+            this.lbGithub.TabIndex = 26;
+            this.lbGithub.TabStop = true;
+            this.lbGithub.Text = "RSA-Algo github";
+            this.lbGithub.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lbGithub_LinkClicked);
+            // 
+            // tbAbout
+            // 
+            this.tbAbout.Location = new System.Drawing.Point(11, 20);
+            this.tbAbout.Multiline = true;
+            this.tbAbout.Name = "tbAbout";
+            this.tbAbout.ReadOnly = true;
+            this.tbAbout.Size = new System.Drawing.Size(232, 105);
+            this.tbAbout.TabIndex = 25;
+            this.tbAbout.Text = "RSA-Algo it\'s open source programm. \r\nIt\'s used RSA algorithm for en/de-cryption " +
+    "text and files. \r\nAlso you can send encrypted key to somebody.\r\nIf you want to h" +
+    "elp us - just click link below.";
             // 
             // btnLoadFile
             // 
@@ -454,6 +509,49 @@
             this.tbLoadResult.Size = new System.Drawing.Size(464, 57);
             this.tbLoadResult.TabIndex = 29;
             // 
+            // boxHelp
+            // 
+            this.boxHelp.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.boxHelp.Controls.Add(this.btnGuideHelp);
+            this.boxHelp.Controls.Add(this.btnSettingsHelp);
+            this.boxHelp.Controls.Add(this.tbHelp);
+            this.boxHelp.Location = new System.Drawing.Point(46, 27);
+            this.boxHelp.Name = "boxHelp";
+            this.boxHelp.Size = new System.Drawing.Size(238, 195);
+            this.boxHelp.TabIndex = 31;
+            this.boxHelp.TabStop = false;
+            this.boxHelp.Text = "Help";
+            this.boxHelp.Visible = false;
+            // 
+            // tbHelp
+            // 
+            this.tbHelp.Location = new System.Drawing.Point(11, 58);
+            this.tbHelp.Multiline = true;
+            this.tbHelp.Name = "tbHelp";
+            this.tbHelp.ReadOnly = true;
+            this.tbHelp.Size = new System.Drawing.Size(215, 117);
+            this.tbHelp.TabIndex = 25;
+            // 
+            // btnSettingsHelp
+            // 
+            this.btnSettingsHelp.Location = new System.Drawing.Point(24, 23);
+            this.btnSettingsHelp.Name = "btnSettingsHelp";
+            this.btnSettingsHelp.Size = new System.Drawing.Size(75, 23);
+            this.btnSettingsHelp.TabIndex = 26;
+            this.btnSettingsHelp.Text = "Settings";
+            this.btnSettingsHelp.UseVisualStyleBackColor = true;
+            this.btnSettingsHelp.Click += new System.EventHandler(this.btnSettingsHelp_Click);
+            // 
+            // btnGuideHelp
+            // 
+            this.btnGuideHelp.Location = new System.Drawing.Point(134, 23);
+            this.btnGuideHelp.Name = "btnGuideHelp";
+            this.btnGuideHelp.Size = new System.Drawing.Size(75, 23);
+            this.btnGuideHelp.TabIndex = 27;
+            this.btnGuideHelp.Text = "Guide";
+            this.btnGuideHelp.UseVisualStyleBackColor = true;
+            this.btnGuideHelp.Click += new System.EventHandler(this.btnGuideHelp_Click);
+            // 
             // rsaApp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -463,6 +561,8 @@
             this.BackgroundImage = global::Rsa_algo.Properties.Resources.bg;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(558, 540);
+            this.Controls.Add(this.boxHelp);
+            this.Controls.Add(this.boxAbout);
             this.Controls.Add(this.tabChoice);
             this.Controls.Add(this.boxSettings);
             this.Controls.Add(this.btnInit);
@@ -485,11 +585,15 @@
             this.menuStrip1.PerformLayout();
             this.boxSettings.ResumeLayout(false);
             this.boxSettings.PerformLayout();
+            this.boxAbout.ResumeLayout(false);
+            this.boxAbout.PerformLayout();
             this.tabChoice.ResumeLayout(false);
             this.tabText.ResumeLayout(false);
             this.tabText.PerformLayout();
             this.tabFile.ResumeLayout(false);
             this.tabFile.PerformLayout();
+            this.boxHelp.ResumeLayout(false);
+            this.boxHelp.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -534,9 +638,17 @@
         private System.Windows.Forms.TabControl tabChoice;
         private System.Windows.Forms.TabPage tabText;
         private System.Windows.Forms.TabPage tabFile;
-        private System.Windows.Forms.Button btnAccept;
         private System.Windows.Forms.CheckBox chOptimalPadding;
         private System.Windows.Forms.TextBox tbLoadResult;
+        private System.Windows.Forms.GroupBox boxAbout;
+        private System.Windows.Forms.TextBox tbAbout;
+        private System.Windows.Forms.LinkLabel lbGithub;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.GroupBox boxHelp;
+        private System.Windows.Forms.TextBox tbHelp;
+        private System.Windows.Forms.Button btnGuideHelp;
+        private System.Windows.Forms.Button btnSettingsHelp;
 
     }
 }

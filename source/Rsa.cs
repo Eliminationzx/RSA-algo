@@ -8,17 +8,13 @@ namespace Rsa_algo
 {
     class Rsa
     {
-        /// <summary>
-        /// The padding scheme often used together with RSA encryption.
-        /// </summary>
+        // The padding scheme often used together with RSA encryption.
         private bool _optimalAsymmetricEncryptionPadding;
         public void setOptimalAsymmetricEncryptionPadding(bool padding)
         {
             _optimalAsymmetricEncryptionPadding = padding;
         }
-        /// <summary>
         // Key generation
-        /// </summary>
         public void GenerateKeys(int keySize, out string publicKey, out string privateKey)
         {
             using (var provider = new RSACryptoServiceProvider(keySize))
@@ -27,25 +23,13 @@ namespace Rsa_algo
                 privateKey = provider.ToXmlString(true);
             }
         }
-        /// <summary>
-        /// Converts the RSA-encrypted text into a string
-        /// </summary>
-        /// <param name="text">The plain text input</param>
-        /// <param name="publicKeyXml">The RSA public key in XML format</param>
-        /// <param name="keySize">The RSA key length</param>
-        /// <returns>The the RSA-encrypted text</returns>
+        // Converts the RSA-encrypted text into a string
         public string Encrypt(string text, string publicKeyXml, int keySize)
         {
             var encrypted = EncryptByteArray(Encoding.UTF8.GetBytes(text), publicKeyXml, keySize);
             return Convert.ToBase64String(encrypted);
         }
-        /// <summary>
-        /// Gets and validates the RSA-encrypted text as a byte array
-        /// </summary>
-        /// <param name="data">The plain text in byte array format</param>
-        /// <param name="publicKeyXml">The RSA public key in XML format</param>
-        /// <param name="keySize">The RSA key length</param>
-        /// <returns>The the RSA-encrypted byte array</returns>
+        // Gets and validates the RSA-encrypted text as a byte array
         private byte[] EncryptByteArray(byte[] data, string publicKeyXml, int keySize)
         {
             int maxLength = GetMaxDataLength(keySize);
@@ -73,25 +57,13 @@ namespace Rsa_algo
                 return null;
             }
         }
-        /// <summary>
-        /// Converts the RSA-decrypted text into a string
-        /// </summary>
-        /// <param name="text">The plain text input</param>
-        /// <param name="publicKeyXml">The RSA public key in XML format</param>
-        /// <param name="keySize">The RSA key length</param>
-        /// <returns>The the RSA-decrypted text</returns>
+        // Converts the RSA-decrypted text into a string
         public string Decrypt(string text, string publicAndPrivateKeyXml, int keySize)
         {
             var decrypted = DecryptByteArray(Convert.FromBase64String(text), publicAndPrivateKeyXml, keySize);
             return Encoding.UTF8.GetString(decrypted);
         }
-        /// <summary>
-        /// Gets and validates the RSA-decrypted text as a byte array
-        /// </summary>
-        /// <param name="data">The plain text in byte array format</param>
-        /// <param name="publicKeyXml">The RSA public key in XML format</param>
-        /// <param name="keySize">The RSA key length</param>
-        /// <returns>The the RSA-decrypted byte array</returns>
+        // Gets and validates the RSA-decrypted text as a byte array
         private byte[] DecryptByteArray(byte[] data, string publicAndPrivateKeyXml, int keySize)
         {
             if (!IsKeySizeValid(keySize))
@@ -113,11 +85,7 @@ namespace Rsa_algo
                 return null;
             }
         }
-        /// <summary>
-        /// Gets the maximum data length for a given key
-        /// </summary>       
-        /// <param name="keySize">The RSA key length</param>
-        /// <returns>The maximum allowable data length</returns>
+        // Gets the maximum data length for a given key
         public int GetMaxDataLength(int keySize)
         {
             if (_optimalAsymmetricEncryptionPadding)
@@ -126,21 +94,14 @@ namespace Rsa_algo
             }
             return ((keySize - 384) / 8) + 37;
         }
-        /// <summary>
-        /// Checks if the given key size if valid
-        /// </summary>       
-        /// <param name="keySize">The RSA key length</param>
-        /// <returns>True if valid; false otherwise</returns>
+        // Checks if the given key size if valid
         public bool IsKeySizeValid(int keySize)
         {
             return keySize >= 384 &&
                    keySize <= 16384 &&
                    keySize % 8 == 0;
         }
-        /// <summary>
         // File encryption algorithm
-        /// </summary>
-        ///
         public void fsEncrypt(string inFile, string publicAndPrivateKeyXml, int keySize)
         {
             EncryptFile(inFile, publicAndPrivateKeyXml, keySize);
@@ -232,9 +193,7 @@ namespace Rsa_algo
                 Console.WriteLine(e.Message);
             }
         }
-        /// <summary>
         // File decryption algorithm
-        /// </summary>
         public void fsDecrypt(string inFile, string publicAndPrivateKeyXml, int keySize)
         {
             DecryptFile(inFile, publicAndPrivateKeyXml, keySize);

@@ -64,7 +64,7 @@ namespace Rsa_algo
             return Encoding.UTF8.GetString(decrypted);
         }
         // Gets and validates the RSA-decrypted text as a byte array
-        private byte[] DecryptByteArray(byte[] data, string publicAndPrivateKeyXml, int keySize)
+        private byte[] DecryptByteArray(byte[] data, string PrivateKeyXml, int keySize)
         {
             if (!IsKeySizeValid(keySize))
             {
@@ -75,7 +75,7 @@ namespace Rsa_algo
             {
                 using (var provider = new RSACryptoServiceProvider(keySize))
                 {
-                    provider.FromXmlString(publicAndPrivateKeyXml);
+                    provider.FromXmlString(PrivateKeyXml);
                     return provider.Decrypt(data, _optimalAsymmetricEncryptionPadding);
                 }
             }

@@ -17,14 +17,15 @@ namespace Rsa_algo
 {
     public partial class rsaApp : Form
     {
+        private Rsa rsa;
         public rsaApp()
         {
             InitializeComponent();
+            rsa = new Rsa();
         }
         private void btnEncrypt_Click(object sender, EventArgs e)
         {
             // key encryption
-            Rsa rsa = new Rsa();
             string encrypted = rsa.Encrypt(tbKey.Text, tbPublicKey.Text, Convert.ToInt32(tbKeySize.Text));
             if (!String.IsNullOrEmpty(encrypted))
                 doWorker(); // do something...
@@ -34,7 +35,6 @@ namespace Rsa_algo
         private void btnDecrypt_Click(object sender, EventArgs e)
         {
             // key decryption
-            Rsa rsa = new Rsa();
             string decrypted = rsa.Decrypt(tbKey.Text, tbPrivateKey.Text, Convert.ToInt32(tbKeySize.Text));
             if (!String.IsNullOrEmpty(decrypted))
                 doWorker(); // do something...
@@ -46,6 +46,8 @@ namespace Rsa_algo
             // Cleanup boxes with key and result
             tbResult.Text = null;
             tbKey.Text = null;
+            btnCopy.Visible = false;
+            btnExport.Visible = false;
         }
         private void btnCopy_Click(object sender, EventArgs e)
         {
@@ -57,7 +59,6 @@ namespace Rsa_algo
             if (String.IsNullOrWhiteSpace(tbKeySize.Text))
                 return;
 
-            Rsa rsa = new Rsa();
             string publicKey, privateKey;
             rsa.GenerateKeys(Convert.ToInt32(tbKeySize.Text), out publicKey, out privateKey);
             doWorker(); // do something...
@@ -88,24 +89,15 @@ namespace Rsa_algo
         }
         private void mViewHelp_Click(object sender, EventArgs e)
         {
-            if (!boxHelp.Visible)
-                boxHelp.Visible = true;
-            else
-                boxHelp.Visible = false;
+           boxHelp.Visible = !boxHelp.Visible;
         }
         private void mAbout_Click(object sender, EventArgs e)
         {
-            if (!boxAbout.Visible)
-                boxAbout.Visible = true;
-            else
-                boxAbout.Visible = false;
+           boxAbout.Visible = !boxAbout.Visible;
         }
         private void mSettings_Click(object sender, EventArgs e)
         {
-            if (!boxSettings.Visible)
-                boxSettings.Visible = true;
-            else
-                boxSettings.Visible = false;
+           boxSettings.Visible = !boxSettings.Visible;
         }
         private void btnLoadFile_Click(object sender, EventArgs e)
         {
@@ -153,7 +145,6 @@ namespace Rsa_algo
             if (String.IsNullOrWhiteSpace(ofdiag.FileName))
                 return;
 
-            Rsa rsa = new Rsa();
             rsa.fsEncrypt(ofdiag.FileName, tbPublicKey.Text, Convert.ToInt32(tbKeySize.Text));
             doWorker(); // do something...
         }
@@ -163,7 +154,6 @@ namespace Rsa_algo
             if (String.IsNullOrWhiteSpace(ofdiag.FileName))
                 return;
 
-            Rsa rsa = new Rsa();
             rsa.fsDecrypt(ofdiag.FileName, tbPrivateKey.Text, Convert.ToInt32(tbKeySize.Text));
             doWorker(); // do something...
         }
@@ -175,12 +165,11 @@ namespace Rsa_algo
         }
         private void chOptimalPadding_CheckedChanged(object sender, EventArgs e)
         {
-            Rsa rsa = new Rsa();
             rsa.setOptimalAsymmetricEncryptionPadding(chLogs.Checked);
         }
         private void lbGithub_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            // Navigate to a URL.
+            // Navigate to a URL
             System.Diagnostics.Process.Start("https://github.com/Eliminationzx/RSA-algo");
         }
 
@@ -218,7 +207,6 @@ namespace Rsa_algo
         {
             if (!btnCopy.Visible)
                 btnCopy.Visible = true;
-
             if (!btnExport.Visible)
                 btnExport.Visible = true;
         }

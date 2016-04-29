@@ -4,8 +4,17 @@
 Application for en/de-cryption with RSA method.
 
 Basic functions:
-* text en/de-cryption
-* file en/de-cryption
-* export keys
-* import keys
-* logging
+* Text en/de-cryption
+* File en/de-cryption
+* Export keys
+* Import keys
+* Logging
+* Setting
+
+## Requirements
+* OS Windows 7/8/10
+* 3 - 20 MB free space
+
+## Links
+
+[Wiki](https://simple.wikipedia.org/wiki/RSA_(algorithm))

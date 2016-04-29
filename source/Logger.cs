@@ -11,10 +11,10 @@ namespace Rsa_algo
 {
     class Logger
     {
-        private bool _useLogs;
-        private string _path;
-        private string _name;
-        private long _size;
+        private bool _useLogs; // Use logs flag
+        private string _path; // Log path
+        private string _name; // Log name
+        private long _size; // Log size
         public Logger(bool use, string path, string name, long size)
         {
             _useLogs = use;
@@ -24,13 +24,13 @@ namespace Rsa_algo
         }
         public void outError(string str, object args)
         {
-            if (!_useLogs)
-                return;
-
-            string path = _path + _name;
-            string msg = str + args;
-            DateTime date = DateTime.Now;
-            writeLine(path, msg, date);
+            if (_useLogs)
+            {
+                string path = _path + _name;
+                string msg = str + args;
+                DateTime date = DateTime.Now;
+                writeLine(path, msg, date);
+            }
         }
         private void writeLine(string path, string msg, DateTime date)
         {

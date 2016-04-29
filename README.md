@@ -21,7 +21,7 @@ Application for en/de-cryption with RSA method.
 - Use optimal padding: Enable/Disable OAEP
 - Key size : encryption key size (bytes)
 
-**Tab files:*
+**Tab files:**
 *Required to en/de-crypt files*
 
 **Tab text:**

@@ -33,77 +33,63 @@
             this.tbResult = new System.Windows.Forms.TextBox();
             this.savediag = new System.Windows.Forms.SaveFileDialog();
             this.ofdiag = new System.Windows.Forms.OpenFileDialog();
-            this.pb = new System.Windows.Forms.ProgressBar();
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.mHelp = new System.Windows.Forms.ToolStripMenuItem();
-            this.mViewHelp = new System.Windows.Forms.ToolStripMenuItem();
-            this.mAbout = new System.Windows.Forms.ToolStripMenuItem();
-            this.mSettings = new System.Windows.Forms.ToolStripMenuItem();
             this.btnEncrypt = new System.Windows.Forms.Button();
             this.btnDecrypt = new System.Windows.Forms.Button();
-            this.btnFlush = new System.Windows.Forms.Button();
             this.btnCopy = new System.Windows.Forms.Button();
             this.tbPublicKey = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.tbPrivateKey = new System.Windows.Forms.TextBox();
             this.btnInit = new System.Windows.Forms.Button();
-            this.tbKeySize = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.boxSettings = new System.Windows.Forms.GroupBox();
-            this.chOptimalPadding = new System.Windows.Forms.CheckBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.tbLogName = new System.Windows.Forms.TextBox();
-            this.tbLogPath = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.chLogs = new System.Windows.Forms.CheckBox();
-            this.boxAbout = new System.Windows.Forms.GroupBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.lbGithub = new System.Windows.Forms.LinkLabel();
-            this.tbAbout = new System.Windows.Forms.TextBox();
             this.btnLoadFile = new System.Windows.Forms.Button();
             this.tbLoad = new System.Windows.Forms.TextBox();
             this.btnEncryptFile = new System.Windows.Forms.Button();
             this.btnDecryptFile = new System.Windows.Forms.Button();
             this.tabChoice = new System.Windows.Forms.TabControl();
             this.tabText = new System.Windows.Forms.TabPage();
-            this.btnExport = new System.Windows.Forms.Button();
             this.tabFile = new System.Windows.Forms.TabPage();
             this.tbLoadResult = new System.Windows.Forms.TextBox();
-            this.boxHelp = new System.Windows.Forms.GroupBox();
-            this.btnGuideHelp = new System.Windows.Forms.Button();
-            this.btnSettingsHelp = new System.Windows.Forms.Button();
-            this.tbHelp = new System.Windows.Forms.TextBox();
-            this.menuStrip1.SuspendLayout();
-            this.boxSettings.SuspendLayout();
-            this.boxAbout.SuspendLayout();
+            this.btnImport = new System.Windows.Forms.Button();
+            this.btnExport = new System.Windows.Forms.Button();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tbLogPath = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.tbLogName = new System.Windows.Forms.TextBox();
+            this.tbLogSize = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.chLogs = new System.Windows.Forms.CheckBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.tbKeySize = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.chPadding = new System.Windows.Forms.CheckBox();
+            this.btnSaveSettings = new System.Windows.Forms.Button();
             this.tabChoice.SuspendLayout();
             this.tabText.SuspendLayout();
             this.tabFile.SuspendLayout();
-            this.boxHelp.SuspendLayout();
+            this.tabPage1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tbKey
             // 
-            this.tbKey.Location = new System.Drawing.Point(56, 28);
+            this.tbKey.Location = new System.Drawing.Point(90, 21);
             this.tbKey.Multiline = true;
             this.tbKey.Name = "tbKey";
             this.tbKey.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbKey.Size = new System.Drawing.Size(437, 60);
+            this.tbKey.Size = new System.Drawing.Size(403, 57);
             this.tbKey.TabIndex = 4;
             // 
             // tbResult
             // 
             this.tbResult.BackColor = System.Drawing.SystemColors.Control;
-            this.tbResult.Location = new System.Drawing.Point(53, 172);
+            this.tbResult.Location = new System.Drawing.Point(90, 106);
             this.tbResult.Multiline = true;
             this.tbResult.Name = "tbResult";
             this.tbResult.ReadOnly = true;
             this.tbResult.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbResult.Size = new System.Drawing.Size(437, 60);
+            this.tbResult.Size = new System.Drawing.Size(403, 40);
             this.tbResult.TabIndex = 5;
-            this.tbResult.TextChanged += new System.EventHandler(this.tbResult_TextChanged);
             // 
             // savediag
             // 
@@ -113,59 +99,11 @@
             // 
             this.ofdiag.Tag = "";
             // 
-            // pb
-            // 
-            this.pb.Location = new System.Drawing.Point(26, 43);
-            this.pb.Name = "pb";
-            this.pb.Size = new System.Drawing.Size(484, 22);
-            this.pb.TabIndex = 7;
-            // 
-            // menuStrip1
-            // 
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mHelp,
-            this.mSettings});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(558, 24);
-            this.menuStrip1.TabIndex = 12;
-            this.menuStrip1.Text = "menuStrip1";
-            // 
-            // mHelp
-            // 
-            this.mHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mViewHelp,
-            this.mAbout});
-            this.mHelp.Name = "mHelp";
-            this.mHelp.Size = new System.Drawing.Size(44, 20);
-            this.mHelp.Text = "Help";
-            // 
-            // mViewHelp
-            // 
-            this.mViewHelp.Name = "mViewHelp";
-            this.mViewHelp.Size = new System.Drawing.Size(125, 22);
-            this.mViewHelp.Text = "View help";
-            this.mViewHelp.Click += new System.EventHandler(this.mViewHelp_Click);
-            // 
-            // mAbout
-            // 
-            this.mAbout.Name = "mAbout";
-            this.mAbout.Size = new System.Drawing.Size(125, 22);
-            this.mAbout.Text = "About";
-            this.mAbout.Click += new System.EventHandler(this.mAbout_Click);
-            // 
-            // mSettings
-            // 
-            this.mSettings.Name = "mSettings";
-            this.mSettings.Size = new System.Drawing.Size(61, 20);
-            this.mSettings.Text = "Settings";
-            this.mSettings.Click += new System.EventHandler(this.mSettings_Click);
-            // 
             // btnEncrypt
             // 
-            this.btnEncrypt.Location = new System.Drawing.Point(126, 114);
+            this.btnEncrypt.Location = new System.Drawing.Point(6, 19);
             this.btnEncrypt.Name = "btnEncrypt";
-            this.btnEncrypt.Size = new System.Drawing.Size(103, 38);
+            this.btnEncrypt.Size = new System.Drawing.Size(78, 22);
             this.btnEncrypt.TabIndex = 13;
             this.btnEncrypt.Text = "Encryption";
             this.btnEncrypt.UseVisualStyleBackColor = true;
@@ -173,40 +111,29 @@
             // 
             // btnDecrypt
             // 
-            this.btnDecrypt.Location = new System.Drawing.Point(265, 114);
+            this.btnDecrypt.Location = new System.Drawing.Point(6, 56);
             this.btnDecrypt.Name = "btnDecrypt";
-            this.btnDecrypt.Size = new System.Drawing.Size(103, 38);
+            this.btnDecrypt.Size = new System.Drawing.Size(78, 22);
             this.btnDecrypt.TabIndex = 14;
             this.btnDecrypt.Text = "Decryption";
             this.btnDecrypt.UseVisualStyleBackColor = true;
             this.btnDecrypt.Click += new System.EventHandler(this.btnDecrypt_Click);
             // 
-            // btnFlush
-            // 
-            this.btnFlush.Location = new System.Drawing.Point(6, 28);
-            this.btnFlush.Name = "btnFlush";
-            this.btnFlush.Size = new System.Drawing.Size(41, 23);
-            this.btnFlush.TabIndex = 15;
-            this.btnFlush.Text = "Flush";
-            this.btnFlush.UseVisualStyleBackColor = true;
-            this.btnFlush.Click += new System.EventHandler(this.btnFlush_Click);
-            // 
             // btnCopy
             // 
-            this.btnCopy.Location = new System.Drawing.Point(6, 172);
+            this.btnCopy.Location = new System.Drawing.Point(6, 115);
             this.btnCopy.Name = "btnCopy";
-            this.btnCopy.Size = new System.Drawing.Size(41, 23);
+            this.btnCopy.Size = new System.Drawing.Size(78, 21);
             this.btnCopy.TabIndex = 16;
             this.btnCopy.Text = "Copy";
             this.btnCopy.UseVisualStyleBackColor = true;
-            this.btnCopy.Visible = false;
             this.btnCopy.Click += new System.EventHandler(this.btnCopy_Click);
             // 
             // tbPublicKey
             // 
-            this.tbPublicKey.Location = new System.Drawing.Point(295, 117);
+            this.tbPublicKey.Location = new System.Drawing.Point(268, 31);
             this.tbPublicKey.Name = "tbPublicKey";
-            this.tbPublicKey.Size = new System.Drawing.Size(215, 20);
+            this.tbPublicKey.Size = new System.Drawing.Size(247, 20);
             this.tbPublicKey.TabIndex = 17;
             // 
             // label2
@@ -214,7 +141,7 @@
             this.label2.AutoSize = true;
             this.label2.BackColor = System.Drawing.SystemColors.Control;
             this.label2.Cursor = System.Windows.Forms.Cursors.Default;
-            this.label2.Location = new System.Drawing.Point(230, 120);
+            this.label2.Location = new System.Drawing.Point(203, 34);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(59, 13);
             this.label2.TabIndex = 18;
@@ -225,7 +152,7 @@
             this.label3.AutoSize = true;
             this.label3.BackColor = System.Drawing.SystemColors.Control;
             this.label3.Cursor = System.Windows.Forms.Cursors.Default;
-            this.label3.Location = new System.Drawing.Point(226, 174);
+            this.label3.Location = new System.Drawing.Point(199, 88);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(63, 13);
             this.label3.TabIndex = 19;
@@ -233,174 +160,26 @@
             // 
             // tbPrivateKey
             // 
-            this.tbPrivateKey.Location = new System.Drawing.Point(295, 171);
+            this.tbPrivateKey.Location = new System.Drawing.Point(268, 85);
             this.tbPrivateKey.Name = "tbPrivateKey";
-            this.tbPrivateKey.Size = new System.Drawing.Size(215, 20);
+            this.tbPrivateKey.Size = new System.Drawing.Size(247, 20);
             this.tbPrivateKey.TabIndex = 20;
             // 
             // btnInit
             // 
-            this.btnInit.Location = new System.Drawing.Point(58, 129);
+            this.btnInit.Location = new System.Drawing.Point(12, 31);
             this.btnInit.Name = "btnInit";
-            this.btnInit.Size = new System.Drawing.Size(125, 43);
+            this.btnInit.Size = new System.Drawing.Size(163, 43);
             this.btnInit.TabIndex = 21;
-            this.btnInit.Text = "Initialize";
+            this.btnInit.Text = "Generate";
             this.btnInit.UseVisualStyleBackColor = true;
-            this.btnInit.Click += new System.EventHandler(this.btnInit_Click);
-            // 
-            // tbKeySize
-            // 
-            this.tbKeySize.Location = new System.Drawing.Point(61, 27);
-            this.tbKeySize.Name = "tbKeySize";
-            this.tbKeySize.Size = new System.Drawing.Size(73, 20);
-            this.tbKeySize.TabIndex = 22;
-            this.tbKeySize.Text = "1024";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 30);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(49, 13);
-            this.label1.TabIndex = 23;
-            this.label1.Text = "Key size:";
-            // 
-            // boxSettings
-            // 
-            this.boxSettings.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.boxSettings.Controls.Add(this.chOptimalPadding);
-            this.boxSettings.Controls.Add(this.label5);
-            this.boxSettings.Controls.Add(this.tbLogName);
-            this.boxSettings.Controls.Add(this.tbLogPath);
-            this.boxSettings.Controls.Add(this.label4);
-            this.boxSettings.Controls.Add(this.chLogs);
-            this.boxSettings.Controls.Add(this.label1);
-            this.boxSettings.Controls.Add(this.tbKeySize);
-            this.boxSettings.Location = new System.Drawing.Point(95, 27);
-            this.boxSettings.Name = "boxSettings";
-            this.boxSettings.Size = new System.Drawing.Size(194, 160);
-            this.boxSettings.TabIndex = 24;
-            this.boxSettings.TabStop = false;
-            this.boxSettings.Text = "Settings";
-            this.boxSettings.Visible = false;
-            // 
-            // chOptimalPadding
-            // 
-            this.chOptimalPadding.AutoSize = true;
-            this.chOptimalPadding.Location = new System.Drawing.Point(73, 67);
-            this.chOptimalPadding.Name = "chOptimalPadding";
-            this.chOptimalPadding.Size = new System.Drawing.Size(122, 17);
-            this.chOptimalPadding.TabIndex = 29;
-            this.chOptimalPadding.Text = "Use optimal padding";
-            this.chOptimalPadding.UseVisualStyleBackColor = true;
-            this.chOptimalPadding.CheckedChanged += new System.EventHandler(this.chOptimalPadding_CheckedChanged);
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(6, 128);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(57, 13);
-            this.label5.TabIndex = 28;
-            this.label5.Text = "Log name:";
-            // 
-            // tbLogName
-            // 
-            this.tbLogName.Location = new System.Drawing.Point(61, 125);
-            this.tbLogName.Name = "tbLogName";
-            this.tbLogName.ReadOnly = true;
-            this.tbLogName.Size = new System.Drawing.Size(112, 20);
-            this.tbLogName.TabIndex = 27;
-            // 
-            // tbLogPath
-            // 
-            this.tbLogPath.Location = new System.Drawing.Point(61, 90);
-            this.tbLogPath.Name = "tbLogPath";
-            this.tbLogPath.ReadOnly = true;
-            this.tbLogPath.Size = new System.Drawing.Size(112, 20);
-            this.tbLogPath.TabIndex = 26;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(6, 93);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(52, 13);
-            this.label4.TabIndex = 25;
-            this.label4.Text = "Log path:";
-            // 
-            // chLogs
-            // 
-            this.chLogs.AutoSize = true;
-            this.chLogs.Location = new System.Drawing.Point(9, 67);
-            this.chLogs.Name = "chLogs";
-            this.chLogs.Size = new System.Drawing.Size(67, 17);
-            this.chLogs.TabIndex = 0;
-            this.chLogs.Text = "Use logs";
-            this.chLogs.UseVisualStyleBackColor = true;
-            this.chLogs.CheckedChanged += new System.EventHandler(this.chLogs_CheckedChanged);
-            // 
-            // boxAbout
-            // 
-            this.boxAbout.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.boxAbout.Controls.Add(this.label7);
-            this.boxAbout.Controls.Add(this.label6);
-            this.boxAbout.Controls.Add(this.lbGithub);
-            this.boxAbout.Controls.Add(this.tbAbout);
-            this.boxAbout.Location = new System.Drawing.Point(46, 27);
-            this.boxAbout.Name = "boxAbout";
-            this.boxAbout.Size = new System.Drawing.Size(253, 173);
-            this.boxAbout.TabIndex = 30;
-            this.boxAbout.TabStop = false;
-            this.boxAbout.Text = "About";
-            this.boxAbout.Visible = false;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(91, 151);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(153, 13);
-            this.label7.TabIndex = 28;
-            this.label7.Text = "E-mail: timurdelimin@gmail.com";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(150, 128);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(94, 13);
-            this.label6.TabIndex = 27;
-            this.label6.Text = "Author: Elimination";
-            // 
-            // lbGithub
-            // 
-            this.lbGithub.AutoSize = true;
-            this.lbGithub.Location = new System.Drawing.Point(8, 132);
-            this.lbGithub.Name = "lbGithub";
-            this.lbGithub.Size = new System.Drawing.Size(85, 13);
-            this.lbGithub.TabIndex = 26;
-            this.lbGithub.TabStop = true;
-            this.lbGithub.Text = "RSA-Algo github";
-            this.lbGithub.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lbGithub_LinkClicked);
-            // 
-            // tbAbout
-            // 
-            this.tbAbout.Location = new System.Drawing.Point(11, 20);
-            this.tbAbout.Multiline = true;
-            this.tbAbout.Name = "tbAbout";
-            this.tbAbout.ReadOnly = true;
-            this.tbAbout.Size = new System.Drawing.Size(232, 105);
-            this.tbAbout.TabIndex = 25;
-            this.tbAbout.Text = "RSA-Algo it\'s open source programm. \r\nIt\'s used RSA algorithm for en/de-cryption " +
-    "text and files. \r\nAlso you can send encrypted key to somebody.\r\nIf you want to h" +
-    "elp us - just click link below.";
+            this.btnInit.Click += new System.EventHandler(this.btnGenerate_Click);
             // 
             // btnLoadFile
             // 
-            this.btnLoadFile.Location = new System.Drawing.Point(32, 42);
+            this.btnLoadFile.Location = new System.Drawing.Point(6, 21);
             this.btnLoadFile.Name = "btnLoadFile";
-            this.btnLoadFile.Size = new System.Drawing.Size(75, 33);
+            this.btnLoadFile.Size = new System.Drawing.Size(77, 24);
             this.btnLoadFile.TabIndex = 25;
             this.btnLoadFile.Text = "Load";
             this.btnLoadFile.UseVisualStyleBackColor = true;
@@ -408,17 +187,17 @@
             // 
             // tbLoad
             // 
-            this.tbLoad.Location = new System.Drawing.Point(113, 49);
+            this.tbLoad.Location = new System.Drawing.Point(89, 24);
             this.tbLoad.Name = "tbLoad";
             this.tbLoad.ReadOnly = true;
-            this.tbLoad.Size = new System.Drawing.Size(351, 20);
+            this.tbLoad.Size = new System.Drawing.Size(392, 20);
             this.tbLoad.TabIndex = 26;
             // 
             // btnEncryptFile
             // 
-            this.btnEncryptFile.Location = new System.Drawing.Point(126, 114);
+            this.btnEncryptFile.Location = new System.Drawing.Point(6, 77);
             this.btnEncryptFile.Name = "btnEncryptFile";
-            this.btnEncryptFile.Size = new System.Drawing.Size(103, 38);
+            this.btnEncryptFile.Size = new System.Drawing.Size(77, 23);
             this.btnEncryptFile.TabIndex = 27;
             this.btnEncryptFile.Text = "Encryption";
             this.btnEncryptFile.UseVisualStyleBackColor = true;
@@ -426,9 +205,9 @@
             // 
             // btnDecryptFile
             // 
-            this.btnDecryptFile.Location = new System.Drawing.Point(265, 114);
+            this.btnDecryptFile.Location = new System.Drawing.Point(6, 117);
             this.btnDecryptFile.Name = "btnDecryptFile";
-            this.btnDecryptFile.Size = new System.Drawing.Size(103, 38);
+            this.btnDecryptFile.Size = new System.Drawing.Size(77, 22);
             this.btnDecryptFile.TabIndex = 28;
             this.btnDecryptFile.Text = "Decryption";
             this.btnDecryptFile.UseVisualStyleBackColor = true;
@@ -438,39 +217,27 @@
             // 
             this.tabChoice.Controls.Add(this.tabText);
             this.tabChoice.Controls.Add(this.tabFile);
-            this.tabChoice.Location = new System.Drawing.Point(26, 241);
+            this.tabChoice.Controls.Add(this.tabPage1);
+            this.tabChoice.Location = new System.Drawing.Point(12, 128);
             this.tabChoice.Name = "tabChoice";
             this.tabChoice.SelectedIndex = 0;
-            this.tabChoice.Size = new System.Drawing.Size(507, 280);
+            this.tabChoice.Size = new System.Drawing.Size(507, 181);
             this.tabChoice.TabIndex = 29;
             // 
             // tabText
             // 
-            this.tabText.Controls.Add(this.btnExport);
+            this.tabText.Controls.Add(this.btnCopy);
             this.tabText.Controls.Add(this.tbKey);
-            this.tabText.Controls.Add(this.btnFlush);
             this.tabText.Controls.Add(this.btnEncrypt);
             this.tabText.Controls.Add(this.btnDecrypt);
             this.tabText.Controls.Add(this.tbResult);
-            this.tabText.Controls.Add(this.btnCopy);
             this.tabText.Location = new System.Drawing.Point(4, 22);
             this.tabText.Name = "tabText";
             this.tabText.Padding = new System.Windows.Forms.Padding(3);
-            this.tabText.Size = new System.Drawing.Size(499, 254);
+            this.tabText.Size = new System.Drawing.Size(499, 155);
             this.tabText.TabIndex = 0;
             this.tabText.Text = "Text";
             this.tabText.UseVisualStyleBackColor = true;
-            // 
-            // btnExport
-            // 
-            this.btnExport.Location = new System.Drawing.Point(6, 209);
-            this.btnExport.Name = "btnExport";
-            this.btnExport.Size = new System.Drawing.Size(41, 23);
-            this.btnExport.TabIndex = 17;
-            this.btnExport.Text = "Exp";
-            this.btnExport.UseVisualStyleBackColor = true;
-            this.btnExport.Visible = false;
-            this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
             // 
             // tabFile
             // 
@@ -482,63 +249,173 @@
             this.tabFile.Location = new System.Drawing.Point(4, 22);
             this.tabFile.Name = "tabFile";
             this.tabFile.Padding = new System.Windows.Forms.Padding(3);
-            this.tabFile.Size = new System.Drawing.Size(499, 254);
+            this.tabFile.Size = new System.Drawing.Size(499, 155);
             this.tabFile.TabIndex = 1;
             this.tabFile.Text = "File";
             this.tabFile.UseVisualStyleBackColor = true;
             // 
             // tbLoadResult
             // 
-            this.tbLoadResult.Location = new System.Drawing.Point(16, 178);
+            this.tbLoadResult.Location = new System.Drawing.Point(89, 77);
             this.tbLoadResult.Multiline = true;
             this.tbLoadResult.Name = "tbLoadResult";
             this.tbLoadResult.ReadOnly = true;
             this.tbLoadResult.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbLoadResult.Size = new System.Drawing.Size(464, 57);
+            this.tbLoadResult.Size = new System.Drawing.Size(392, 62);
             this.tbLoadResult.TabIndex = 29;
             // 
-            // boxHelp
+            // btnImport
             // 
-            this.boxHelp.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.boxHelp.Controls.Add(this.btnGuideHelp);
-            this.boxHelp.Controls.Add(this.btnSettingsHelp);
-            this.boxHelp.Controls.Add(this.tbHelp);
-            this.boxHelp.Location = new System.Drawing.Point(46, 27);
-            this.boxHelp.Name = "boxHelp";
-            this.boxHelp.Size = new System.Drawing.Size(238, 195);
-            this.boxHelp.TabIndex = 31;
-            this.boxHelp.TabStop = false;
-            this.boxHelp.Text = "Help";
-            this.boxHelp.Visible = false;
+            this.btnImport.Location = new System.Drawing.Point(12, 75);
+            this.btnImport.Name = "btnImport";
+            this.btnImport.Size = new System.Drawing.Size(75, 30);
+            this.btnImport.TabIndex = 30;
+            this.btnImport.Text = "Import";
+            this.btnImport.UseVisualStyleBackColor = true;
+            this.btnImport.Click += new System.EventHandler(this.btnImport_Click);
             // 
-            // btnGuideHelp
+            // btnExport
             // 
-            this.btnGuideHelp.Location = new System.Drawing.Point(134, 23);
-            this.btnGuideHelp.Name = "btnGuideHelp";
-            this.btnGuideHelp.Size = new System.Drawing.Size(75, 23);
-            this.btnGuideHelp.TabIndex = 27;
-            this.btnGuideHelp.Text = "Guide";
-            this.btnGuideHelp.UseVisualStyleBackColor = true;
-            this.btnGuideHelp.Click += new System.EventHandler(this.btnGuideHelp_Click);
+            this.btnExport.Location = new System.Drawing.Point(93, 75);
+            this.btnExport.Name = "btnExport";
+            this.btnExport.Size = new System.Drawing.Size(82, 30);
+            this.btnExport.TabIndex = 31;
+            this.btnExport.Text = "Export";
+            this.btnExport.UseVisualStyleBackColor = true;
+            this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
             // 
-            // btnSettingsHelp
+            // tabPage1
             // 
-            this.btnSettingsHelp.Location = new System.Drawing.Point(24, 23);
-            this.btnSettingsHelp.Name = "btnSettingsHelp";
-            this.btnSettingsHelp.Size = new System.Drawing.Size(75, 23);
-            this.btnSettingsHelp.TabIndex = 26;
-            this.btnSettingsHelp.Text = "Settings";
-            this.btnSettingsHelp.UseVisualStyleBackColor = true;
-            this.btnSettingsHelp.Click += new System.EventHandler(this.btnSettingsHelp_Click);
+            this.tabPage1.Controls.Add(this.btnSaveSettings);
+            this.tabPage1.Controls.Add(this.chPadding);
+            this.tabPage1.Controls.Add(this.label8);
+            this.tabPage1.Controls.Add(this.tbKeySize);
+            this.tabPage1.Controls.Add(this.label7);
+            this.tabPage1.Controls.Add(this.chLogs);
+            this.tabPage1.Controls.Add(this.label6);
+            this.tabPage1.Controls.Add(this.label5);
+            this.tabPage1.Controls.Add(this.tbLogSize);
+            this.tabPage1.Controls.Add(this.tbLogName);
+            this.tabPage1.Controls.Add(this.label4);
+            this.tabPage1.Controls.Add(this.label1);
+            this.tabPage1.Controls.Add(this.tbLogPath);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(499, 155);
+            this.tabPage1.TabIndex = 2;
+            this.tabPage1.Text = "Settings";
+            this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // tbHelp
+            // tbLogPath
             // 
-            this.tbHelp.Location = new System.Drawing.Point(11, 58);
-            this.tbHelp.Multiline = true;
-            this.tbHelp.Name = "tbHelp";
-            this.tbHelp.ReadOnly = true;
-            this.tbHelp.Size = new System.Drawing.Size(215, 117);
-            this.tbHelp.TabIndex = 25;
+            this.tbLogPath.Location = new System.Drawing.Point(123, 43);
+            this.tbLogPath.Name = "tbLogPath";
+            this.tbLogPath.Size = new System.Drawing.Size(100, 20);
+            this.tbLogPath.TabIndex = 0;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(69, 46);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(52, 13);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Log path:";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(69, 84);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(57, 13);
+            this.label4.TabIndex = 2;
+            this.label4.Text = "Log name:";
+            // 
+            // tbLogName
+            // 
+            this.tbLogName.Location = new System.Drawing.Point(123, 81);
+            this.tbLogName.Name = "tbLogName";
+            this.tbLogName.Size = new System.Drawing.Size(100, 20);
+            this.tbLogName.TabIndex = 3;
+            // 
+            // tbLogSize
+            // 
+            this.tbLogSize.Location = new System.Drawing.Point(123, 118);
+            this.tbLogSize.Name = "tbLogSize";
+            this.tbLogSize.Size = new System.Drawing.Size(100, 20);
+            this.tbLogSize.TabIndex = 4;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(69, 121);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(49, 13);
+            this.label5.TabIndex = 5;
+            this.label5.Text = "Log size:";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(69, 17);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(51, 13);
+            this.label6.TabIndex = 6;
+            this.label6.Text = "Use logs:";
+            // 
+            // chLogs
+            // 
+            this.chLogs.AutoSize = true;
+            this.chLogs.Location = new System.Drawing.Point(123, 18);
+            this.chLogs.Name = "chLogs";
+            this.chLogs.Size = new System.Drawing.Size(15, 14);
+            this.chLogs.TabIndex = 7;
+            this.chLogs.UseVisualStyleBackColor = true;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(259, 42);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(49, 13);
+            this.label7.TabIndex = 8;
+            this.label7.Text = "Key size:";
+            // 
+            // tbKeySize
+            // 
+            this.tbKeySize.Location = new System.Drawing.Point(314, 39);
+            this.tbKeySize.Name = "tbKeySize";
+            this.tbKeySize.Size = new System.Drawing.Size(100, 20);
+            this.tbKeySize.TabIndex = 9;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(259, 70);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(106, 13);
+            this.label8.TabIndex = 10;
+            this.label8.Text = "Use optimal padding:";
+            // 
+            // chPadding
+            // 
+            this.chPadding.AutoSize = true;
+            this.chPadding.Location = new System.Drawing.Point(371, 70);
+            this.chPadding.Name = "chPadding";
+            this.chPadding.Size = new System.Drawing.Size(15, 14);
+            this.chPadding.TabIndex = 11;
+            this.chPadding.UseVisualStyleBackColor = true;
+            // 
+            // btnSaveSettings
+            // 
+            this.btnSaveSettings.Location = new System.Drawing.Point(262, 111);
+            this.btnSaveSettings.Name = "btnSaveSettings";
+            this.btnSaveSettings.Size = new System.Drawing.Size(152, 23);
+            this.btnSaveSettings.TabIndex = 12;
+            this.btnSaveSettings.Text = "Save settings";
+            this.btnSaveSettings.UseVisualStyleBackColor = true;
+            this.btnSaveSettings.Click += new System.EventHandler(this.btnSaveSettings_Click);
             // 
             // rsaApp
             // 
@@ -548,40 +425,30 @@
             this.BackColor = System.Drawing.SystemColors.Control;
             this.BackgroundImage = global::Rsa_algo.Properties.Resources.bg;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(558, 540);
-            this.Controls.Add(this.boxHelp);
-            this.Controls.Add(this.boxAbout);
+            this.ClientSize = new System.Drawing.Size(531, 322);
+            this.Controls.Add(this.btnExport);
+            this.Controls.Add(this.btnImport);
             this.Controls.Add(this.tabChoice);
-            this.Controls.Add(this.boxSettings);
             this.Controls.Add(this.btnInit);
             this.Controls.Add(this.tbPrivateKey);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.tbPublicKey);
-            this.Controls.Add(this.pb);
-            this.Controls.Add(this.menuStrip1);
             this.Cursor = System.Windows.Forms.Cursors.Default;
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.HelpButton = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MainMenuStrip = this.menuStrip1;
             this.Name = "rsaApp";
             this.Opacity = 0.92D;
             this.Text = "RSA Algo";
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
-            this.boxSettings.ResumeLayout(false);
-            this.boxSettings.PerformLayout();
-            this.boxAbout.ResumeLayout(false);
-            this.boxAbout.PerformLayout();
             this.tabChoice.ResumeLayout(false);
             this.tabText.ResumeLayout(false);
             this.tabText.PerformLayout();
             this.tabFile.ResumeLayout(false);
             this.tabFile.PerformLayout();
-            this.boxHelp.ResumeLayout(false);
-            this.boxHelp.PerformLayout();
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -593,29 +460,14 @@
         private System.Windows.Forms.TextBox tbResult;
         private System.Windows.Forms.SaveFileDialog savediag;
         private System.Windows.Forms.OpenFileDialog ofdiag;
-        private System.Windows.Forms.ProgressBar pb;
-        private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem mHelp;
-        private System.Windows.Forms.ToolStripMenuItem mViewHelp;
-        private System.Windows.Forms.ToolStripMenuItem mAbout;
         private System.Windows.Forms.Button btnEncrypt;
         private System.Windows.Forms.Button btnDecrypt;
-        private System.Windows.Forms.Button btnFlush;
         private System.Windows.Forms.Button btnCopy;
         private System.Windows.Forms.TextBox tbPublicKey;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox tbPrivateKey;
         private System.Windows.Forms.Button btnInit;
-        private System.Windows.Forms.TextBox tbKeySize;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ToolStripMenuItem mSettings;
-        private System.Windows.Forms.CheckBox chLogs;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox tbLogName;
-        private System.Windows.Forms.TextBox tbLogPath;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.GroupBox boxSettings;
         private System.Windows.Forms.Button btnLoadFile;
         private System.Windows.Forms.TextBox tbLoad;
         private System.Windows.Forms.Button btnEncryptFile;
@@ -623,18 +475,23 @@
         private System.Windows.Forms.TabControl tabChoice;
         private System.Windows.Forms.TabPage tabText;
         private System.Windows.Forms.TabPage tabFile;
-        private System.Windows.Forms.CheckBox chOptimalPadding;
         private System.Windows.Forms.TextBox tbLoadResult;
-        private System.Windows.Forms.GroupBox boxAbout;
-        private System.Windows.Forms.TextBox tbAbout;
-        private System.Windows.Forms.LinkLabel lbGithub;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.GroupBox boxHelp;
-        private System.Windows.Forms.TextBox tbHelp;
-        private System.Windows.Forms.Button btnGuideHelp;
-        private System.Windows.Forms.Button btnSettingsHelp;
+        private System.Windows.Forms.Button btnImport;
         private System.Windows.Forms.Button btnExport;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.CheckBox chPadding;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.TextBox tbKeySize;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.CheckBox chLogs;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox tbLogSize;
+        private System.Windows.Forms.TextBox tbLogName;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox tbLogPath;
+        private System.Windows.Forms.Button btnSaveSettings;
 
     }
 }

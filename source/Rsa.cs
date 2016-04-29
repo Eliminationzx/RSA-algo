@@ -10,83 +10,106 @@ namespace Rsa_algo
     {
         // The padding scheme often used together with RSA encryption.
         private bool _optimalAsymmetricEncryptionPadding;
-        public void setOptimalAsymmetricEncryptionPadding(bool padding)
+        private int _keySize;
+        private string _xmlPublicKey;
+        private string _xmlPrivateKey;
+        public Rsa(bool useOptimalPadding, int keySize)
         {
-            _optimalAsymmetricEncryptionPadding = padding;
+            _optimalAsymmetricEncryptionPadding = useOptimalPadding;
+            _xmlPrivateKey = null;
+            _xmlPublicKey = null;
+            _keySize = keySize;
+        }
+        public void setXmlKeys(string publicKey, string privateKey)
+        {
+            _xmlPrivateKey = privateKey;
+            _xmlPublicKey = publicKey;
+        }
+        public string getXmlPublicKey()
+        {
+            return _xmlPublicKey;
+        }
+        public string getXmlPrivateKey()
+        {
+            return _xmlPrivateKey;
         }
         // Key generation
-        public void GenerateKeys(int keySize, out string publicKey, out string privateKey)
+        public void GenerateKeys(out string publicKey, out string privateKey)
         {
-            using (var provider = new RSACryptoServiceProvider(keySize))
+            if (!IsKeySizeValid(_keySize))
             {
-                publicKey = provider.ToXmlString(false);
-                privateKey = provider.ToXmlString(true);
+                throw new ArgumentException("Key size is not valid", "_keySize");
             }
+
+            RSACryptoServiceProvider provider = new RSACryptoServiceProvider(_keySize);
+            publicKey = provider.ToXmlString(false);
+            privateKey = provider.ToXmlString(true);
+            setXmlKeys(publicKey, privateKey);
         }
         // Converts the RSA-encrypted text into a string
-        public string Encrypt(string text, string publicKeyXml, int keySize)
+        public string Encrypt(string text, string publicKeyXml)
         {
-            var encrypted = EncryptByteArray(Encoding.UTF8.GetBytes(text), publicKeyXml, keySize);
+            byte[] encrypted = EncryptByteArray(Encoding.UTF8.GetBytes(text), publicKeyXml);
             return Convert.ToBase64String(encrypted);
         }
         // Gets and validates the RSA-encrypted text as a byte array
-        private byte[] EncryptByteArray(byte[] data, string publicKeyXml, int keySize)
+        private byte[] EncryptByteArray(byte[] data, string publicKeyXml)
         {
-            int maxLength = GetMaxDataLength(keySize);
+            int maxLength = GetMaxDataLength(_keySize);
             if (data.Length > maxLength)
             {
                 throw new ArgumentException(String.Format("Maximum data length is {0}", maxLength), "data");
             }
 
-            if (!IsKeySizeValid(keySize))
+            if (!IsKeySizeValid(_keySize))
             {
-                throw new ArgumentException("Key size is not valid", "keySize");
+                throw new ArgumentException("Key size is not valid", "_keySize");
             }
 
             try
             {
-                using (var provider = new RSACryptoServiceProvider(keySize))
+                using (RSACryptoServiceProvider provider = new RSACryptoServiceProvider(_keySize))
                 {
                     provider.FromXmlString(publicKeyXml);
                     return provider.Encrypt(data, _optimalAsymmetricEncryptionPadding);
                 }
             }
-            catch (Exception e)
+            catch (CryptographicException e)
             {
                 Console.WriteLine(e.Message);
                 return null;
             }
         }
         // Converts the RSA-decrypted text into a string
-        public string Decrypt(string text, string publicAndPrivateKeyXml, int keySize)
+        public string Decrypt(string text, string publicAndPrivateKeyXml)
         {
-            var decrypted = DecryptByteArray(Convert.FromBase64String(text), publicAndPrivateKeyXml, keySize);
+            byte[] decrypted = DecryptByteArray(Convert.FromBase64String(text), publicAndPrivateKeyXml);
             return Encoding.UTF8.GetString(decrypted);
         }
         // Gets and validates the RSA-decrypted text as a byte array
-        private byte[] DecryptByteArray(byte[] data, string PrivateKeyXml, int keySize)
+        private byte[] DecryptByteArray(byte[] data, string PrivateKeyXml)
         {
-            if (!IsKeySizeValid(keySize))
+            if (!IsKeySizeValid(_keySize))
             {
-                throw new ArgumentException("Key size is not valid", "keySize");
+                throw new ArgumentException("Key size is not valid", "_keySize");
             }
 
             try
             {
-                using (var provider = new RSACryptoServiceProvider(keySize))
+                using (RSACryptoServiceProvider provider = new RSACryptoServiceProvider(_keySize))
                 {
                     provider.FromXmlString(PrivateKeyXml);
                     return provider.Decrypt(data, _optimalAsymmetricEncryptionPadding);
                 }
             }
-            catch (Exception e)
+            catch (CryptographicException e)
             {
                 Console.WriteLine(e.Message);
                 return null;
             }
         }
         // Gets the maximum data length for a given key
-        public int GetMaxDataLength(int keySize)
+        private int GetMaxDataLength(int keySize)
         {
             if (_optimalAsymmetricEncryptionPadding)
             {
@@ -95,18 +118,18 @@ namespace Rsa_algo
             return ((keySize - 384) / 8) + 37;
         }
         // Checks if the given key size if valid
-        public bool IsKeySizeValid(int keySize)
+        private bool IsKeySizeValid(int keySize)
         {
             return keySize >= 384 &&
                    keySize <= 16384 &&
                    keySize % 8 == 0;
         }
         // File encryption algorithm
-        public void fsEncrypt(string inFile, string publicAndPrivateKeyXml, int keySize)
+        public void fsEncrypt(string inFile, string publicAndPrivateKeyXml)
         {
-            EncryptFile(inFile, publicAndPrivateKeyXml, keySize);
+            EncryptFile(inFile, publicAndPrivateKeyXml);
         }
-        private void EncryptFile(string inFile, string publicAndPrivateKeyXml, int keySize)
+        private void EncryptFile(string inFile, string publicAndPrivateKeyXml)
         {
             // Create instance of Rijndael for
             // symetric encryption of the data
@@ -116,37 +139,37 @@ namespace Rsa_algo
             rjndl.Mode = CipherMode.CBC;
             ICryptoTransform transform = rjndl.CreateEncryptor();
 
-            // Use RSACryptoServiceProvider to
-            // enrypt the Rijndael key
-            // rsa is previously instantiated: 
-            //    rsa = new RSACryptoServiceProvider(cspp);
-            byte[] keyEncrypted = EncryptByteArray(rjndl.Key, publicAndPrivateKeyXml, keySize);
-
-            // Create byte arrays to contain
-            // the length values of the key and IV
-            byte[] LenK = new byte[4];
-            byte[] LenIV = new byte[4];
-
-            int lKey = keyEncrypted.Length;
-            LenK = BitConverter.GetBytes(lKey);
-            int lIV = rjndl.IV.Length;
-            LenIV = BitConverter.GetBytes(lIV);
-
-            // Write the following to the FileStream
-            // for the encrypted file (outFs):
-            // - length of the key
-            // - length of the IV
-            // - ecrypted key
-            // - the IV
-            // - the encrypted cipher content
-
-            int startFileName = inFile.LastIndexOf("\\") + 1;
-
-            // Change the file's extension to ".enc"
-            string outFile = inFile.Substring(startFileName, inFile.LastIndexOf(".") - startFileName) + ".enc";
-
             try
             {
+                // Use RSACryptoServiceProvider to
+                // enrypt the Rijndael key
+                // rsa is previously instantiated: 
+                //    rsa = new RSACryptoServiceProvider(cspp);
+                byte[] keyEncrypted = EncryptByteArray(rjndl.Key, publicAndPrivateKeyXml);
+
+                // Create byte arrays to contain
+                // the length values of the key and IV
+                byte[] LenK = new byte[4];
+                byte[] LenIV = new byte[4];
+
+                int lKey = keyEncrypted.Length;
+                LenK = BitConverter.GetBytes(lKey);
+                int lIV = rjndl.IV.Length;
+                LenIV = BitConverter.GetBytes(lIV);
+
+                // Write the following to the FileStream
+                // for the encrypted file (outFs):
+                // - length of the key
+                // - length of the IV
+                // - ecrypted key
+                // - the IV
+                // - the encrypted cipher content
+
+                int startFileName = inFile.LastIndexOf(@"\") + 1;
+
+                // Change the file's extension to ".enc"
+                string outFile = inFile.Substring(startFileName, inFile.LastIndexOf(".") - startFileName) + ".enc";
+            
                 using (FileStream outFs = new FileStream(outFile, FileMode.CreateNew))
                 {
                     outFs.Write(LenK, 0, 4);
@@ -188,17 +211,17 @@ namespace Rsa_algo
                     outFs.Close();
                 }
             }
-            catch (Exception e)
+            catch (CryptographicException e)
             {
                 Console.WriteLine(e.Message);
             }
         }
         // File decryption algorithm
-        public void fsDecrypt(string inFile, string publicAndPrivateKeyXml, int keySize)
+        public void fsDecrypt(string inFile, string publicAndPrivateKeyXml)
         {
-            DecryptFile(inFile, publicAndPrivateKeyXml, keySize);
+            DecryptFile(inFile, publicAndPrivateKeyXml);
         }
-        private void DecryptFile(string inFile, string publicAndPrivateKeyXml, int keySize)
+        private void DecryptFile(string inFile, string publicAndPrivateKeyXml)
         {
             // Create instance of Rijndael for
             // symetric decryption of the data
@@ -214,8 +237,10 @@ namespace Rsa_algo
             byte[] LenK = new byte[4];
             byte[] LenIV = new byte[4];
 
-            // Consruct the file name for the decrypted file
-            string outFile = inFile.Substring(0, inFile.LastIndexOf(".")) + ".dec";
+            int startFileName = inFile.LastIndexOf(@"\") + 1;
+
+            // Change the file's extension to ".dec"
+            string outFile = inFile.Substring(startFileName, inFile.LastIndexOf(".") - startFileName) + ".dec";
 
             try
             {
@@ -255,7 +280,7 @@ namespace Rsa_algo
                     inFs.Read(IV, 0, lenIV);
                     // Use RSACryptoServiceProvider
                     // to decrypt the Rijndael key
-                    byte[] KeyDecrypted = DecryptByteArray(KeyEncrypted, publicAndPrivateKeyXml, keySize);
+                    byte[] KeyDecrypted = DecryptByteArray(KeyEncrypted, publicAndPrivateKeyXml);
 
                     // Decrypt the key
                     ICryptoTransform transform = rjndl.CreateDecryptor(KeyDecrypted, IV);
@@ -300,7 +325,7 @@ namespace Rsa_algo
                     inFs.Close();
                 }
             }
-            catch (Exception e)
+            catch (CryptographicException e)
             {
                 Console.WriteLine(e.Message);
             }

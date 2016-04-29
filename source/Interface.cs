@@ -8,118 +8,108 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
-using System.Diagnostics;
-using System.Text.RegularExpressions;
-using System.Net.Mail;
-using System.Net;
 
 namespace Rsa_algo
 {
     public partial class rsaApp : Form
     {
         private Rsa rsa;
+        private Logger logger;
         public rsaApp()
         {
             InitializeComponent();
-            rsa = new Rsa();
+            InitializeOpenFileDiag();
+            InitializeSaveFileDiag();
+            InitializeSettings();
+            InitializeExtentions();
+        }
+        private void InitializeExtentions()
+        {
+            string path = tbLogPath.Text;
+            string name = tbLogName.Text;
+            long logSize = Convert.ToInt64(tbLogSize.Text);
+            bool use = chLogs.Checked;
+            bool padding = chPadding.Checked;
+            int keySize = Convert.ToInt32(tbKeySize.Text);
+            rsa = new Rsa(padding, keySize); // Rsa algorithm
+            logger = new Logger(use, path, name, logSize);  // Logger
+        }
+        private void InitializeSettings()
+        {
+            tbLogPath.Text = RsaAlgoSettings.Default["LogPathConf"].ToString();
+            tbLogName.Text = RsaAlgoSettings.Default["LogNameConf"].ToString();
+            tbLogSize.Text = RsaAlgoSettings.Default["LogSizeConf"].ToString();
+            chLogs.Checked = Convert.ToBoolean(RsaAlgoSettings.Default["UseLogsConf"]);
+            chPadding.Checked = Convert.ToBoolean(RsaAlgoSettings.Default["UseOptimalPaddingConf"]);
+            tbKeySize.Text = RsaAlgoSettings.Default["KeySizeConf"].ToString();
+        }
+        private void InitializeOpenFileDiag()
+        {
+            ofdiag.Filter = "All files (*.rsa)|*.rsa;";
+            ofdiag.Title = "Load file browser";
+        }
+        private void InitializeSaveFileDiag()
+        {
+            savediag.Title = "Save file browser";
+            savediag.Filter = "All files (*.rsa)|*.rsa;";
         }
         private void btnEncrypt_Click(object sender, EventArgs e)
         {
-            // key encryption
-            string encrypted = rsa.Encrypt(tbKey.Text, tbPublicKey.Text, Convert.ToInt32(tbKeySize.Text));
-            if (!String.IsNullOrEmpty(encrypted))
-                doWorker(); // do something...
+            if (String.IsNullOrWhiteSpace(tbPublicKey.Text))
+                return;
+            // Key encryption
+            string encrypted = rsa.Encrypt(tbKey.Text, tbPublicKey.Text);
             tbResult.Text = encrypted;
-            outError("[" + DateTime.Now + "] RSA encrypted: ", encrypted);
+            logger.outError("RSA encrypted: ", encrypted);
         }
         private void btnDecrypt_Click(object sender, EventArgs e)
         {
-            // key decryption
-            string decrypted = rsa.Decrypt(tbKey.Text, tbPrivateKey.Text, Convert.ToInt32(tbKeySize.Text));
-            if (!String.IsNullOrEmpty(decrypted))
-                doWorker(); // do something...
+            if (String.IsNullOrWhiteSpace(tbPrivateKey.Text))
+                return;
+            // Key decryption
+            string decrypted = rsa.Decrypt(tbKey.Text, tbPrivateKey.Text);
             tbResult.Text = decrypted;
-            outError("[" + DateTime.Now + "] RSA decrypted: ", decrypted);
+            logger.outError("RSA decrypted: ", decrypted);
         }
         private void btnFlush_Click(object sender, EventArgs e)
         {
             // Cleanup boxes with key and result
             tbResult.Text = null;
             tbKey.Text = null;
-            btnCopy.Visible = false;
-            btnExport.Visible = false;
         }
         private void btnCopy_Click(object sender, EventArgs e)
         {
             // Select & copy
             tbSelectAndCopy(tbResult);
         }
-        private void btnInit_Click(object sender, EventArgs e)
+        private void btnGenerate_Click(object sender, EventArgs e)
         {
-            if (String.IsNullOrWhiteSpace(tbKeySize.Text))
-                return;
-
             string publicKey, privateKey;
-            rsa.GenerateKeys(Convert.ToInt32(tbKeySize.Text), out publicKey, out privateKey);
-            doWorker(); // do something...
+            rsa.GenerateKeys(out publicKey, out privateKey);
             tbPublicKey.Text = publicKey;
             tbPrivateKey.Text = privateKey;
-            outError("RSA public key: ", publicKey);
-            outError("RSA private key: ", privateKey);
-        }
-        private void outError(string str, object args, bool useMb = false)
-        {
-            if (useMb)
-                MessageBox.Show(str + args);
-
-            if (chLogs.Checked)
-            {
-                if (String.IsNullOrWhiteSpace(tbLogName.Text))
-                    return;
-
-                // create log directory if doesn't exist
-                if (!Directory.Exists(tbLogPath.Text))
-                    Directory.CreateDirectory(tbLogPath.Text);
-
-                StreamWriter file = new StreamWriter(tbLogPath.Text + tbLogName.Text, false);
-                file.WriteLine(str + args);
-                file.Close();
-                file.Dispose();
-            }
-        }
-        private void mViewHelp_Click(object sender, EventArgs e)
-        {
-           boxHelp.Visible = !boxHelp.Visible;
-        }
-        private void mAbout_Click(object sender, EventArgs e)
-        {
-           boxAbout.Visible = !boxAbout.Visible;
-        }
-        private void mSettings_Click(object sender, EventArgs e)
-        {
-           boxSettings.Visible = !boxSettings.Visible;
+            logger.outError("RSA public key: ", publicKey);
+            logger.outError("RSA private key: ", privateKey);
         }
         private void btnLoadFile_Click(object sender, EventArgs e)
         {
-            if (ofdiag.ShowDialog() != DialogResult.OK)
-                return;
+            if (ofdiag.ShowDialog() == DialogResult.OK)
+            {
+                string name = ofdiag.FileName;
+                if (String.IsNullOrWhiteSpace(name))
+                    return;
 
-            string name = ofdiag.FileName;
-            if (String.IsNullOrWhiteSpace(name))
-                return;
+                FileInfo fi = new FileInfo(name);
+                long length = fi.Length;
+                tbLoad.Text = name;
+                tbLoadResult.Text = "File name: " + fi.Name + "\r\n";
+                tbLoadResult.Text += "File size: " + length + " bytes\r\n";
 
-            doWorker(); // do something...
-
-            FileInfo fi = new FileInfo(name);
-            long length = fi.Length;
-            tbLoad.Text = name;
-            tbLoadResult.Text = "File name: " + fi.Name + "\r\n";
-            tbLoadResult.Text += "File size: " + length + " bytes\r\n";
-
-            if (fi.Name.Contains(".enc"))
-                tbLoadResult.Text += "Attributes: encrypted \r\n";
-            else
-                tbLoadResult.Text += "Attributes: none";
+                if (fi.Name.Contains(".enc"))
+                    tbLoadResult.Text += "Attributes: encrypted \r\n";
+                else
+                    tbLoadResult.Text += "Attributes: none";
+            }
         }
         private void outFile(string path, string str, object args)
         {
@@ -128,34 +118,16 @@ namespace Rsa_algo
             file.Close();
             file.Dispose();
         }
-        private void doWorker()
-        {
-            pb.Maximum = 100;
-            for (int i = 0; i < pb.Maximum; ++i)
-                pb.Increment(i);
-            pb.Value = 0;
-        }
-        private void chLogs_CheckedChanged(object sender, EventArgs e)
-        {
-            tbLogName.ReadOnly = !chLogs.Checked;
-            tbLogPath.ReadOnly = !chLogs.Checked;
-        }
         private void btnEncryptFile_Click(object sender, EventArgs e)
         {
-            if (String.IsNullOrWhiteSpace(ofdiag.FileName))
-                return;
-
-            rsa.fsEncrypt(ofdiag.FileName, tbPublicKey.Text, Convert.ToInt32(tbKeySize.Text));
-            doWorker(); // do something...
+            if (!String.IsNullOrWhiteSpace(tbPublicKey.Text))
+                rsa.fsEncrypt(ofdiag.FileName, tbPublicKey.Text);
         }
 
         private void btnDecryptFile_Click(object sender, EventArgs e)
         {
-            if (String.IsNullOrWhiteSpace(ofdiag.FileName))
-                return;
-
-            rsa.fsDecrypt(ofdiag.FileName, tbPrivateKey.Text, Convert.ToInt32(tbKeySize.Text));
-            doWorker(); // do something...
+            if (!String.IsNullOrWhiteSpace(tbPrivateKey.Text))
+                rsa.fsDecrypt(ofdiag.FileName, tbPrivateKey.Text);
         }
         private void tbSelectAndCopy(TextBox tb)
         {
@@ -163,52 +135,52 @@ namespace Rsa_algo
             tb.Focus();
             tb.Copy();
         }
-        private void chOptimalPadding_CheckedChanged(object sender, EventArgs e)
+        private void btnImport_Click(object sender, EventArgs e)
         {
-            rsa.setOptimalAsymmetricEncryptionPadding(chLogs.Checked);
+            if (ofdiag.ShowDialog() == DialogResult.OK)
+            {
+                string publicKey = null;
+                string privateKey = null;
+                string line = null;
+                string filename = ofdiag.FileName;
+                using (StreamReader sr = new StreamReader(filename))
+                {
+                    while ((line = sr.ReadLine()) != null)
+                    {
+                        if (line.Contains("<RSAKeyValue>"))
+                        {
+                            // Find private key
+                            if (line.Contains("<P>"))
+                                privateKey = line;
+                            else
+                                publicKey = line;
+                        }
+                    }
+                }
+                rsa.setXmlKeys(publicKey, privateKey);
+                tbPublicKey.Text = publicKey;
+                tbPrivateKey.Text = privateKey;
+            }
         }
-        private void lbGithub_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            // Navigate to a URL
-            System.Diagnostics.Process.Start("https://github.com/Eliminationzx/RSA-algo");
-        }
-
-        private void btnSettingsHelp_Click(object sender, EventArgs e)
-        {
-            tbHelp.Text = "Settings:\r\n";
-            tbHelp.Text += "* Key size - size of key in bytes\r\n";
-            tbHelp.Text += "* Use logs - option that enable/disable logs\r\n";
-            tbHelp.Text += "* Log path - directory for logs\r\n";
-            tbHelp.Text += "* Log name - name of logs\r\n";
-            tbHelp.Text += "* Use optimal padding - option that enable/disable optimal padding of file decryption";
-        }
-        private void btnGuideHelp_Click(object sender, EventArgs e)
-        {
-            tbHelp.Text = "How to use guide:\r\n";
-            tbHelp.Text += "1) Click initialize (firstly check settings!)\r\n";
-            tbHelp.Text += "2) Choose type of en/de-cryption (file or text)\r\n";
-            tbHelp.Text += "3) Initialize your data (text or file)\r\n";
-            tbHelp.Text += "4) Click on button en/de-cryption\r\n";
-            tbHelp.Text += "5) Finish";
-        }
-
         private void btnExport_Click(object sender, EventArgs e)
         {
-            // show dialog window
-            if (savediag.ShowDialog() != DialogResult.OK)
-                return;
-            // save into the file
-            string name = savediag.FileName;
-            outFile(name, tbResult.Text, null);
-            outFile(name + "_public.xml", tbPublicKey.Text, null);
-            outFile(name + "_private.xml", tbPrivateKey.Text, null);
+            if (savediag.ShowDialog() == DialogResult.OK)
+            {
+                // save into the file
+                string name = savediag.FileName;
+                outFile(name, tbResult.Text + "\n" + rsa.getXmlPublicKey() + "\n" + rsa.getXmlPrivateKey(), null);
+            }
         }
-        private void tbResult_TextChanged(object sender, EventArgs e)
+
+        private void btnSaveSettings_Click(object sender, EventArgs e)
         {
-            if (!btnCopy.Visible)
-                btnCopy.Visible = true;
-            if (!btnExport.Visible)
-                btnExport.Visible = true;
+            RsaAlgoSettings.Default["LogPathConf"] = tbLogPath.Text;
+            RsaAlgoSettings.Default["LogNameConf"] = tbLogName.Text;
+            RsaAlgoSettings.Default["LogSizeConf"] = Convert.ToInt64(tbLogSize.Text);
+            RsaAlgoSettings.Default["UseLogsConf"] = chLogs.Checked;
+            RsaAlgoSettings.Default["UseOptimalPaddingConf"] = chPadding.Checked;
+            RsaAlgoSettings.Default["KeySizeConf"] = Convert.ToInt32(tbKeySize.Text);
+            RsaAlgoSettings.Default.Save();
         }
     }
 }

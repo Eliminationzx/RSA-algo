@@ -3,7 +3,7 @@
 ## Introduction
 Application for en/de-cryption with RSA method.
 
-*Basic functions:*
+**Basic functions:**
 - Text en/de-cryption
 - File en/de-cryption
 - Export keys
@@ -12,7 +12,7 @@ Application for en/de-cryption with RSA method.
 - Setting
 
 ## Instruction
-**Tab settings**
+**Tab settings:**
 *Required to configure the application*
 - Use logs : Enable/Disable logging
 - Log path : Log path
@@ -20,9 +20,11 @@ Application for en/de-cryption with RSA method.
 - Log size : Log size (bytes)
 - Use optimal padding: Enable/Disable OAEP
 - Key size : encryption key size (bytes)
-**Tab files**
+
+**Tab files:*
 *Required to en/de-crypt files*
-**Tab text**
+
+**Tab text:**
 *Required to en/de-crypt text*
 
 ## Requirements

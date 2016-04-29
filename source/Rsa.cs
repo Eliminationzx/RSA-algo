@@ -3,17 +3,18 @@ using System.Collections.Generic;
 using System.Text;
 using System.Security.Cryptography;
 using System.IO;
+using System.Diagnostics;
 
 namespace Rsa_algo
 {
-    class Rsa
+    class Rsa : Logger
     {
-        // The padding scheme often used together with RSA encryption.
-        private bool _optimalAsymmetricEncryptionPadding;
-        private int _keySize;
-        private string _xmlPublicKey;
-        private string _xmlPrivateKey;
-        public Rsa(bool useOptimalPadding, int keySize)
+        private bool _optimalAsymmetricEncryptionPadding; // The padding scheme often used together with RSA encryption
+        private int _keySize;   // RSA Key size
+        private string _xmlPublicKey;   // Public key in xml
+        private string _xmlPrivateKey;  // Private key in xml
+        public Rsa(bool useOptimalPadding, int keySize, bool useLogs, string logPath, string logName, long logSize) 
+            : base(useLogs, logPath, logName, logSize)
         {
             _optimalAsymmetricEncryptionPadding = useOptimalPadding;
             _xmlPrivateKey = null;
@@ -33,7 +34,7 @@ namespace Rsa_algo
         {
             return _xmlPrivateKey;
         }
-        // Key generation
+        // Random keys generation
         public void GenerateKeys(out string publicKey, out string privateKey)
         {
             if (!IsKeySizeValid(_keySize))
@@ -41,16 +42,22 @@ namespace Rsa_algo
                 throw new ArgumentException("Key size is not valid", "_keySize");
             }
 
-            RSACryptoServiceProvider provider = new RSACryptoServiceProvider(_keySize);
-            publicKey = provider.ToXmlString(false);
-            privateKey = provider.ToXmlString(true);
-            setXmlKeys(publicKey, privateKey);
+            using (RSACryptoServiceProvider provider = new RSACryptoServiceProvider(_keySize))
+            {
+                publicKey = provider.ToXmlString(false);
+                privateKey = provider.ToXmlString(true);
+                setXmlKeys(publicKey, privateKey);
+                outError("RSA public key: ", publicKey);
+                outError("RSA private key: ", privateKey);
+            }
         }
         // Converts the RSA-encrypted text into a string
         public string Encrypt(string text, string publicKeyXml)
         {
             byte[] encrypted = EncryptByteArray(Encoding.UTF8.GetBytes(text), publicKeyXml);
-            return Convert.ToBase64String(encrypted);
+            string str = Convert.ToBase64String(encrypted);
+            outError("RSA encrypted: ", str);
+            return str;
         }
         // Gets and validates the RSA-encrypted text as a byte array
         private byte[] EncryptByteArray(byte[] data, string publicKeyXml)
@@ -76,7 +83,7 @@ namespace Rsa_algo
             }
             catch (CryptographicException e)
             {
-                Console.WriteLine(e.Message);
+                outError(e.Message, null);
                 return null;
             }
         }
@@ -84,7 +91,9 @@ namespace Rsa_algo
         public string Decrypt(string text, string publicAndPrivateKeyXml)
         {
             byte[] decrypted = DecryptByteArray(Convert.FromBase64String(text), publicAndPrivateKeyXml);
-            return Encoding.UTF8.GetString(decrypted);
+            string str = Encoding.UTF8.GetString(decrypted);
+            outError("RSA decrypted: ", str);
+            return str;
         }
         // Gets and validates the RSA-decrypted text as a byte array
         private byte[] DecryptByteArray(byte[] data, string PrivateKeyXml)
@@ -104,7 +113,7 @@ namespace Rsa_algo
             }
             catch (CryptographicException e)
             {
-                Console.WriteLine(e.Message);
+                outError(e.Message, null);
                 return null;
             }
         }
@@ -128,6 +137,7 @@ namespace Rsa_algo
         public void fsEncrypt(string inFile, string publicAndPrivateKeyXml)
         {
             EncryptFile(inFile, publicAndPrivateKeyXml);
+            outError("RSA file encrypted", null);
         }
         private void EncryptFile(string inFile, string publicAndPrivateKeyXml)
         {
@@ -213,13 +223,14 @@ namespace Rsa_algo
             }
             catch (CryptographicException e)
             {
-                Console.WriteLine(e.Message);
+                outError(e.Message, null);
             }
         }
         // File decryption algorithm
         public void fsDecrypt(string inFile, string publicAndPrivateKeyXml)
         {
             DecryptFile(inFile, publicAndPrivateKeyXml);
+            outError("RSA file decrypted", null);
         }
         private void DecryptFile(string inFile, string publicAndPrivateKeyXml)
         {
@@ -327,7 +338,7 @@ namespace Rsa_algo
             }
             catch (CryptographicException e)
             {
-                Console.WriteLine(e.Message);
+                outError(e.Message, null);
             }
         }
     }

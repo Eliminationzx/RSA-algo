@@ -25,23 +25,23 @@ namespace Rsa_algo
         }
         private void InitializeExtentions()
         {
-            string path = tbLogPath.Text;
-            string name = tbLogName.Text;
+            // Settings
+            string logPath = tbLogPath.Text;
+            string logName = tbLogName.Text;
             long logSize = Convert.ToInt64(tbLogSize.Text);
-            bool use = chLogs.Checked;
+            bool useLogs = chLogs.Checked;
             bool padding = chPadding.Checked;
             int keySize = Convert.ToInt32(tbKeySize.Text);
-            rsa = new Rsa(padding, keySize); // Rsa algorithm
-            logger = new Logger(use, path, name, logSize);  // Logger
+            rsa = new Rsa(padding, keySize, useLogs, logPath, logName, logSize); // RSA algorithm
         }
         private void InitializeSettings()
         {
-            tbLogPath.Text = RsaAlgoSettings.Default["LogPathConf"].ToString();
-            tbLogName.Text = RsaAlgoSettings.Default["LogNameConf"].ToString();
-            tbLogSize.Text = RsaAlgoSettings.Default["LogSizeConf"].ToString();
-            chLogs.Checked = Convert.ToBoolean(RsaAlgoSettings.Default["UseLogsConf"]);
-            chPadding.Checked = Convert.ToBoolean(RsaAlgoSettings.Default["UseOptimalPaddingConf"]);
-            tbKeySize.Text = RsaAlgoSettings.Default["KeySizeConf"].ToString();
+            tbLogPath.Text = RsaAlgoSettings.Default["LogPathConf"].ToString(); // Log path setting
+            tbLogName.Text = RsaAlgoSettings.Default["LogNameConf"].ToString(); // Log name setting
+            tbLogSize.Text = RsaAlgoSettings.Default["LogSizeConf"].ToString(); // Log size setting
+            chLogs.Checked = Convert.ToBoolean(RsaAlgoSettings.Default["UseLogsConf"]); // Use logs settings
+            chPadding.Checked = Convert.ToBoolean(RsaAlgoSettings.Default["UseOptimalPaddingConf"]); // Use optimal padding settings
+            tbKeySize.Text = RsaAlgoSettings.Default["KeySizeConf"].ToString(); // Rsa key size setting
         }
         private void InitializeOpenFileDiag()
         {
@@ -60,7 +60,6 @@ namespace Rsa_algo
             // Key encryption
             string encrypted = rsa.Encrypt(tbKey.Text, tbPublicKey.Text);
             tbResult.Text = encrypted;
-            logger.outError("RSA encrypted: ", encrypted);
         }
         private void btnDecrypt_Click(object sender, EventArgs e)
         {
@@ -69,7 +68,6 @@ namespace Rsa_algo
             // Key decryption
             string decrypted = rsa.Decrypt(tbKey.Text, tbPrivateKey.Text);
             tbResult.Text = decrypted;
-            logger.outError("RSA decrypted: ", decrypted);
         }
         private void btnFlush_Click(object sender, EventArgs e)
         {
@@ -88,8 +86,6 @@ namespace Rsa_algo
             rsa.GenerateKeys(out publicKey, out privateKey);
             tbPublicKey.Text = publicKey;
             tbPrivateKey.Text = privateKey;
-            logger.outError("RSA public key: ", publicKey);
-            logger.outError("RSA private key: ", privateKey);
         }
         private void btnLoadFile_Click(object sender, EventArgs e)
         {
@@ -139,14 +135,15 @@ namespace Rsa_algo
         {
             if (ofdiag.ShowDialog() == DialogResult.OK)
             {
+                // RSA key import
                 string publicKey = null;
                 string privateKey = null;
                 string line = null;
-                string filename = ofdiag.FileName;
-                using (StreamReader sr = new StreamReader(filename))
+                using (StreamReader sr = new StreamReader(ofdiag.FileName))
                 {
                     while ((line = sr.ReadLine()) != null)
                     {
+                        // Find RSA key value tag
                         if (line.Contains("<RSAKeyValue>"))
                         {
                             // Find private key
@@ -166,14 +163,14 @@ namespace Rsa_algo
         {
             if (savediag.ShowDialog() == DialogResult.OK)
             {
-                // save into the file
+                // RSA Keys export
                 string name = savediag.FileName;
                 outFile(name, tbResult.Text + "\n" + rsa.getXmlPublicKey() + "\n" + rsa.getXmlPrivateKey(), null);
             }
         }
-
         private void btnSaveSettings_Click(object sender, EventArgs e)
         {
+            // Save user settings
             RsaAlgoSettings.Default["LogPathConf"] = tbLogPath.Text;
             RsaAlgoSettings.Default["LogNameConf"] = tbLogName.Text;
             RsaAlgoSettings.Default["LogSizeConf"] = Convert.ToInt64(tbLogSize.Text);

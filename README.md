@@ -12,18 +12,18 @@ Application for en/de-cryption with RSA method.
 - Setting
 
 ## Instruction
-*Tab settings*
-Required to configure the application
+**Tab settings**
+*Required to configure the application*
 - Use logs : Enable/Disable logging
 - Log path : Log path
 - Log name : Log name
 - Log size : Log size (bytes)
 - Use optimal padding: Enable/Disable OAEP
 - Key size : encryption key size (bytes)
-*Tab files*
-Required to en/de-crypt files
-*Tab text*
-Required to en/de-crypt text
+**Tab files**
+*Required to en/de-crypt files*
+**Tab text**
+*Required to en/de-crypt text*
 
 ## Requirements
 - OS Windows 7/8/10

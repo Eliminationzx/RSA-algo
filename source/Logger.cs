@@ -36,8 +36,11 @@ namespace Rsa_algo
         {
             int startFileName = path.LastIndexOf(@"\") + 1;
             string name = path.Substring(startFileName, path.LastIndexOf(".") + startFileName);
+            bool append = false;
             FileInfo fi = new FileInfo(name);
-            StreamWriter file = new StreamWriter(path, fi.Length >= _size && fi.Exists);
+            if (fi.Exists)
+                append = fi.Length >= _size;
+            StreamWriter file = new StreamWriter(path, append);
             file.WriteLine("[" + date + "]" + msg);
             file.Close();
             file.Dispose();

@@ -17,8 +17,6 @@ namespace Rsa_algo
         public rsaApp()
         {
             InitializeComponent();
-            InitializeOpenFileDiag();
-            InitializeSaveFileDiag();
             InitializeSettings();
             InitializeExtentions();
         }
@@ -39,16 +37,6 @@ namespace Rsa_algo
             chLogs.Checked = Convert.ToBoolean(RsaAlgoSettings.Default["UseLogsConf"]); // Use logs settings
             chPadding.Checked = Convert.ToBoolean(RsaAlgoSettings.Default["UseOptimalPaddingConf"]); // Use optimal padding settings
             tbKeySize.Text = RsaAlgoSettings.Default["KeySizeConf"].ToString(); // Rsa key size setting
-        }
-        private void InitializeOpenFileDiag()
-        {
-            ofdiag.Filter = "All files (*.rsa)|*.rsa;";
-            ofdiag.Title = "Load file browser";
-        }
-        private void InitializeSaveFileDiag()
-        {
-            savediag.Title = "Save file browser";
-            savediag.Filter = "All files (*.rsa)|*.rsa;";
         }
         private void btnEncrypt_Click(object sender, EventArgs e)
         {
@@ -170,6 +158,7 @@ namespace Rsa_algo
             RsaAlgoSettings.Default["UseOptimalPaddingConf"] = chPadding.Checked;
             RsaAlgoSettings.Default["KeySizeConf"] = Convert.ToInt32(tbKeySize.Text);
             RsaAlgoSettings.Default.Save();
+            Application.Restart();
         }
     }
 }

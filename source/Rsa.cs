@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Text;
 using System.Security.Cryptography;
 using System.IO;
-using System.Diagnostics;
 
 namespace Rsa_algo
 {
@@ -13,8 +11,8 @@ namespace Rsa_algo
         private int _keySize;   // RSA Key size
         private string _xmlPublicKey;   // Public key in xml
         private string _xmlPrivateKey;  // Private key in xml
-        public Rsa(bool useOptimalPadding, int keySize, bool useLogs, string logPath, string logName, long logSize) 
-            : base(useLogs, logPath, logName, logSize)
+        public Rsa(bool useOptimalPadding, int keySize, bool useLogs, string logPath, string logName) 
+            : base(useLogs, logPath, logName)
         {
             _optimalAsymmetricEncryptionPadding = useOptimalPadding;
             _xmlPrivateKey = null;
@@ -149,37 +147,37 @@ namespace Rsa_algo
             rjndl.Mode = CipherMode.CBC;
             ICryptoTransform transform = rjndl.CreateEncryptor();
 
+            // Use RSACryptoServiceProvider to
+            // enrypt the Rijndael key
+            // rsa is previously instantiated: 
+            //    rsa = new RSACryptoServiceProvider(cspp);
+            byte[] keyEncrypted = EncryptByteArray(rjndl.Key, publicAndPrivateKeyXml);
+
+            // Create byte arrays to contain
+            // the length values of the key and IV
+            byte[] LenK = new byte[4];
+            byte[] LenIV = new byte[4];
+
+            int lKey = keyEncrypted.Length;
+            LenK = BitConverter.GetBytes(lKey);
+            int lIV = rjndl.IV.Length;
+            LenIV = BitConverter.GetBytes(lIV);
+
+            // Write the following to the FileStream
+            // for the encrypted file (outFs):
+            // - length of the key
+            // - length of the IV
+            // - ecrypted key
+            // - the IV
+            // - the encrypted cipher content
+
+            int startFileName = inFile.LastIndexOf(@"\") + 1;
+
+            // Change the file's extension to ".enc"
+            string outFile = inFile.Substring(startFileName, inFile.LastIndexOf(".") - startFileName) + ".enc";
+
             try
             {
-                // Use RSACryptoServiceProvider to
-                // enrypt the Rijndael key
-                // rsa is previously instantiated: 
-                //    rsa = new RSACryptoServiceProvider(cspp);
-                byte[] keyEncrypted = EncryptByteArray(rjndl.Key, publicAndPrivateKeyXml);
-
-                // Create byte arrays to contain
-                // the length values of the key and IV
-                byte[] LenK = new byte[4];
-                byte[] LenIV = new byte[4];
-
-                int lKey = keyEncrypted.Length;
-                LenK = BitConverter.GetBytes(lKey);
-                int lIV = rjndl.IV.Length;
-                LenIV = BitConverter.GetBytes(lIV);
-
-                // Write the following to the FileStream
-                // for the encrypted file (outFs):
-                // - length of the key
-                // - length of the IV
-                // - ecrypted key
-                // - the IV
-                // - the encrypted cipher content
-
-                int startFileName = inFile.LastIndexOf(@"\") + 1;
-
-                // Change the file's extension to ".enc"
-                string outFile = inFile.Substring(startFileName, inFile.LastIndexOf(".") - startFileName) + ".enc";
-            
                 using (FileStream outFs = new FileStream(outFile, FileMode.CreateNew))
                 {
                     outFs.Write(LenK, 0, 4);

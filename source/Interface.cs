@@ -14,7 +14,6 @@ namespace Rsa_algo
     public partial class rsaApp : Form
     {
         private Rsa rsa;
-        private Logger logger;
         public rsaApp()
         {
             InitializeComponent();
@@ -28,17 +27,15 @@ namespace Rsa_algo
             // Settings
             string logPath = tbLogPath.Text;
             string logName = tbLogName.Text;
-            long logSize = Convert.ToInt64(tbLogSize.Text);
             bool useLogs = chLogs.Checked;
             bool padding = chPadding.Checked;
             int keySize = Convert.ToInt32(tbKeySize.Text);
-            rsa = new Rsa(padding, keySize, useLogs, logPath, logName, logSize); // RSA algorithm
+            rsa = new Rsa(padding, keySize, useLogs, logPath, logName); // RSA algorithm
         }
         private void InitializeSettings()
         {
             tbLogPath.Text = RsaAlgoSettings.Default["LogPathConf"].ToString(); // Log path setting
             tbLogName.Text = RsaAlgoSettings.Default["LogNameConf"].ToString(); // Log name setting
-            tbLogSize.Text = RsaAlgoSettings.Default["LogSizeConf"].ToString(); // Log size setting
             chLogs.Checked = Convert.ToBoolean(RsaAlgoSettings.Default["UseLogsConf"]); // Use logs settings
             chPadding.Checked = Convert.ToBoolean(RsaAlgoSettings.Default["UseOptimalPaddingConf"]); // Use optimal padding settings
             tbKeySize.Text = RsaAlgoSettings.Default["KeySizeConf"].ToString(); // Rsa key size setting
@@ -107,13 +104,6 @@ namespace Rsa_algo
                     tbLoadResult.Text += "Attributes: none";
             }
         }
-        private void outFile(string path, string str, object args)
-        {
-            StreamWriter file = new StreamWriter(path, false);
-            file.WriteLine(str + args);
-            file.Close();
-            file.Dispose();
-        }
         private void btnEncryptFile_Click(object sender, EventArgs e)
         {
             if (!String.IsNullOrWhiteSpace(tbPublicKey.Text))
@@ -164,8 +154,11 @@ namespace Rsa_algo
             if (savediag.ShowDialog() == DialogResult.OK)
             {
                 // RSA Keys export
-                string name = savediag.FileName;
-                outFile(name, tbResult.Text + "\n" + rsa.getXmlPublicKey() + "\n" + rsa.getXmlPrivateKey(), null);
+                string path = savediag.FileName;
+                StreamWriter file = new StreamWriter(path, false);
+                file.WriteLine(tbResult.Text + "\n" + rsa.getXmlPublicKey() + "\n" + rsa.getXmlPrivateKey());
+                file.Close();
+                file.Dispose();
             }
         }
         private void btnSaveSettings_Click(object sender, EventArgs e)
@@ -173,7 +166,6 @@ namespace Rsa_algo
             // Save user settings
             RsaAlgoSettings.Default["LogPathConf"] = tbLogPath.Text;
             RsaAlgoSettings.Default["LogNameConf"] = tbLogName.Text;
-            RsaAlgoSettings.Default["LogSizeConf"] = Convert.ToInt64(tbLogSize.Text);
             RsaAlgoSettings.Default["UseLogsConf"] = chLogs.Checked;
             RsaAlgoSettings.Default["UseOptimalPaddingConf"] = chPadding.Checked;
             RsaAlgoSettings.Default["KeySizeConf"] = Convert.ToInt32(tbKeySize.Text);

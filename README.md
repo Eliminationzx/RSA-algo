@@ -17,7 +17,6 @@ Application for en/de-cryption with RSA method.
 - Use logs : Enable/Disable logging
 - Log path : Log path
 - Log name : Log name
-- Log size : Log size (bytes)
 - Use optimal padding: Enable/Disable OAEP
 - Key size : encryption key size (bytes)
 
@@ -29,7 +28,7 @@ Application for en/de-cryption with RSA method.
 
 ## Requirements
 - OS Windows 7/8/10
-- 3 - 20 MB free space
+- 3 - 20 MB free disk space
 
 ## Links
 

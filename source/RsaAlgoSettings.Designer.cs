@@ -25,7 +25,7 @@ namespace Rsa_algo {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute(".")]
+        [global::System.Configuration.DefaultSettingValueAttribute("./")]
         public string LogPathConf {
             get {
                 return ((string)(this["LogPathConf"]));
@@ -44,18 +44,6 @@ namespace Rsa_algo {
             }
             set {
                 this["LogNameConf"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("20000")]
-        public long LogSizeConf {
-            get {
-                return ((long)(this["LogSizeConf"]));
-            }
-            set {
-                this["LogSizeConf"] = value;
             }
         }
         

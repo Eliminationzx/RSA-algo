@@ -50,21 +50,19 @@
             this.tabFile = new System.Windows.Forms.TabPage();
             this.tbLoadResult = new System.Windows.Forms.TextBox();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.btnSaveSettings = new System.Windows.Forms.Button();
             this.chPadding = new System.Windows.Forms.CheckBox();
             this.label8 = new System.Windows.Forms.Label();
             this.tbKeySize = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.chLogs = new System.Windows.Forms.CheckBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.tbLogSize = new System.Windows.Forms.TextBox();
             this.tbLogName = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.tbLogPath = new System.Windows.Forms.TextBox();
             this.btnImport = new System.Windows.Forms.Button();
             this.btnExport = new System.Windows.Forms.Button();
+            this.btnSaveSettings = new System.Windows.Forms.Button();
             this.tabChoice.SuspendLayout();
             this.tabText.SuspendLayout();
             this.tabFile.SuspendLayout();
@@ -273,8 +271,6 @@
             this.tabPage1.Controls.Add(this.label7);
             this.tabPage1.Controls.Add(this.chLogs);
             this.tabPage1.Controls.Add(this.label6);
-            this.tabPage1.Controls.Add(this.label5);
-            this.tabPage1.Controls.Add(this.tbLogSize);
             this.tabPage1.Controls.Add(this.tbLogName);
             this.tabPage1.Controls.Add(this.label4);
             this.tabPage1.Controls.Add(this.label1);
@@ -286,16 +282,6 @@
             this.tabPage1.TabIndex = 2;
             this.tabPage1.Text = "Settings";
             this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // btnSaveSettings
-            // 
-            this.btnSaveSettings.Location = new System.Drawing.Point(262, 111);
-            this.btnSaveSettings.Name = "btnSaveSettings";
-            this.btnSaveSettings.Size = new System.Drawing.Size(152, 23);
-            this.btnSaveSettings.TabIndex = 12;
-            this.btnSaveSettings.Text = "Save settings";
-            this.btnSaveSettings.UseVisualStyleBackColor = true;
-            this.btnSaveSettings.Click += new System.EventHandler(this.btnSaveSettings_Click);
             // 
             // chPadding
             // 
@@ -334,7 +320,7 @@
             // chLogs
             // 
             this.chLogs.AutoSize = true;
-            this.chLogs.Location = new System.Drawing.Point(123, 18);
+            this.chLogs.Location = new System.Drawing.Point(117, 39);
             this.chLogs.Name = "chLogs";
             this.chLogs.Size = new System.Drawing.Size(15, 14);
             this.chLogs.TabIndex = 7;
@@ -343,31 +329,15 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(69, 17);
+            this.label6.Location = new System.Drawing.Point(63, 38);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(51, 13);
             this.label6.TabIndex = 6;
             this.label6.Text = "Use logs:";
             // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(69, 121);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(49, 13);
-            this.label5.TabIndex = 5;
-            this.label5.Text = "Log size:";
-            // 
-            // tbLogSize
-            // 
-            this.tbLogSize.Location = new System.Drawing.Point(123, 118);
-            this.tbLogSize.Name = "tbLogSize";
-            this.tbLogSize.Size = new System.Drawing.Size(100, 20);
-            this.tbLogSize.TabIndex = 4;
-            // 
             // tbLogName
             // 
-            this.tbLogName.Location = new System.Drawing.Point(123, 81);
+            this.tbLogName.Location = new System.Drawing.Point(117, 102);
             this.tbLogName.Name = "tbLogName";
             this.tbLogName.Size = new System.Drawing.Size(100, 20);
             this.tbLogName.TabIndex = 3;
@@ -375,7 +345,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(69, 84);
+            this.label4.Location = new System.Drawing.Point(63, 105);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(57, 13);
             this.label4.TabIndex = 2;
@@ -384,7 +354,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(69, 46);
+            this.label1.Location = new System.Drawing.Point(63, 67);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(52, 13);
             this.label1.TabIndex = 1;
@@ -392,7 +362,7 @@
             // 
             // tbLogPath
             // 
-            this.tbLogPath.Location = new System.Drawing.Point(123, 43);
+            this.tbLogPath.Location = new System.Drawing.Point(117, 64);
             this.tbLogPath.Name = "tbLogPath";
             this.tbLogPath.Size = new System.Drawing.Size(100, 20);
             this.tbLogPath.TabIndex = 0;
@@ -416,6 +386,16 @@
             this.btnExport.Text = "Export";
             this.btnExport.UseVisualStyleBackColor = true;
             this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
+            // 
+            // btnSaveSettings
+            // 
+            this.btnSaveSettings.Location = new System.Drawing.Point(262, 111);
+            this.btnSaveSettings.Name = "btnSaveSettings";
+            this.btnSaveSettings.Size = new System.Drawing.Size(152, 23);
+            this.btnSaveSettings.TabIndex = 12;
+            this.btnSaveSettings.Text = "Save settings";
+            this.btnSaveSettings.UseVisualStyleBackColor = true;
+            this.btnSaveSettings.Click += new System.EventHandler(this.btnSaveSettings_Click);
             // 
             // rsaApp
             // 
@@ -485,8 +465,6 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.CheckBox chLogs;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox tbLogSize;
         private System.Windows.Forms.TextBox tbLogName;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label1;

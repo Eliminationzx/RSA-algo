@@ -134,6 +134,8 @@ namespace Rsa_algo
         // File encryption algorithm
         public void fsEncrypt(string inFile, string publicAndPrivateKeyXml)
         {
+            if (String.IsNullOrWhiteSpace(inFile) || String.IsNullOrWhiteSpace(publicAndPrivateKeyXml))
+                return;
             EncryptFile(inFile, publicAndPrivateKeyXml);
             outError("RSA file encrypted", null);
         }
@@ -227,6 +229,8 @@ namespace Rsa_algo
         // File decryption algorithm
         public void fsDecrypt(string inFile, string publicAndPrivateKeyXml)
         {
+            if (String.IsNullOrWhiteSpace(inFile) || String.IsNullOrWhiteSpace(publicAndPrivateKeyXml))
+                return;
             DecryptFile(inFile, publicAndPrivateKeyXml);
             outError("RSA file decrypted", null);
         }

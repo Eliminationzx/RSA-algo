@@ -94,14 +94,12 @@ namespace Rsa_algo
         }
         private void btnEncryptFile_Click(object sender, EventArgs e)
         {
-            if (!String.IsNullOrWhiteSpace(tbPublicKey.Text))
-                rsa.fsEncrypt(ofdiag.FileName, tbPublicKey.Text);
+           rsa.fsEncrypt(ofdiag.FileName, tbPublicKey.Text);
         }
 
         private void btnDecryptFile_Click(object sender, EventArgs e)
         {
-            if (!String.IsNullOrWhiteSpace(tbPrivateKey.Text))
-                rsa.fsDecrypt(ofdiag.FileName, tbPrivateKey.Text);
+           rsa.fsDecrypt(ofdiag.FileName, tbPrivateKey.Text);
         }
         private void tbSelectAndCopy(TextBox tb)
         {

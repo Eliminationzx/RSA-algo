@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using System.Xml;
 
 namespace Rsa_algo
 {
@@ -40,16 +41,26 @@ namespace Rsa_algo
         }
         private void btnEncrypt_Click(object sender, EventArgs e)
         {
-            if (String.IsNullOrWhiteSpace(tbPublicKey.Text))
+            if (String.IsNullOrWhiteSpace(tbPublicKey.Text) ||
+                String.IsNullOrWhiteSpace(tbKey.Text))
                 return;
+
+            // Run timer
+            timer1.Start();
+
             // Key encryption
             string encrypted = rsa.Encrypt(tbKey.Text, tbPublicKey.Text);
             tbResult.Text = encrypted;
         }
         private void btnDecrypt_Click(object sender, EventArgs e)
         {
-            if (String.IsNullOrWhiteSpace(tbPrivateKey.Text))
+            if (String.IsNullOrWhiteSpace(tbPrivateKey.Text) ||
+                String.IsNullOrWhiteSpace(tbKey.Text))
                 return;
+
+            // Run timer
+            timer1.Start();
+
             // Key decryption
             string decrypted = rsa.Decrypt(tbKey.Text, tbPrivateKey.Text);
             tbResult.Text = decrypted;
@@ -67,6 +78,9 @@ namespace Rsa_algo
         }
         private void btnGenerate_Click(object sender, EventArgs e)
         {
+            // Run timer
+            timer1.Start();
+
             string publicKey, privateKey;
             rsa.GenerateKeys(out publicKey, out privateKey);
             tbPublicKey.Text = publicKey;
@@ -94,11 +108,16 @@ namespace Rsa_algo
         }
         private void btnEncryptFile_Click(object sender, EventArgs e)
         {
+           // Run timer
+           timer1.Start();
+
            rsa.fsEncrypt(ofdiag.FileName, tbPublicKey.Text);
         }
-
         private void btnDecryptFile_Click(object sender, EventArgs e)
         {
+           // Run timer
+           timer1.Start();
+
            rsa.fsDecrypt(ofdiag.FileName, tbPrivateKey.Text);
         }
         private void tbSelectAndCopy(TextBox tb)
@@ -157,6 +176,17 @@ namespace Rsa_algo
             RsaAlgoSettings.Default["KeySizeConf"] = Convert.ToInt32(tbKeySize.Text);
             RsaAlgoSettings.Default.Save();
             Application.Restart();
+        }
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            pbProcessing.PerformStep();
+
+            // Stop timer and refresh value of the progress bar
+            if (pbProcessing.Value == pbProcessing.Maximum)
+            {
+                timer1.Stop();
+                pbProcessing.Value = pbProcessing.Minimum;
+            }
         }
     }
 }

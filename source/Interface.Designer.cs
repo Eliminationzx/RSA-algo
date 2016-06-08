@@ -28,11 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(rsaApp));
             this.tbKey = new System.Windows.Forms.TextBox();
             this.tbResult = new System.Windows.Forms.TextBox();
-            this.savediag = new System.Windows.Forms.SaveFileDialog();
-            this.ofdiag = new System.Windows.Forms.OpenFileDialog();
             this.btnEncrypt = new System.Windows.Forms.Button();
             this.btnDecrypt = new System.Windows.Forms.Button();
             this.btnCopy = new System.Windows.Forms.Button();
@@ -50,6 +49,7 @@
             this.tabFile = new System.Windows.Forms.TabPage();
             this.tbLoadResult = new System.Windows.Forms.TextBox();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.btnSaveSettings = new System.Windows.Forms.Button();
             this.chPadding = new System.Windows.Forms.CheckBox();
             this.label8 = new System.Windows.Forms.Label();
             this.tbKeySize = new System.Windows.Forms.TextBox();
@@ -62,7 +62,10 @@
             this.tbLogPath = new System.Windows.Forms.TextBox();
             this.btnImport = new System.Windows.Forms.Button();
             this.btnExport = new System.Windows.Forms.Button();
-            this.btnSaveSettings = new System.Windows.Forms.Button();
+            this.ofdiag = new System.Windows.Forms.OpenFileDialog();
+            this.savediag = new System.Windows.Forms.SaveFileDialog();
+            this.pbProcessing = new System.Windows.Forms.ProgressBar();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.tabChoice.SuspendLayout();
             this.tabText.SuspendLayout();
             this.tabFile.SuspendLayout();
@@ -71,37 +74,29 @@
             // 
             // tbKey
             // 
-            this.tbKey.Location = new System.Drawing.Point(90, 21);
+            this.tbKey.Location = new System.Drawing.Point(99, 21);
             this.tbKey.Multiline = true;
             this.tbKey.Name = "tbKey";
             this.tbKey.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbKey.Size = new System.Drawing.Size(403, 57);
+            this.tbKey.Size = new System.Drawing.Size(394, 57);
             this.tbKey.TabIndex = 4;
             // 
             // tbResult
             // 
             this.tbResult.BackColor = System.Drawing.SystemColors.Control;
-            this.tbResult.Location = new System.Drawing.Point(90, 106);
+            this.tbResult.Location = new System.Drawing.Point(77, 106);
             this.tbResult.Multiline = true;
             this.tbResult.Name = "tbResult";
             this.tbResult.ReadOnly = true;
             this.tbResult.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbResult.Size = new System.Drawing.Size(403, 40);
+            this.tbResult.Size = new System.Drawing.Size(416, 40);
             this.tbResult.TabIndex = 5;
-            // 
-            // savediag
-            // 
-            this.savediag.FileName = "Key.rsa";
-            // 
-            // ofdiag
-            // 
-            this.ofdiag.Tag = "";
             // 
             // btnEncrypt
             // 
             this.btnEncrypt.Location = new System.Drawing.Point(6, 19);
             this.btnEncrypt.Name = "btnEncrypt";
-            this.btnEncrypt.Size = new System.Drawing.Size(78, 22);
+            this.btnEncrypt.Size = new System.Drawing.Size(87, 22);
             this.btnEncrypt.TabIndex = 13;
             this.btnEncrypt.Text = "Encryption";
             this.btnEncrypt.UseVisualStyleBackColor = true;
@@ -111,7 +106,7 @@
             // 
             this.btnDecrypt.Location = new System.Drawing.Point(6, 56);
             this.btnDecrypt.Name = "btnDecrypt";
-            this.btnDecrypt.Size = new System.Drawing.Size(78, 22);
+            this.btnDecrypt.Size = new System.Drawing.Size(87, 22);
             this.btnDecrypt.TabIndex = 14;
             this.btnDecrypt.Text = "Decryption";
             this.btnDecrypt.UseVisualStyleBackColor = true;
@@ -121,7 +116,7 @@
             // 
             this.btnCopy.Location = new System.Drawing.Point(6, 115);
             this.btnCopy.Name = "btnCopy";
-            this.btnCopy.Size = new System.Drawing.Size(78, 21);
+            this.btnCopy.Size = new System.Drawing.Size(65, 21);
             this.btnCopy.TabIndex = 16;
             this.btnCopy.Text = "Copy";
             this.btnCopy.UseVisualStyleBackColor = true;
@@ -129,9 +124,9 @@
             // 
             // tbPublicKey
             // 
-            this.tbPublicKey.Location = new System.Drawing.Point(268, 31);
+            this.tbPublicKey.Location = new System.Drawing.Point(264, 51);
             this.tbPublicKey.Name = "tbPublicKey";
-            this.tbPublicKey.Size = new System.Drawing.Size(247, 20);
+            this.tbPublicKey.Size = new System.Drawing.Size(260, 20);
             this.tbPublicKey.TabIndex = 17;
             // 
             // label2
@@ -139,7 +134,7 @@
             this.label2.AutoSize = true;
             this.label2.BackColor = System.Drawing.SystemColors.Control;
             this.label2.Cursor = System.Windows.Forms.Cursors.Default;
-            this.label2.Location = new System.Drawing.Point(203, 34);
+            this.label2.Location = new System.Drawing.Point(195, 54);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(59, 13);
             this.label2.TabIndex = 18;
@@ -150,7 +145,7 @@
             this.label3.AutoSize = true;
             this.label3.BackColor = System.Drawing.SystemColors.Control;
             this.label3.Cursor = System.Windows.Forms.Cursors.Default;
-            this.label3.Location = new System.Drawing.Point(199, 88);
+            this.label3.Location = new System.Drawing.Point(195, 108);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(63, 13);
             this.label3.TabIndex = 19;
@@ -158,14 +153,14 @@
             // 
             // tbPrivateKey
             // 
-            this.tbPrivateKey.Location = new System.Drawing.Point(268, 85);
+            this.tbPrivateKey.Location = new System.Drawing.Point(264, 105);
             this.tbPrivateKey.Name = "tbPrivateKey";
-            this.tbPrivateKey.Size = new System.Drawing.Size(247, 20);
+            this.tbPrivateKey.Size = new System.Drawing.Size(260, 20);
             this.tbPrivateKey.TabIndex = 20;
             // 
             // btnInit
             // 
-            this.btnInit.Location = new System.Drawing.Point(12, 31);
+            this.btnInit.Location = new System.Drawing.Point(17, 51);
             this.btnInit.Name = "btnInit";
             this.btnInit.Size = new System.Drawing.Size(163, 43);
             this.btnInit.TabIndex = 21;
@@ -177,25 +172,25 @@
             // 
             this.btnLoadFile.Location = new System.Drawing.Point(6, 21);
             this.btnLoadFile.Name = "btnLoadFile";
-            this.btnLoadFile.Size = new System.Drawing.Size(77, 24);
+            this.btnLoadFile.Size = new System.Drawing.Size(28, 24);
             this.btnLoadFile.TabIndex = 25;
-            this.btnLoadFile.Text = "Load";
+            this.btnLoadFile.Text = "...";
             this.btnLoadFile.UseVisualStyleBackColor = true;
             this.btnLoadFile.Click += new System.EventHandler(this.btnLoadFile_Click);
             // 
             // tbLoad
             // 
-            this.tbLoad.Location = new System.Drawing.Point(89, 24);
+            this.tbLoad.Location = new System.Drawing.Point(40, 24);
             this.tbLoad.Name = "tbLoad";
             this.tbLoad.ReadOnly = true;
-            this.tbLoad.Size = new System.Drawing.Size(392, 20);
+            this.tbLoad.Size = new System.Drawing.Size(441, 20);
             this.tbLoad.TabIndex = 26;
             // 
             // btnEncryptFile
             // 
             this.btnEncryptFile.Location = new System.Drawing.Point(6, 77);
             this.btnEncryptFile.Name = "btnEncryptFile";
-            this.btnEncryptFile.Size = new System.Drawing.Size(77, 23);
+            this.btnEncryptFile.Size = new System.Drawing.Size(89, 23);
             this.btnEncryptFile.TabIndex = 27;
             this.btnEncryptFile.Text = "Encryption";
             this.btnEncryptFile.UseVisualStyleBackColor = true;
@@ -205,7 +200,7 @@
             // 
             this.btnDecryptFile.Location = new System.Drawing.Point(6, 117);
             this.btnDecryptFile.Name = "btnDecryptFile";
-            this.btnDecryptFile.Size = new System.Drawing.Size(77, 22);
+            this.btnDecryptFile.Size = new System.Drawing.Size(89, 22);
             this.btnDecryptFile.TabIndex = 28;
             this.btnDecryptFile.Text = "Decryption";
             this.btnDecryptFile.UseVisualStyleBackColor = true;
@@ -216,7 +211,7 @@
             this.tabChoice.Controls.Add(this.tabText);
             this.tabChoice.Controls.Add(this.tabFile);
             this.tabChoice.Controls.Add(this.tabPage1);
-            this.tabChoice.Location = new System.Drawing.Point(12, 128);
+            this.tabChoice.Location = new System.Drawing.Point(17, 148);
             this.tabChoice.Name = "tabChoice";
             this.tabChoice.SelectedIndex = 0;
             this.tabChoice.Size = new System.Drawing.Size(507, 181);
@@ -254,12 +249,12 @@
             // 
             // tbLoadResult
             // 
-            this.tbLoadResult.Location = new System.Drawing.Point(89, 77);
+            this.tbLoadResult.Location = new System.Drawing.Point(101, 77);
             this.tbLoadResult.Multiline = true;
             this.tbLoadResult.Name = "tbLoadResult";
             this.tbLoadResult.ReadOnly = true;
             this.tbLoadResult.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbLoadResult.Size = new System.Drawing.Size(392, 62);
+            this.tbLoadResult.Size = new System.Drawing.Size(380, 62);
             this.tbLoadResult.TabIndex = 29;
             // 
             // tabPage1
@@ -283,6 +278,16 @@
             this.tabPage1.Text = "Settings";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // btnSaveSettings
+            // 
+            this.btnSaveSettings.Location = new System.Drawing.Point(262, 111);
+            this.btnSaveSettings.Name = "btnSaveSettings";
+            this.btnSaveSettings.Size = new System.Drawing.Size(152, 23);
+            this.btnSaveSettings.TabIndex = 12;
+            this.btnSaveSettings.Text = "Save settings";
+            this.btnSaveSettings.UseVisualStyleBackColor = true;
+            this.btnSaveSettings.Click += new System.EventHandler(this.btnSaveSettings_Click);
+            // 
             // chPadding
             // 
             this.chPadding.AutoSize = true;
@@ -303,9 +308,9 @@
             // 
             // tbKeySize
             // 
-            this.tbKeySize.Location = new System.Drawing.Point(314, 39);
+            this.tbKeySize.Location = new System.Drawing.Point(339, 39);
             this.tbKeySize.Name = "tbKeySize";
-            this.tbKeySize.Size = new System.Drawing.Size(100, 20);
+            this.tbKeySize.Size = new System.Drawing.Size(132, 20);
             this.tbKeySize.TabIndex = 9;
             // 
             // label7
@@ -313,14 +318,14 @@
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(259, 42);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(49, 13);
+            this.label7.Size = new System.Drawing.Size(74, 13);
             this.label7.TabIndex = 8;
-            this.label7.Text = "Key size:";
+            this.label7.Text = "Key size (bits):";
             // 
             // chLogs
             // 
             this.chLogs.AutoSize = true;
-            this.chLogs.Location = new System.Drawing.Point(117, 39);
+            this.chLogs.Location = new System.Drawing.Point(128, 37);
             this.chLogs.Name = "chLogs";
             this.chLogs.Size = new System.Drawing.Size(15, 14);
             this.chLogs.TabIndex = 7;
@@ -329,7 +334,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(63, 38);
+            this.label6.Location = new System.Drawing.Point(58, 37);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(51, 13);
             this.label6.TabIndex = 6;
@@ -337,7 +342,7 @@
             // 
             // tbLogName
             // 
-            this.tbLogName.Location = new System.Drawing.Point(117, 102);
+            this.tbLogName.Location = new System.Drawing.Point(128, 99);
             this.tbLogName.Name = "tbLogName";
             this.tbLogName.Size = new System.Drawing.Size(100, 20);
             this.tbLogName.TabIndex = 3;
@@ -345,7 +350,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(63, 105);
+            this.label4.Location = new System.Drawing.Point(58, 102);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(57, 13);
             this.label4.TabIndex = 2;
@@ -354,7 +359,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(63, 67);
+            this.label1.Location = new System.Drawing.Point(58, 67);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(52, 13);
             this.label1.TabIndex = 1;
@@ -362,14 +367,14 @@
             // 
             // tbLogPath
             // 
-            this.tbLogPath.Location = new System.Drawing.Point(117, 64);
+            this.tbLogPath.Location = new System.Drawing.Point(128, 64);
             this.tbLogPath.Name = "tbLogPath";
             this.tbLogPath.Size = new System.Drawing.Size(100, 20);
             this.tbLogPath.TabIndex = 0;
             // 
             // btnImport
             // 
-            this.btnImport.Location = new System.Drawing.Point(12, 75);
+            this.btnImport.Location = new System.Drawing.Point(17, 95);
             this.btnImport.Name = "btnImport";
             this.btnImport.Size = new System.Drawing.Size(75, 30);
             this.btnImport.TabIndex = 30;
@@ -379,7 +384,7 @@
             // 
             // btnExport
             // 
-            this.btnExport.Location = new System.Drawing.Point(93, 75);
+            this.btnExport.Location = new System.Drawing.Point(98, 95);
             this.btnExport.Name = "btnExport";
             this.btnExport.Size = new System.Drawing.Size(82, 30);
             this.btnExport.TabIndex = 31;
@@ -387,15 +392,25 @@
             this.btnExport.UseVisualStyleBackColor = true;
             this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
             // 
-            // btnSaveSettings
+            // ofdiag
             // 
-            this.btnSaveSettings.Location = new System.Drawing.Point(262, 111);
-            this.btnSaveSettings.Name = "btnSaveSettings";
-            this.btnSaveSettings.Size = new System.Drawing.Size(152, 23);
-            this.btnSaveSettings.TabIndex = 12;
-            this.btnSaveSettings.Text = "Save settings";
-            this.btnSaveSettings.UseVisualStyleBackColor = true;
-            this.btnSaveSettings.Click += new System.EventHandler(this.btnSaveSettings_Click);
+            this.ofdiag.Tag = "";
+            this.ofdiag.Title = "Import your data";
+            // 
+            // savediag
+            // 
+            this.savediag.Title = "Export your data";
+            // 
+            // pbProcessing
+            // 
+            this.pbProcessing.Location = new System.Drawing.Point(17, 12);
+            this.pbProcessing.Name = "pbProcessing";
+            this.pbProcessing.Size = new System.Drawing.Size(507, 23);
+            this.pbProcessing.TabIndex = 32;
+            // 
+            // timer1
+            // 
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // rsaApp
             // 
@@ -405,7 +420,8 @@
             this.BackColor = System.Drawing.SystemColors.Control;
             this.BackgroundImage = global::Rsa_algo.Properties.Resources.bg;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(531, 322);
+            this.ClientSize = new System.Drawing.Size(543, 346);
+            this.Controls.Add(this.pbProcessing);
             this.Controls.Add(this.btnExport);
             this.Controls.Add(this.btnImport);
             this.Controls.Add(this.tabChoice);
@@ -438,8 +454,6 @@
 
         private System.Windows.Forms.TextBox tbKey;
         private System.Windows.Forms.TextBox tbResult;
-        private System.Windows.Forms.SaveFileDialog savediag;
-        private System.Windows.Forms.OpenFileDialog ofdiag;
         private System.Windows.Forms.Button btnEncrypt;
         private System.Windows.Forms.Button btnDecrypt;
         private System.Windows.Forms.Button btnCopy;
@@ -470,6 +484,10 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox tbLogPath;
         private System.Windows.Forms.Button btnSaveSettings;
+        private System.Windows.Forms.OpenFileDialog ofdiag;
+        private System.Windows.Forms.SaveFileDialog savediag;
+        private System.Windows.Forms.ProgressBar pbProcessing;
+        private System.Windows.Forms.Timer timer1;
 
     }
 }

@@ -3,6 +3,8 @@
 ## Introduction
 Application for en/de-cryption with RSA method.
 
+![alt tag](https://s32.postimg.org/il6wid6th/rsa_encryption.jpg)
+
 **Basic functions:**
 - Text en/de-cryption
 - File en/de-cryption
@@ -18,7 +20,7 @@ Application for en/de-cryption with RSA method.
 - Log path : Log path
 - Log name : Log name
 - Use optimal padding: Enable/Disable OAEP
-- Key size : encryption key size (bytes)
+- Key size : Encryption key size (bits)
 
 **Tab files:**
 *Required to en/de-crypt files*
